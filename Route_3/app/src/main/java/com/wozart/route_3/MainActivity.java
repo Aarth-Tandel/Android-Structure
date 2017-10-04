@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.wozart.route_3.data.DeviceAdapter;
 import com.wozart.route_3.data.DeviceDbHelper;
 import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.data.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity
 
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
-
+        TestData.insertDummyData(mDb);
         db.InsertBasicData(mDb);
 
     }
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         // int id = item.getItemId();
         int count = HomeMenu.size();
+        ArrayList<String> rooms = new ArrayList<>();
 
         switch (item.getItemId()) {
             case R.id.add_home:
@@ -167,24 +169,32 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.home:
                 item.setChecked(true);
-                ArrayList<String> rooms = db.GetRooms(mDb, item.getTitle().toString());
+                rooms = db.GetRooms(mDb, item.getTitle().toString());
                 prepareRooms(rooms);
                 return true;
 
             case 1:
                 item.setChecked(true);
+                rooms = db.GetRooms(mDb, item.getTitle().toString());
+                prepareRooms(rooms);
                 return true;
 
             case 2:
                 item.setChecked(true);
+                rooms = db.GetRooms(mDb, item.getTitle().toString());
+                prepareRooms(rooms);
                 return true;
 
             case 3:
                 item.setChecked(true);
+                rooms = db.GetRooms(mDb, item.getTitle().toString());
+                prepareRooms(rooms);
                 return true;
 
             case 4:
                 item.setChecked(true);
+                rooms = db.GetRooms(mDb, item.getTitle().toString());
+                prepareRooms(rooms);
                 return true;
         }
 
@@ -221,6 +231,8 @@ public class MainActivity extends AppCompatActivity
      * Adding few albums for testing
      */
     private void prepareRooms(ArrayList<String> rooms) {
+
+        albumList.clear();
         int[] covers = new int[]{
                 R.drawable.album1,
                 R.drawable.album2,
@@ -230,7 +242,7 @@ public class MainActivity extends AppCompatActivity
                 R.drawable.album6,
                 R.drawable.album7
         };
-//
+
 //        Album a = new Album("HALL", 5, covers[0]);
 //        albumList.add(a);
 //
@@ -252,7 +264,7 @@ public class MainActivity extends AppCompatActivity
 //        a = new Album("STORE ROOM", 11, covers[6]);
 //        albumList.add(a);
 
-        for(String x : rooms){
+        for (String x : rooms) {
             Album a = new Album(x, 0, covers[2]);
             albumList.add(a);
         }

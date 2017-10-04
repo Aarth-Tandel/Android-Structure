@@ -76,8 +76,10 @@ public class DeviceDbOperations {
     }
 
     public ArrayList<String> GetRooms(SQLiteDatabase db, String home) {
+        String[] params = new String[]{home};
         Cursor cursor = db.rawQuery("select distinct " + DeviceContract.DeviceEntry.ROOM_NAME + " from " + DeviceContract.DeviceEntry.TABLE_NAME + " where " + DeviceContract.DeviceEntry.HOME_NAME
-                + " = " + home, null);
+                + " = ?", params);
+//        Cursor cursor = db.query(true, DeviceContract.DeviceEntry.TABLE_NAME, DeviceContract.DeviceEntry.ROOM_NAME, )
         ArrayList<String> room = new ArrayList<>();
         while (cursor.moveToNext()) {
             room.add(cursor.getString(0));

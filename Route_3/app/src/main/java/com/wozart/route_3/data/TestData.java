@@ -32,6 +32,16 @@ public class TestData {
         cv.put(DeviceContract.DeviceEntry.LOAD_3, "Sofa");
         cv.put(DeviceContract.DeviceEntry.LOAD_4, "Fan");
         cv.put(DeviceContract.DeviceEntry.HOME_NAME, "Office");
+        cv.put(DeviceContract.DeviceEntry.ROOM_NAME, "Cabin");
+        list.add(cv);
+
+        cv = new ContentValues();
+        cv.put(DeviceContract.DeviceEntry.DEVICE_NAME, "200FE");
+        cv.put(DeviceContract.DeviceEntry.LOAD_1, "Lava Lamp");
+        cv.put(DeviceContract.DeviceEntry.LOAD_2, "Bulb");
+        cv.put(DeviceContract.DeviceEntry.LOAD_3, "Sofa");
+        cv.put(DeviceContract.DeviceEntry.LOAD_4, "Fan");
+        cv.put(DeviceContract.DeviceEntry.HOME_NAME, "Home");
         cv.put(DeviceContract.DeviceEntry.ROOM_NAME, "Lab");
         list.add(cv);
 
