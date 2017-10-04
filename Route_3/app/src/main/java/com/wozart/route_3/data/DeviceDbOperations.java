@@ -74,4 +74,14 @@ public class DeviceDbOperations {
             db.endTransaction();
         }
     }
+
+    public ArrayList<String> GetRooms(SQLiteDatabase db, String home) {
+        Cursor cursor = db.rawQuery("select distinct " + DeviceContract.DeviceEntry.ROOM_NAME + " from " + DeviceContract.DeviceEntry.TABLE_NAME + " where " + DeviceContract.DeviceEntry.HOME_NAME
+                + " = " + home, null);
+        ArrayList<String> room = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            room.add(cursor.getString(0));
+        }
+        return room;
+    }
 }

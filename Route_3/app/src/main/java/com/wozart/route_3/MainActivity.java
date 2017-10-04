@@ -7,20 +7,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        prepareAlbums();
+        //prepareRooms(null);
 
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
@@ -117,22 +117,24 @@ public class MainActivity extends AppCompatActivity
         onOptionsItemSelected(menu.findItem(R.id.home));
         return true;
     }
+
     private void createMenuItem(String name) {
-        if(!name.equals("Home")) {
+        if (!name.equals("Home")) {
             HomeMenu.add(R.id.gp_home, HOME_ID, Menu.NONE, name);
             HomeMenu.setGroupCheckable(R.id.gp_home, true, true);
             HOME_ID++;
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-       // int id = item.getItemId();
+        // int id = item.getItemId();
         int count = HomeMenu.size();
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.add_home:
                 if (count <= MAX_HOME) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
@@ -165,7 +167,8 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.home:
                 item.setChecked(true);
-
+                ArrayList<String> rooms = db.GetRooms(mDb, item.getTitle().toString());
+                prepareRooms(rooms);
                 return true;
 
             case 1:
@@ -217,7 +220,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Adding few albums for testing
      */
-    private void prepareAlbums() {
+    private void prepareRooms(ArrayList<String> rooms) {
         int[] covers = new int[]{
                 R.drawable.album1,
                 R.drawable.album2,
@@ -227,27 +230,32 @@ public class MainActivity extends AppCompatActivity
                 R.drawable.album6,
                 R.drawable.album7
         };
+//
+//        Album a = new Album("HALL", 5, covers[0]);
+//        albumList.add(a);
+//
+//        a = new Album("BED ROOM", 8, covers[1]);
+//        albumList.add(a);
+//
+//        a = new Album("KICHEN", 11, covers[2]);
+//        albumList.add(a);
+//
+//        a = new Album("LIVING ROOM", 12, covers[3]);
+//        albumList.add(a);
+//
+//        a = new Album("ENTRANCE", 14, covers[4]);
+//        albumList.add(a);
+//
+//        a = new Album("GARAGE", 1, covers[5]);
+//        albumList.add(a);
+//
+//        a = new Album("STORE ROOM", 11, covers[6]);
+//        albumList.add(a);
 
-        Album a = new Album("HALL", 5, covers[0]);
-        albumList.add(a);
-
-        a = new Album("BED ROOM", 8, covers[1]);
-        albumList.add(a);
-
-        a = new Album("KICHEN", 11, covers[2]);
-        albumList.add(a);
-
-        a = new Album("LIVING ROOM", 12, covers[3]);
-        albumList.add(a);
-
-        a = new Album("ENTRANCE", 14, covers[4]);
-        albumList.add(a);
-
-        a = new Album("GARAGE", 1, covers[5]);
-        albumList.add(a);
-
-        a = new Album("STORE ROOM", 11, covers[6]);
-        albumList.add(a);
+        for(String x : rooms){
+            Album a = new Album(x, 0, covers[2]);
+            albumList.add(a);
+        }
 
         adapter.notifyDataSetChanged();
     }
