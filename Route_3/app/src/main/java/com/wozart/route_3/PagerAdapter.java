@@ -25,11 +25,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                HomeTab Home = new HomeTab();
-                return Home;
-            case 1:
                 FavTab Favourites = new FavTab();
                 return Favourites;
+            case 1:
+                HomeTab Home = new HomeTab();
+                return Home;
             case 2:
                 SceneTab Scenes = new SceneTab();
                 return Scenes;

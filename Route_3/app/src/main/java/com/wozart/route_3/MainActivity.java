@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeTabs() {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Home"));
         tabLayout.addTab(tabLayout.newTab().setText("Favourites"));
+        tabLayout.addTab(tabLayout.newTab().setText("Rooms"));
         tabLayout.addTab(tabLayout.newTab().setText("Scenes"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setCurrentItem(1);
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
