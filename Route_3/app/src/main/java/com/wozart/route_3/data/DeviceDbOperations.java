@@ -40,7 +40,6 @@ public class DeviceDbOperations {
             ContentValues value = new ContentValues();
             value.put(DeviceContract.DeviceEntry.DEVICE_NAME, "Aura");
             value.put(DeviceContract.DeviceEntry.HOME_NAME, "Home");
-            value.put(DeviceContract.DeviceEntry.ROOM_NAME, "Hall");
             value.put(DeviceContract.DeviceEntry.LOAD_1, "Load 1");
             value.put(DeviceContract.DeviceEntry.LOAD_2, "Load 2");
             value.put(DeviceContract.DeviceEntry.LOAD_3, "Load 3");
@@ -79,11 +78,39 @@ public class DeviceDbOperations {
         String[] params = new String[]{home};
         Cursor cursor = db.rawQuery("select distinct " + DeviceContract.DeviceEntry.ROOM_NAME + " from " + DeviceContract.DeviceEntry.TABLE_NAME + " where " + DeviceContract.DeviceEntry.HOME_NAME
                 + " = ?", params);
-//        Cursor cursor = db.query(true, DeviceContract.DeviceEntry.TABLE_NAME, DeviceContract.DeviceEntry.ROOM_NAME, )
         ArrayList<String> room = new ArrayList<>();
         while (cursor.moveToNext()) {
             room.add(cursor.getString(0));
         }
         return room;
+    }
+
+    public void InsertRoom(SQLiteDatabase db, String home, String room) {
+        String x = "null";
+        String[] params = new String[]{x};
+        Cursor cursor = db.rawQuery("select " + DeviceContract.DeviceEntry.HOME_NAME + " from " + DeviceContract.DeviceEntry.TABLE_NAME + " where " + DeviceContract.DeviceEntry.ROOM_NAME
+                + " = ?", params);
+        if (cursor.getCount() == 0) {
+            ContentValues value = new ContentValues();
+            value.put(DeviceContract.DeviceEntry.HOME_NAME, home);
+            value.put(DeviceContract.DeviceEntry.ROOM_NAME, room);
+
+            try {
+                db.beginTransaction();
+                db.insert(DeviceContract.DeviceEntry.TABLE_NAME, null, value);
+
+                db.setTransactionSuccessful();
+            } catch (SQLException e) {
+                //Too bad :(
+            } finally {
+                db.endTransaction();
+
+            }
+        } else {
+            ContentValues cv = new ContentValues();
+            cv.put(DeviceContract.DeviceEntry.ROOM_NAME, room);
+            db.update(DeviceContract.DeviceEntry.TABLE_NAME, cv, DeviceContract.DeviceEntry.HOME_NAME + " = " + home, null);
+        }
+        cursor.close();
     }
 }

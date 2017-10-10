@@ -22,13 +22,13 @@ public class DeviceDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_DEVICE_TABLE = "CREATE TABLE " +
                 DeviceContract.DeviceEntry.TABLE_NAME + " (" +
                 DeviceContract.DeviceEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                DeviceContract.DeviceEntry.DEVICE_NAME + " TEXT DEFAULT 'Aura', " +
+                DeviceContract.DeviceEntry.DEVICE_NAME + " TEXT DEFAULT 'null', " +
                 DeviceContract.DeviceEntry.LOAD_1 + " TEXT DEFAULT 'Load 1', " +
                 DeviceContract.DeviceEntry.LOAD_2 + " TEXT DEFAULT 'Load 2', " +
                 DeviceContract.DeviceEntry.LOAD_3 + " TEXT DEFAULT 'Load 3', " +
                 DeviceContract.DeviceEntry.LOAD_4 + " TEXT DEFAULT 'Load 4', " +
-                DeviceContract.DeviceEntry.HOME_NAME + " TEXT DEFAULT 'Home', " +
-                DeviceContract.DeviceEntry.ROOM_NAME + " TEXT DEFAULT 'Hall'" +
+                DeviceContract.DeviceEntry.HOME_NAME + " TEXT DEFAULT 'null', " +
+                DeviceContract.DeviceEntry.ROOM_NAME + " TEXT DEFAULT 'null'" +
             ");";
 
         sqLiteDatabase.execSQL(SQL_CREATE_DEVICE_TABLE);

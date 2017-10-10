@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     private SQLiteDatabase mDb;
 
     FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+    FloatingActionButton AddDevice, AddScenes, AddRooms;
 
 
     @Override
@@ -99,23 +99,23 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeFab() {
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
-        floatingActionButton2 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
-        floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
+        AddDevice = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
+        AddScenes = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
+        AddRooms = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
 
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+        AddDevice.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu first item clicked
+                addRooms();
 
             }
         });
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+        AddScenes.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu second item clicked
 
             }
         });
-        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
+        AddRooms.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO something when floating action menu third item clicked
 
@@ -163,28 +163,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.add_home:
                 if (count <= MAX_HOME) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                    final EditText input = new EditText(MainActivity.this);
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.MATCH_PARENT);
-                    input.setLayoutParams(lp);
-                    alert.setView(input);
-                    alert.setMessage("Add a new home");
-                    alert.setTitle("Name");
-                    alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            createMenuItem(input.getText().toString());
-                            db.InsertHome(mDb, input.getText().toString());
-                        }
-                    });
-
-                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            // what ever you want to do with No option.
-                        }
-                    });
-                    alert.show();
+                    addHomeDialog();
                 } else {
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Only five Home can be added :(", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -250,7 +229,84 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public String GetSelectedHome(){
+    private void addRooms() {
+        final Boolean[] flag = {true};
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        final EditText input = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alert.setView(input);
+        alert.setMessage("Adding new room to " + SelectedHome);
+        alert.setTitle("Rooms");
+        alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int whichButton) {
+                for (String x : db.GetRooms(mDb, SelectedHome)) {
+                    if (input.getText().toString().equals(x)) {
+                        flag[0] = false;
+                    }
+                }
+                if (flag[0]) {
+                    db.InsertRoom(mDb, SelectedHome, input.getText().toString().trim());
+                    getFragmentRefreshListener().onRefresh();
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Room added", Snackbar.LENGTH_LONG) .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Room with same name already exists", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+        alert.show();
+    }
+
+    private void addHomeDialog() {
+        final Boolean[] flag = {true};
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        final EditText input = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alert.setView(input);
+        alert.setMessage("Add a new home");
+        alert.setTitle("Homes");
+        alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                for (String x : db.GetAllHome(mDb)) {
+                    if (input.getText().toString().equals(x)) {
+                        flag[0] = false;
+                    }
+                }
+                if (flag[0]) {
+                    createMenuItem(input.getText().toString());
+                    db.InsertHome(mDb, input.getText().toString());
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Home added", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Room with same name already exists", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+        alert.show();
+    }
+
+    public String GetSelectedHome() {
         return SelectedHome;
     }
 
@@ -264,7 +320,7 @@ public class MainActivity extends AppCompatActivity
         return fragmentRefreshListener;
     }
 
-    public interface FragmentRefreshListener{
+    public interface FragmentRefreshListener {
         void onRefresh();
     }
 }
