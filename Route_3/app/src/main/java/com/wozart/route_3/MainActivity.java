@@ -2,6 +2,7 @@ package com.wozart.route_3;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,12 +14,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.Constant;
+import com.amazonaws.mobile.AWSMobileClient;
+import com.amazonaws.mobilehelper.auth.IdentityHandler;
+import com.amazonaws.mobilehelper.auth.IdentityManager;
+import com.amazonaws.mobilehelper.auth.IdentityProvider;
+import com.amazonaws.mobilehelper.auth.user.IdentityProfile;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.wozart.route_3.data.DeviceDbHelper;
@@ -26,6 +36,10 @@ import com.wozart.route_3.data.DeviceDbOperations;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String BUNDLE_KEY_TOOLBAR_TITLE = "title";
+    private IdentityManager identityManager;
 
     private Menu HomeMenu;
     private int HOME_ID = 1;
@@ -35,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
 
+    private NavigationView NavigationView;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton AddDevice, AddScenes, AddRooms;
 
@@ -46,8 +61,18 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        NavigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        AWSMobileClient.initializeMobileClientIfNecessary(this);
+        final AWSMobileClient awsMobileClient = AWSMobileClient.defaultMobileClient();
+
         initializeFab();
         initializeTabs();
+        updateUserDetails();
+
+        // Obtain a reference to the identity manager.
+        identityManager = awsMobileClient.getIdentityManager();
+        UserInfo();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,9 +85,61 @@ public class MainActivity extends AppCompatActivity
 
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
-//        TestData.insertDummyData(mDb);
         db.InsertBasicData(mDb);
+    }
 
+    private void updateUserDetails() {
+
+        View headerView = NavigationView.getHeaderView(0);
+        TextView drawerUsername = (TextView) headerView.findViewById(R.id.tv_username);
+        ImageView drawerImage = (ImageView) headerView.findViewById(R.id.imageView);
+
+        final IdentityManager identityManager =
+                AWSMobileClient.defaultMobileClient().getIdentityManager();
+        final IdentityProvider identityProvider =
+                identityManager.getCurrentIdentityProvider();
+
+        final IdentityProfile identityProfile = identityManager.getIdentityProfile();
+
+        if (identityProfile != null && identityProfile.getUserName() != null) {
+            drawerUsername.setText(identityProfile.getUserName());
+            drawerImage.setImageBitmap(identityProfile.getUserImage());
+        }
+    }
+
+    private void UserInfo() {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                final IdentityManager identityManager = AWSMobileClient.defaultMobileClient().getIdentityManager();
+
+                Log.d(LOG_TAG, "fetchUserIdentity");
+                AWSMobileClient.defaultMobileClient()
+                        .getIdentityManager()
+                        .getUserID(new IdentityHandler() {
+
+                            @Override
+                            public void onIdentityId(String identityId) {
+                                Constant.IDENTITY_ID = identityId;
+                                if (identityManager.isUserSignedIn()) {
+                                    final IdentityProfile identityProfile = identityManager.getIdentityProfile();
+
+                                    if (identityProfile != null) {
+//                                        getUserData(identityId);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void handleError(Exception exception) {
+                                Log.e(LOG_TAG, " " + exception);
+                            }
+                        });
+
+            }
+        };
+        Thread saveUserId = new Thread(runnable);
+        saveUserId.start();
     }
 
     private void initializeTabs() {
@@ -251,7 +328,7 @@ public class MainActivity extends AppCompatActivity
                 if (flag[0]) {
                     db.InsertRoom(mDb, SelectedHome, input.getText().toString().trim());
                     getFragmentRefreshListener().onRefresh();
-                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Room added", Snackbar.LENGTH_LONG) .setAction("Action", null).show();
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Room added", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 } else {
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Room with same name already exists", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -265,6 +342,27 @@ public class MainActivity extends AppCompatActivity
             }
         });
         alert.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!AWSMobileClient.defaultMobileClient().getIdentityManager().isUserSignedIn()) {
+            // In the case that the activity is restarted by the OS after the application
+            // is killed we must redirect to the splash activity to handle the sign-in flow.
+            Intent intent = new Intent(this, SplashActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(final Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        // Save the title so it will be restored properly to match the view loaded when rotation
+        // was changed or in case the activity was destroyed.
     }
 
     private void addHomeDialog() {
@@ -308,6 +406,10 @@ public class MainActivity extends AppCompatActivity
 
     public String GetSelectedHome() {
         return SelectedHome;
+    }
+
+    public void UpdateFragment() {
+        onOptionsItemSelected(HomeMenu.findItem(R.id.home));
     }
 
     public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {

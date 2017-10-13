@@ -53,15 +53,15 @@ public class HomeTab extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        ((MainActivity)getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
+        ((MainActivity) getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
             @Override
             public void onRefresh() {
                 MainActivity activity = new MainActivity();
                 String home = activity.GetSelectedHome();
-                if(home != null) {
+                if (home != null) {
                     ArrayList<String> rooms = db.GetRooms(mDb, home);
                     prepareRooms(rooms);
-                } else{
+                } else {
                     ArrayList<String> rooms = db.GetRooms(mDb, "Home");
                     prepareRooms(rooms);
                 }
