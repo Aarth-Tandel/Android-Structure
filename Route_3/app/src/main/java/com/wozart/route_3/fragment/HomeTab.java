@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wozart.route_3.Album;
+import com.wozart.route_3.Rooms;
 import com.wozart.route_3.AlbumsAdapter;
 import com.wozart.route_3.MainActivity;
 import com.wozart.route_3.R;
@@ -32,7 +32,7 @@ public class HomeTab extends Fragment {
 
     private RecyclerView recyclerView;
     private AlbumsAdapter adapter;
-    private List<Album> albumList;
+    private List<Rooms> roomsList;
 
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
@@ -43,8 +43,8 @@ public class HomeTab extends Fragment {
         View rootView = inflater.inflate(R.layout.home_fragment, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        albumList = new ArrayList<>();
-        adapter = new AlbumsAdapter(getActivity(), albumList);
+        roomsList = new ArrayList<>();
+        adapter = new AlbumsAdapter(getActivity(), roomsList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -83,7 +83,7 @@ public class HomeTab extends Fragment {
      */
     private void prepareRooms(ArrayList<String> rooms) {
 
-        albumList.clear();
+        roomsList.clear();
         int[] covers = new int[]{
                 R.drawable.album1,
                 R.drawable.album2,
@@ -95,8 +95,8 @@ public class HomeTab extends Fragment {
         };
 
         for (String x : rooms) {
-            Album a = new Album(x, 0, covers[2]);
-            albumList.add(a);
+            Rooms a = new Rooms(x, 0, covers[2]);
+            roomsList.add(a);
         }
 
         adapter.notifyDataSetChanged();

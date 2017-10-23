@@ -126,4 +126,10 @@ public class DeviceDbOperations {
     public void DeleteRoom(SQLiteDatabase db, String home, String room) {
         db.delete(TABLE_NAME, HOME_NAME + " =? and " + ROOM_NAME + " =? ", new String[]{home, room});
     }
+
+    public void UpdateRoom(SQLiteDatabase db, String home, String previousRoom, String room){
+        ContentValues cv = new ContentValues();
+        cv.put(ROOM_NAME, room);
+        db.update(TABLE_NAME, cv, HOME_NAME + " =?  and " + ROOM_NAME + " =? ", new String[]{home, previousRoom});
+    }
 }

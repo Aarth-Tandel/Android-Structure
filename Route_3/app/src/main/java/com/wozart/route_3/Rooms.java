@@ -4,17 +4,17 @@ package com.wozart.route_3;
 /**
  * Created by Lincoln on 18/05/16.
  */
-public class Album {
+public class Rooms {
     private String name;
-    private int numOfSongs;
+    private int numOfDevices;
     private int thumbnail;
 
-    public Album() {
+    public Rooms() {
     }
 
-    public Album(String name, int numOfSongs, int thumbnail) {
+    public Rooms(String name, int numOfSongs, int thumbnail) {
         this.name = name;
-        this.numOfSongs = numOfSongs;
+        this.numOfDevices = numOfSongs;
         this.thumbnail = thumbnail;
     }
 
@@ -26,12 +26,12 @@ public class Album {
         this.name = name;
     }
 
-    public int getNumOfSongs() {
-        return numOfSongs;
+    public int getNumOfDevices() {
+        return numOfDevices;
     }
 
-    public void setNumOfSongs(int numOfSongs) {
-        this.numOfSongs = numOfSongs;
+    public void setNumOfDevices(int numOfSongs) {
+        this.numOfDevices = numOfSongs;
     }
 
     public int getThumbnail() {

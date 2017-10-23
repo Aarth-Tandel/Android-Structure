@@ -5,7 +5,9 @@ package com.wozart.route_3;
  */
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.PopupMenu;
@@ -15,7 +17,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +32,7 @@ import java.util.List;
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Album> albumList;
+    private List<Rooms> roomsList;
     MainActivity activity = new MainActivity();
 
     private DeviceDbOperations db = new DeviceDbOperations();
@@ -61,9 +65,9 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     }
 
 
-    public AlbumsAdapter(Context mContext, List<Album> albumList) {
+    public AlbumsAdapter(Context mContext, List<Rooms> roomsList) {
         this.mContext = mContext;
-        this.albumList = albumList;
+        this.roomsList = roomsList;
     }
 
     @Override
@@ -81,15 +85,15 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Album album = albumList.get(position);
-        holder.title.setText(album.getName());
-        holder.count.setText(album.getNumOfSongs() + " Devices");
+        Rooms rooms = roomsList.get(position);
+        holder.title.setText(rooms.getName());
+        holder.count.setText(rooms.getNumOfDevices() + " Devices");
 
-        // loading album cover using Glide library
-        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail1);
-        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail2);
-        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail3);
-        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail4);
+        // loading rooms cover using Glide library
+        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail1);
+        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail2);
+        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail3);
+        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail4);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,11 +132,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.action_add_favourite:
-                    Toast.makeText(mContext, "Edit", Toast.LENGTH_SHORT).show();
+                    Rooms previousDevice = roomsList.get(Position);
+                    editBoxPopUp(previousDevice.getName());
                     return true;
 
                 case R.id.action_play_next:
-                    Toast.makeText(mContext, "Remove", Toast.LENGTH_SHORT).show();
                     deleteItem(Position);
                     db.DeleteRoom(mDb, activity.GetSelectedHome(), RoomSelected);
                     return true;
@@ -142,14 +146,58 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
         }
 
         private void deleteItem(int position){
-            albumList.remove(position);
+            roomsList.remove(position);
             notifyItemRemoved(position);
-            notifyItemRangeChanged(position, albumList.size());
+            notifyItemRangeChanged(position, roomsList.size());
+        }
+
+        private void updateCard(String roomName){
+            Rooms previousDevice = roomsList.get(Position);
+            Rooms device = new Rooms(roomName, previousDevice.getNumOfDevices() , previousDevice.getThumbnail() );
+            roomsList.set(Position, device);
+            notifyItemChanged(Position);
+        }
+
+        private void editBoxPopUp(final String previousDevice){
+            final Boolean[] flag = {true};
+            AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+            final EditText input = new EditText(mContext);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT);
+            input.setLayoutParams(lp);
+            alert.setView(input);
+            alert.setMessage("Change name of " + previousDevice);
+            alert.setTitle("Edit Room");
+            alert.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    for (String x : db.GetRooms(mDb, activity.GetSelectedHome())) {
+                        if (input.getText().toString().equals(x)) {
+                            flag[0] = false;
+                        }
+                    }
+                    if (flag[0]) {
+                        db.UpdateRoom(mDb, activity.GetSelectedHome(), previousDevice ,input.getText().toString().trim());
+                        Toast.makeText(mContext, "Room name edited", Toast.LENGTH_SHORT).show();
+                        updateCard(input.getText().toString().trim());
+                    } else {
+                        Toast.makeText(mContext, "Edit failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // what ever you want to do with No option.
+                }
+            });
+            alert.show();
         }
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return roomsList.size();
     }
 }
