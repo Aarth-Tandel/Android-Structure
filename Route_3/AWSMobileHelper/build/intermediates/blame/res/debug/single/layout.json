@@ -16,12 +16,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_expanded_menu_layout.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_select_dialog_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_select_dialog_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_expanded_menu_layout.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_list_menu_item_radio.xml",
@@ -36,12 +36,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_simple.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_bar_up_container.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_bar_up_container.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_lines.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_lines.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_bar_up_container.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_bar_up_container.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",
@@ -64,12 +64,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_media_action.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_dialog_title_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_dialog_title_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_dialog_title_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_dialog_title_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/select_dialog_multichoice_material.xml",
@@ -116,6 +116,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/select_dialog_multichoice_material.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/select_dialog_multichoice_material.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_mode_bar.xml"
     },
@@ -126,6 +130,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
@@ -148,12 +156,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_content_include.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_item_layout.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_item_layout.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/support_simple_spinner_dropdown_item.xml",
@@ -180,24 +188,24 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_part_time.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_part_chronometer.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_part_chronometer.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_search_view.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_search_view.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_search_view.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_search_view.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_media_action.xml",
@@ -208,16 +216,16 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/support_simple_spinner_dropdown_item.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_simple.xml"
+        "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_layout.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_part_chronometer.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_layout.xml"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_simple.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
@@ -272,6 +280,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/select_dialog_item_material.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/notification_template_part_time.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
@@ -280,12 +292,20 @@
         "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/src/main/res/layout/activity_sign_in.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_header_item_layout.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_popup_menu_header_item_layout.xml"
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_header_item_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/select_dialog_item_material.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/select_dialog_item_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_search_view.xml",
@@ -312,6 +332,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_part_chronometer.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_media_cancel_action.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/notification_media_cancel_action.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_mode_close_item_material.xml"
     },
@@ -322,6 +346,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_content_include.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_screen_content_include.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
@@ -336,12 +364,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_list_menu_item_icon.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_big_media_narrow.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_big_media_narrow.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_mode_bar.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_big_media_narrow.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_big_media_narrow.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",
@@ -380,6 +408,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_item_layout.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_dialog_title_material.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_dialog_title_material.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_layout.xml"
     },
@@ -388,16 +420,16 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/select_dialog_singlechoice_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_item_layout.xml"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_simple.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/select_dialog_item_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/select_dialog_item_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_simple.xml"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_item_layout.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
@@ -414,6 +446,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_list_item.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_media_action.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/notification_media_action.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_select_dialog_material.xml",
@@ -464,12 +500,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_lines.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/horizontal_sign_in_divider.xml",
-        "source": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/src/main/res/layout/horizontal_sign_in_divider.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_mode_bar.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/horizontal_sign_in_divider.xml",
+        "source": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/src/main/res/layout/horizontal_sign_in_divider.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
@@ -482,6 +518,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_activity_chooser_view.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_big_media_narrow.xml",
@@ -568,6 +608,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_big_media.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_action_mode_bar.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_activity_chooser_view.xml"
     },
@@ -640,6 +684,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_big_media_narrow.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_big_media_narrow.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/notification_template_big_media_narrow.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_expanded_menu_layout.xml"
     },
@@ -702,6 +750,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_popup_menu_item_layout.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
@@ -812,6 +864,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_media.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_media.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/notification_template_media.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/select_dialog_multichoice_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/select_dialog_multichoice_material.xml"
     },
@@ -834,6 +890,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_mode_close_item_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_search_view.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_search_view.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
@@ -870,6 +930,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_simple.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_screen_simple_overlay_action_mode.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
@@ -918,6 +982,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_lines.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_lines.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_select_dialog_material.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_select_dialog_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/support_simple_spinner_dropdown_item.xml",
@@ -992,6 +1060,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_toolbar.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/support_simple_spinner_dropdown_item.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/support_simple_spinner_dropdown_item.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_popup_menu_item_layout.xml"
     },
@@ -1020,6 +1092,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_list_menu_item_layout.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_lines.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/notification_template_lines.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_content_include.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_content_include.xml"
     },
@@ -1038,6 +1114,14 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/select_dialog_singlechoice_material.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_bar_up_container.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_action_bar_up_container.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_alert_dialog_material.xml",
@@ -1066,6 +1150,14 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_media_cancel_action.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_action_mode_close_item_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/notification_template_part_chronometer.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_media_cancel_action.xml",
@@ -1140,8 +1232,16 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_menu_layout.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_action_menu_item_layout.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_lines.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_lines.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/activity_sign_in.xml",
+        "source": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/src/main/res/layout/activity_sign_in.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_select_dialog_material.xml",
@@ -1180,6 +1280,18 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_alert_dialog_material.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_big_media.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/notification_template_big_media.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_list_item.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_list_menu_item_radio.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_list_menu_item_radio.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_header_item_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_popup_menu_header_item_layout.xml"
     },
@@ -1200,6 +1312,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_simple.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_expanded_menu_layout.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_action_bar_view_list_nav_layout.xml"
     },
@@ -1218,6 +1334,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/horizontal_sign_in_divider.xml",
         "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/src/main/res/layout/horizontal_sign_in_divider.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_header_item_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_popup_menu_header_item_layout.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",
@@ -1274,6 +1394,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_bar_title_item.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_action_bar_title_item.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
@@ -1362,6 +1486,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_big_media.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_big_media.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_screen_simple.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
@@ -1568,6 +1696,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_activity_chooser_view.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_media_action.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_media_action.xml"
     },
@@ -1582,6 +1714,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/horizontal_sign_in_divider.xml",
         "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/src/main/res/layout/horizontal_sign_in_divider.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_list_menu_item_icon.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_template_big_media_narrow.xml",
@@ -1630,6 +1766,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_list_menu_item_checkbox.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_content_include.xml",
@@ -1868,6 +2008,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_select_dialog_material.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_screen_toolbar.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_media_action.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_media_action.xml"
     },
@@ -1972,6 +2116,10 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_screen_simple_overlay_action_mode.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_alert_dialog_material.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_alert_dialog_material.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_list_menu_item_checkbox.xml"
     },
@@ -2034,6 +2182,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/select_dialog_singlechoice_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_list_menu_item_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_list_menu_item_layout.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/notification_media_action.xml",
@@ -2184,12 +2336,20 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/notification_template_media.xml"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/horizontal_sign_in_divider.xml",
+        "source": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/src/main/res/layout/horizontal_sign_in_divider.xml"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/layout/abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/layout/abc_action_menu_layout.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",

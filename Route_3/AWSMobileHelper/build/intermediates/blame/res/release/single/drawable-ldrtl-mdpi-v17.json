@@ -68,12 +68,20 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-ldrtl-mdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/release/drawable-ldrtl-mdpi-v17/abc_ic_menu_cut_mtrl_alpha.png",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/drawable-ldrtl-mdpi-v17/abc_ic_menu_cut_mtrl_alpha.png"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/release/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/release/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/release/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/release/drawable-ldrtl-mdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png",
@@ -90,6 +98,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/release/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/release/drawable-ldrtl-mdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png",
+        "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/drawable-ldrtl-mdpi-v17/abc_ic_menu_copy_mtrl_am_alpha.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/release/drawable-ldrtl-mdpi-v17/abc_spinner_mtrl_am_alpha.9.png",

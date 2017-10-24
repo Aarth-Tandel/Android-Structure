@@ -12,12 +12,12 @@
         "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/default_sign_in_logo.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/facebook_icon.png",
-        "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/facebook_icon.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/default_sign_in_logo.png",
         "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/default_sign_in_logo.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/facebook_icon.png",
+        "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/facebook_icon.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/default_sign_in_logo.png",
@@ -68,6 +68,10 @@
         "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/default_sign_in_logo.png"
     },
     {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/facebook_icon.png",
+        "source": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/facebook_icon.png"
+    },
+    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/facebook_icon.png",
         "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/facebook_icon.png"
     },
@@ -94,6 +98,10 @@
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/facebook_icon.png",
         "source": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/facebook_icon.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/default_sign_in_logo.png",
+        "source": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/bundles/debug/res/mipmap-xxxhdpi-v4/default_sign_in_logo.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/mipmap-xxxhdpi-v4/default_sign_in_logo.png",
