@@ -3,7 +3,6 @@ package com.wozart.route_3.favourites;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,11 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.wozart.route_3.MainActivity;
 import com.wozart.route_3.R;
-import com.wozart.route_3.RoomActivity;
 
 import java.util.List;
 
@@ -33,10 +31,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.My
 
     private Context mContext;
     private List<Favourites> roomsList;
-    MainActivity activity = new MainActivity();
-
-//    private DeviceDbOperations db = new DeviceDbOperations();
-//    private SQLiteDatabase mDb;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count;
@@ -53,9 +47,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.My
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, RoomActivity.class);
-                    intent.putExtra("room", title.getText());
-                    mContext.startActivity(intent);
+                    Toast.makeText(mContext, title.getText() +  " Selected", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -96,26 +88,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.My
             }
         });
     }
-
-//    @Override
-//    public void onBindViewHolder(final com.wozart.route_3.AlbumsAdapter.MyViewHolder holder, final int position) {
-//        Rooms rooms = roomsList.get(position);
-//        holder.title.setText(rooms.getName());
-//        holder.count.setText(rooms.getNumOfDevices() + " Devices");
-//
-//        // loading rooms cover using Glide library
-//        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail1);
-//        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail2);
-//        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail3);
-//        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail4);
-//
-//        holder.overflow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showPopupMenu(holder.overflow, holder.title.getText().toString(), position);
-//            }
-//        });
-//    }
 
     /**
      * Showing popup menu when tapping on 3 dots

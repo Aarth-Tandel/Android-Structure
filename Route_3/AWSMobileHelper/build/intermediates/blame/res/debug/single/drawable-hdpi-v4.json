@@ -8,24 +8,24 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_selector_disabled_holo_light.9.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_star_black_36dp.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_star_black_36dp.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_selector_disabled_holo_light.9.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_selector_disabled_holo_light.9.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_star_black_36dp.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_star_black_36dp.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_scrubber_track_mtrl_alpha.9.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_scrubber_track_mtrl_alpha.9.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_star_half_black_48dp.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_star_half_black_48dp.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_scrubber_track_mtrl_alpha.9.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_scrubber_track_mtrl_alpha.9.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_pressed_holo_light.9.png",
@@ -60,12 +60,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_cab_background_top_mtrl_alpha.9.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png",
         "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_015.png",
@@ -88,16 +88,16 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_pressed_holo_light.9.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_pressed_holo_light.9.png"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_pressed_holo_dark.9.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_pressed_holo_dark.9.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_pressed_holo_dark.9.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_pressed_holo_dark.9.png"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_pressed_holo_light.9.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_pressed_holo_light.9.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_000.png",
@@ -120,20 +120,20 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_menu_cut_mtrl_alpha.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_star_half_black_36dp.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_star_half_black_36dp.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_scrubber_control_to_pressed_mtrl_000.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_scrubber_control_to_pressed_mtrl_000.png"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_star_half_black_36dp.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_star_half_black_36dp.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_scrubber_control_to_pressed_mtrl_000.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_scrubber_control_to_pressed_mtrl_000.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_star_black_36dp.png",
@@ -192,12 +192,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_scrubber_primary_mtrl_alpha.9.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_015.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_015.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_pressed_holo_light.9.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_pressed_holo_light.9.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_015.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_btn_radio_to_on_mtrl_015.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_text_select_handle_middle_mtrl_alpha.png",
@@ -232,28 +232,28 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_tab_indicator_mtrl_alpha.9.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_star_half_black_48dp.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_star_half_black_48dp.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_text_select_handle_middle_mtrl_alpha.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_text_select_handle_middle_mtrl_alpha.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_longpressed_holo.9.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_longpressed_holo.9.png"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_longpressed_holo.9.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_list_longpressed_holo.9.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_list_divider_mtrl_alpha.9.png",
@@ -292,12 +292,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_spinner_mtrl_am_alpha.9.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_star_black_36dp.png",
         "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/drawable-hdpi-v4/abc_ic_star_black_36dp.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_text_select_handle_left_mtrl_alpha.png",
@@ -332,12 +332,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_textfield_default_mtrl_alpha.9.png",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_textfield_default_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-hdpi-v4/abc_scrubber_control_off_mtrl_alpha.png",

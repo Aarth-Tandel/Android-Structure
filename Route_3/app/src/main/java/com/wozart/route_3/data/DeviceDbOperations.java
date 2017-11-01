@@ -47,13 +47,7 @@ public class DeviceDbOperations {
         Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
         if (cursor.getCount() == 0) {
             ContentValues value = new ContentValues();
-            value.put(DEVICE_NAME, "Aura");
             value.put(HOME_NAME, "Home");
-            value.put(LOAD_1, "Load 1");
-            value.put(LOAD_2, "Load 2");
-            value.put(LOAD_3, "Load 3");
-            value.put(LOAD_4, "Load 4");
-
             try {
                 db.beginTransaction();
                 db.insert(TABLE_NAME, null, value);
@@ -115,10 +109,6 @@ public class DeviceDbOperations {
                 db.endTransaction();
 
             }
-        } else {
-            ContentValues cv = new ContentValues();
-            cv.put(ROOM_NAME, room);
-            db.update(TABLE_NAME, cv, HOME_NAME + " = " + home, null);
         }
         cursor.close();
     }
@@ -127,9 +117,32 @@ public class DeviceDbOperations {
         db.delete(TABLE_NAME, HOME_NAME + " =? and " + ROOM_NAME + " =? ", new String[]{home, room});
     }
 
-    public void UpdateRoom(SQLiteDatabase db, String home, String previousRoom, String room){
+    public void UpdateRoom(SQLiteDatabase db, String home, String previousRoom, String room) {
         ContentValues cv = new ContentValues();
         cv.put(ROOM_NAME, room);
         db.update(TABLE_NAME, cv, HOME_NAME + " =?  and " + ROOM_NAME + " =? ", new String[]{home, previousRoom});
+    }
+
+    public void TransferDeletedDevices(SQLiteDatabase db, String home, String room) {
+        ContentValues cv = new ContentValues();
+        cv.put(ROOM_NAME, "Hall");
+        db.update(TABLE_NAME, cv, HOME_NAME + " =? and " + ROOM_NAME + " =? ", new String[]{home, room});
+    }
+
+    public ArrayList<String> GetLoads(SQLiteDatabase db, String room, String home) {
+        String[] params = new String[]{home, room};
+        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + ", " + LOAD_1 + ", " + LOAD_2 + ", " + LOAD_3 + ", " + LOAD_4 + " from " + TABLE_NAME + " where " + HOME_NAME
+                + " = ? and " + ROOM_NAME + " =?", params);
+        ArrayList<String> loads = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            if (!cursor.getString(0).equals("null")) {
+                loads.add(cursor.getString(0));
+                loads.add(cursor.getString(1));
+                loads.add(cursor.getString(2));
+                loads.add(cursor.getString(3));
+                loads.add(cursor.getString(4));
+            }
+        }
+        return loads;
     }
 }

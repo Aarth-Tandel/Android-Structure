@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    app:layout_behavior="FloatingActionMenuBehavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
         android:layout_marginBottom="11dp"
         android:layout_marginLeft="11dp"
         android:layout_marginRight="11dp"
@@ -45,24 +48,24 @@
         fab:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/material_design_floating_action_menu_item1"
+            android:id="@+id/add_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_label="Add Room"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/material_design_floating_action_menu_item2"
+            android:id="@+id/configure_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_label="Add Scenes"
+            fab:fab_label="Configure Device"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/material_design_floating_action_menu_item3"
+            android:id="@+id/add_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_label="Add Device"
+            fab:fab_label="Automation"
             fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

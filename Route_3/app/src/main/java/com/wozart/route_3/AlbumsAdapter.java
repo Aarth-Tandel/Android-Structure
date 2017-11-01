@@ -23,9 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.wozart.route_3.data.DeviceDbHelper;
 import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.rooms.RoomActivity;
 
 import java.util.List;
 
@@ -58,6 +58,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, RoomActivity.class);
                     intent.putExtra("room", title.getText());
+                    intent.putExtra("home", activity.GetSelectedHome());
                     mContext.startActivity(intent);
                 }
             });
@@ -73,7 +74,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.album_card, parent, false);
+                .inflate(R.layout.room_card, parent, false);
 
         DeviceDbHelper dbHelper = new DeviceDbHelper(mContext);
         mDb = dbHelper.getWritableDatabase();
@@ -90,10 +91,10 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
         holder.count.setText(rooms.getNumOfDevices() + " Devices");
 
         // loading rooms cover using Glide library
-        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail1);
-        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail2);
-        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail3);
-        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail4);
+//        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail1);
+//        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail2);
+//        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail3);
+//        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail4);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,27 +139,33 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
 
                 case R.id.action_play_next:
                     deleteItem(Position);
-                    db.DeleteRoom(mDb, activity.GetSelectedHome(), RoomSelected);
                     return true;
                 default:
             }
             return false;
         }
 
-        private void deleteItem(int position){
-            roomsList.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, roomsList.size());
+        private void deleteItem(int position) {
+            if(!RoomSelected.equals("Hall")) {
+                roomsList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, roomsList.size());
+                db.TransferDeletedDevices(mDb, activity.GetSelectedHome(), RoomSelected);
+                db.DeleteRoom(mDb, activity.GetSelectedHome(), RoomSelected);
+            }
+            else {
+                Toast.makeText(mContext, "Cant delete default room", Toast.LENGTH_SHORT).show();
+            }
         }
 
-        private void updateCard(String roomName){
+        private void updateCard(String roomName) {
             Rooms previousDevice = roomsList.get(Position);
-            Rooms device = new Rooms(roomName, previousDevice.getNumOfDevices() , previousDevice.getThumbnail() );
+            Rooms device = new Rooms(roomName, previousDevice.getNumOfDevices(), previousDevice.getThumbnail());
             roomsList.set(Position, device);
             notifyItemChanged(Position);
         }
 
-        private void editBoxPopUp(final String previousDevice){
+        private void editBoxPopUp(final String previousDevice) {
             final Boolean[] flag = {true};
             AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
             final EditText input = new EditText(mContext);
@@ -178,9 +185,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
                         }
                     }
                     if (flag[0]) {
-                        db.UpdateRoom(mDb, activity.GetSelectedHome(), previousDevice ,input.getText().toString().trim());
-                        Toast.makeText(mContext, "Room name edited", Toast.LENGTH_SHORT).show();
-                        updateCard(input.getText().toString().trim());
+                        if (!RoomSelected.equals("Hall")) {
+                            db.UpdateRoom(mDb, activity.GetSelectedHome(), previousDevice, input.getText().toString().trim());
+                            Toast.makeText(mContext, "Room name edited", Toast.LENGTH_SHORT).show();
+                            updateCard(input.getText().toString().trim());
+                        } else {
+                            Toast.makeText(mContext, "default cant be edited", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(mContext, "Edit failed", Toast.LENGTH_SHORT).show();
                     }

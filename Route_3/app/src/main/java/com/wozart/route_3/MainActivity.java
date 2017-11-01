@@ -1,13 +1,26 @@
 package com.wozart.route_3;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.net.nsd.NsdServiceInfo;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,13 +28,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Constant;
 import com.amazonaws.mobile.AWSMobileClient;
@@ -33,25 +50,46 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.wozart.route_3.data.DeviceDbHelper;
 import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.model.AuraSwitch;
+import com.wozart.route_3.network.NsdClient;
+import com.wozart.route_3.network.TcpClient;
+import com.wozart.route_3.network.TcpServer;
+import com.wozart.route_3.utilities.Encryption;
+import com.wozart.route_3.utilities.JsonUtils;
+
+import java.net.UnknownHostException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private static final String BUNDLE_KEY_TOOLBAR_TITLE = "title";
     private IdentityManager identityManager;
+    public static String NETWORK_SSID = "Aura";
+    public static String URL = "http://192.168.10.1/";
+    private String IP;
 
     private Menu HomeMenu;
     private int HOME_ID = 1;
     private int MAX_HOME = 5;
     public static String SelectedHome;
+    private static String AddNewDeviceTo = null;
 
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
 
+    private TcpClient mTcpClient;
+    private NsdClient Nsd;
+
+    private Toast mtoast;
+    private CoordinatorLayout coordinatorLayout;
+
+    private ArrayList<AuraSwitch> UnpairedDevice = new ArrayList<>();
+
     private NavigationView NavigationView;
     FloatingActionMenu materialDesignFAM;
-    FloatingActionButton AddDevice, AddScenes, AddRooms;
+    FloatingActionButton AddDevice, ConfigureDevice, AddRooms;
 
 
     @Override
@@ -62,17 +100,13 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         NavigationView = (NavigationView) findViewById(R.id.nav_view);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.mCordinateLayout);
 
         AWSMobileClient.initializeMobileClientIfNecessary(this);
         final AWSMobileClient awsMobileClient = AWSMobileClient.defaultMobileClient();
 
-        initializeFab();
-        initializeTabs();
-        updateUserDetails();
-
         // Obtain a reference to the identity manager.
         identityManager = awsMobileClient.getIdentityManager();
-        UserInfo();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -83,9 +117,55 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        startService(new Intent(this, TcpServer.class));
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, new IntentFilter("intentKey"));
+
+        UserInfo();
+        initializeFab();
+        initializeTabs();
+        updateUserDetails();
+        convertIP();
+        initializeDiscovery();
+    }
+
+    private void initializeDiscovery() {
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
         db.InsertBasicData(mDb);
+
+        Nsd = new NsdClient(this);
+        Nsd.initializeNsd();
+        nsdDiscovery();
+    }
+
+    public void nsdDiscovery() {
+        Nsd.discoverServices();
+        final Handler NsdDiscoveryHandler = new Handler();
+        NsdDiscoveryHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (final NsdServiceInfo service : Nsd.GetServiceInfo()) {
+                    JsonUtils mJsonUtils = new JsonUtils();
+                    String data = null;
+                    try {
+                        data = mJsonUtils.InitialData(IP);
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
+                    }
+
+                    new ConnectTask(data, service.getHost().getHostAddress()).execute("");
+                    Log.d(LOG_TAG, "Initial data: " + data + " to " + service.getServiceName());
+                }
+            }
+        }, 1000);
+
+        NsdDiscoveryHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Nsd.stopDiscovery();
+            }
+        }, 1000);
     }
 
     private void updateUserDetails() {
@@ -176,28 +256,98 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeFab() {
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        AddDevice = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
-        AddScenes = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
-        AddRooms = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
+        AddDevice = (FloatingActionButton) findViewById(R.id.add_device);
+        ConfigureDevice = (FloatingActionButton) findViewById(R.id.configure_device);
+        AddRooms = (FloatingActionButton) findViewById(R.id.add_room);
 
-        AddDevice.setOnClickListener(new View.OnClickListener() {
+        AddRooms.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 addRooms();
 
             }
         });
-        AddScenes.setOnClickListener(new View.OnClickListener() {
+        AddDevice.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu second item clicked
+                Snackbar.make(coordinatorLayout, "Only five Home can be added :(", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
 
             }
         });
-        AddRooms.setOnClickListener(new View.OnClickListener() {
+        ConfigureDevice.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu third item clicked
-
+                openWebPage(URL);
             }
         });
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("key");
+        }
+    };
+
+    private class ConnectTask extends AsyncTask<String, String, TcpClient> {
+
+        private String data = null;
+        private String ip = null;
+
+        private ConnectTask(String message, String address) {
+            super();
+            data = message;
+            ip = address;
+        }
+
+        @Override
+        protected TcpClient doInBackground(String... message) {
+
+            //we create a TCPClient object and
+            mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
+                @Override
+                //here the messageReceived method is implemented
+                public void messageReceived(String message) {
+                    publishProgress(message);
+                }
+            });
+            mTcpClient.run(data, ip);
+
+            return null;
+        }
+
+        protected void onProgressUpdate(String... message) {
+            if (message[0].equals(Constant.SERVER_NOT_REACHABLE)) {
+                if (mtoast != null)
+                    mtoast = null;
+                Context context = getApplicationContext();
+                CharSequence text = "Device Offline";
+                int duration = Toast.LENGTH_SHORT;
+
+                mtoast = Toast.makeText(context, text, duration);
+                mtoast.show();
+            } else {
+                JsonUtils mJsonUtils = new JsonUtils();
+                AuraSwitch dummyDevice = mJsonUtils.DeserializeTcp(message[0]);
+
+                if (dummyDevice.getType() == 1 && dummyDevice.getCode().equals(Constant.UNPAIRED)) {
+                    dummyDevice.setIP(Nsd.GetIP(dummyDevice.getName()));
+                    UnpairedDevice.add(dummyDevice);
+                    Snackbar.make(findViewById(R.id.mCordinateLayout), "Device paired Successfully", Snackbar.LENGTH_INDEFINITE)
+                            .setAction("ADD", new ConfigureListener(dummyDevice)).show();
+                }
+
+                if (dummyDevice.getCode().equals(Encryption.MAC(MainActivity.this)) && dummyDevice.getType() == 2) {
+                    if (mtoast != null)
+                        mtoast = null;
+                    Context context = getApplicationContext();
+                    CharSequence text = "Device Paired Successfully";
+                    int duration = Toast.LENGTH_SHORT;
+                    mtoast = Toast.makeText(context, text, duration);
+                    mtoast.show();
+                }
+            }
+        }
+
     }
 
     @Override
@@ -242,7 +392,7 @@ public class MainActivity extends AppCompatActivity
                 if (count <= MAX_HOME) {
                     addHomeDialog();
                 } else {
-                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Only five Home can be added :(", Snackbar.LENGTH_LONG)
+                    Snackbar.make(materialDesignFAM, "Only five Home can be added :(", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
                 return true;
@@ -279,6 +429,20 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ConfigureListener implements View.OnClickListener {
+
+        private AuraSwitch deviceToPair;
+
+        private ConfigureListener(AuraSwitch device) {
+            deviceToPair = device;
+        }
+
+        @Override
+        public void onClick(View v) {
+            addDeviceToWhatRoomPopUp(deviceToPair);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -328,9 +492,9 @@ public class MainActivity extends AppCompatActivity
                 if (flag[0]) {
                     db.InsertRoom(mDb, SelectedHome, input.getText().toString().trim());
                     getFragmentRefreshListener().onRefresh();
-                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Room added", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    Snackbar.make(materialDesignFAM, "Room added", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 } else {
-                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Room with same name already exists", Snackbar.LENGTH_LONG)
+                    Snackbar.make(materialDesignFAM, "Room with same name already exists", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
@@ -358,11 +522,84 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(final Bundle bundle) {
-        super.onSaveInstanceState(bundle);
-        // Save the title so it will be restored properly to match the view loaded when rotation
-        // was changed or in case the activity was destroyed.
+    private void addDeviceToWhatRoomPopUp(final AuraSwitch deviceToPair) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setTitle("Select room to add the device");
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.add_device_to_home_dialog, null);
+        dialog.setView(dialogView);
+        ArrayList<String> rooms = db.GetRooms(mDb, SelectedHome);
+        final RadioGroup radioGroup = (RadioGroup) dialogView.findViewById(R.id.radio_group);
+
+        for (String x : rooms) {
+            RadioButton radioButton = new RadioButton(this);
+            radioButton.setText(x);
+            radioGroup.addView(radioButton);
+        }
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
+                for (int i = 0; i < rg.getChildCount(); i++) {
+                    RadioButton btn = (RadioButton) rg.getChildAt(i);
+                    if (btn.getId() == checkedId) {
+                        AddNewDeviceTo = btn.getText().toString();
+                        // do something with text
+                        return;
+                    }
+                }
+            }
+        });
+
+        dialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if (!(AddNewDeviceTo == null)) {
+                    pairingPopUp(deviceToPair);
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    private void pairingPopUp(final AuraSwitch deviceToPair) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alert.setView(input);
+        alert.setMessage("Enter pairing pin of  " + deviceToPair.getName());
+        alert.setTitle("Pin");
+        alert.setPositiveButton("Pair", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if (input.length() == 8) {
+                    try {
+                        String encryptedPin = Encryption.SHA256(input.getText().toString());
+                        String Mac = Encryption.MAC(MainActivity.this);
+                        String data = JsonUtils.PairingData(Mac, encryptedPin);
+                        new ConnectTask(data, deviceToPair.getIP()).execute("");
+                    } catch (NoSuchAlgorithmException e) {
+                        Log.e(LOG_TAG, "Failed Pairing: " + e);
+                    }
+                }
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+        alert.show();
+    }
+
+    private void convertIP() {
+        WifiManager mWifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = mWifi.getConnectionInfo();
+        int ipAddress = wifiInfo.getIpAddress();
+        IP = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
     }
 
     private void addHomeDialog() {
@@ -404,12 +641,32 @@ public class MainActivity extends AppCompatActivity
         alert.show();
     }
 
-    public String GetSelectedHome() {
-        return SelectedHome;
+    private void openWebPage(String url) {
+
+        WifiConfiguration mWifiConfig = new WifiConfiguration();
+        mWifiConfig.SSID = "\"" + NETWORK_SSID + "\"";
+        mWifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+
+        WifiManager mWifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        mWifi.addNetwork(mWifiConfig);
+
+        WifiInfo mWifiInfo = mWifi.getConnectionInfo();
+        mWifiInfo.getSSID();
+        if (mWifiInfo.getSSID().contains(NETWORK_SSID)) {
+            Uri webpage = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        } else {
+            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            Toast.makeText(this, "Please Connect to Aura Device", Toast.LENGTH_LONG).show();
+        }
     }
 
-    public void UpdateFragment() {
-        onOptionsItemSelected(HomeMenu.findItem(R.id.home));
+    public String GetSelectedHome() {
+        return SelectedHome;
     }
 
     public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {

@@ -1,0 +1,147 @@
+package com.wozart.route_3.utilities;
+
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.wozart.route_3.model.AuraSwitch;
+import com.wozart.route_3.model.AwsDataModel;
+import com.wozart.route_3.model.JsonAws;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+/**
+ * Created by wozart on 26/10/17.
+ */
+
+public class JsonUtils {
+    private static final String LOG_TAG = JsonUtils.class.getSimpleName();
+    public static int ToggleLed = 0;
+
+    public void DeserializeAwsData(String Data) {
+        Gson gson = new Gson();
+        AwsDataModel dataRD = new AwsDataModel();
+        JsonAws states = new JsonAws();
+
+        try {
+            dataRD = gson.fromJson(Data, AwsDataModel.class);
+            states = dataRD.desired;
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Error Parsing Json Data: " + e);
+        }
+    }
+
+    public String AwsRegionThing(String region, String thing) {
+        String data = null;
+        data = "{\"type\":7,\"thing\":\"" + thing + "\",\"region\":\"" + region + "\"}";
+        return data;
+    }
+
+    public ArrayList<String> Certificates(String data) {
+        String[] certificates = SegregateData.Segregate(data);
+        String jsonCertificate;
+        ArrayList<String> dataCertificates = new ArrayList<>();
+        int length = 0;
+        int pktNo = 0;
+        for (String fragment : certificates) {
+            jsonCertificate = "{\"type\":6,\"pos\":" + length + ",\"pktno\":" + pktNo + ",\"data\":\"" + fragment + "\"}";
+            dataCertificates.add(jsonCertificate);
+            length += fragment.length() + 1;
+            pktNo++;
+        }
+        return dataCertificates;
+    }
+
+    public ArrayList<String> PrivateKeys(String data) {
+        String[] privateKey = SegregateData.Segregate(data);
+        String jsonPrivateKey;
+        int length = 0;
+        int pktNo = 0;
+        ArrayList<String> dataPrivarteKey = new ArrayList<>();
+        for (String fragment : privateKey) {
+            jsonPrivateKey = "{\"type\":5,\"pos\":" + length + ",\"pktno\":" + pktNo + ",\"data\":\"" + fragment + "\"}";
+            dataPrivarteKey.add(jsonPrivateKey);
+            length += fragment.length() + 1;
+            pktNo++;
+        }
+        return dataPrivarteKey;
+    }
+
+    public AuraSwitch Deserialize(String data) {
+        Gson gson = new Gson();
+        String trimedData = data.trim();
+        AuraSwitch device = new AuraSwitch();
+        try {
+            device = gson.fromJson(trimedData, AuraSwitch.class);
+        } catch (Exception e) {
+            Log.e("JSON: ", "Illegal msg" + e);
+        } finally {
+            return device;
+        }
+    }
+
+    public String Serialize(AuraSwitch device, String ipInString) throws UnknownHostException {
+        String name = device.getName();
+        int[] states = device.getStates();
+        int[] dims = device.getDims();
+        String ip = IpConvert(ipInString);
+
+        String data = "{\"type\":4, \"ip\":\"" + ip + "\",\"name\":\"" + name + "\",\"state\":[" + states[0] + "," + states[1] + "," + states[2] + "," + states[3] + "],\"dimm\":["
+                + dims[0] + "," + dims[1] + "," + dims[2] + "," + dims[3] + "]}";
+        return data;
+    }
+
+    public String SerializeDataToAws() {
+        String data = null;
+        if (ToggleLed == 1) {
+            data = "{\"type\":4,\"state\":{\"desired\": {\"led\": " + ToggleLed + ", \"dimm\": [100, 100, 100, 100],\"state\": [1, 1, 1, 1]}}}";
+            ToggleLed = 0;
+        } else {
+            data = "{\"state\":{\"desired\": {\"led\": " + ToggleLed + ", \"dimm\": [100, 100, 100, 100],\"state\": [0, 0, 0, 0]}}}";
+            ToggleLed = 1;
+        }
+        return data;
+    }
+
+    public String InitialData(String ipInString) throws UnknownHostException {
+        String ip = IpConvert(ipInString);
+
+        String data = "{\"type\":1,\"ip\":\"" + ip + "\",\"time\":" + (System.currentTimeMillis()/1000) + " }";
+        return data;
+    }
+
+    public AuraSwitch DeserializeTcp(String data) {
+        Gson gson = new Gson();
+        AuraSwitch device = new AuraSwitch();
+        try {
+            device = gson.fromJson(data, AuraSwitch.class);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Illegal Message " + e);
+        } finally {
+            return device;
+        }
+    }
+
+    public static String PairingData(String mac, String pin) {
+        String data = "{\"type\":2,\"hash\":\"" + pin + "\",\"mac\":\"" + mac + "\"}";
+        return data;
+    }
+
+    public static String PairedData(String IP) throws UnknownHostException {
+        String ip = IpConvert(IP);
+        String data = "{\"type\":3,\"ip\":\"" + ip + "\"}";
+        return data;
+    }
+
+    private static String IpConvert(String ipInString) throws UnknownHostException {
+        InetAddress ip = InetAddress.getByName(ipInString);
+        String var = "";
+        byte[] bytes = ip.getAddress();
+        for (byte b : bytes) {
+            var = var + String.format("%03d.", (b & 0xFF));
+        }
+        var = var.substring(0, var.length() - 1);
+        return var;
+    }
+}

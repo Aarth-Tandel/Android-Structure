@@ -8,12 +8,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_search_api_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_search_api_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_search_api_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/GitHub/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_seekbar_tick_mark_material.xml",
         "source": "/Users/wozart/.android/build-cache/2499837bc2f78105a434d502f4d0284ccb1de03d/output/res/drawable/abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_search_api_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_search_api_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_light.xml",
@@ -40,12 +40,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_search_api_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_check_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_check_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Prototype/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_seekbar_tick_mark_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_check_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_check_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_textfield_search_material.xml",
@@ -100,24 +100,24 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_ab_back_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_dark.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
+        "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ratingbar_indicator_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ratingbar_indicator_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_ab_back_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_ab_back_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ratingbar_indicator_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ratingbar_indicator_material.xml"
-    },
-    {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_switch_thumb_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_switch_thumb_material.xml"
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_dark.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Complete Modules/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_search_api_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_switch_thumb_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_switch_thumb_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_search_api_material.xml",
@@ -252,12 +252,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_check_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_check_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_check_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_spinner_textfield_background_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_check_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_check_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_search_api_material.xml",
@@ -272,36 +272,36 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_switch_thumb_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ratingbar_indicator_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ratingbar_indicator_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_switch_thumb_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ratingbar_indicator_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ratingbar_indicator_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ratingbar_small_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ratingbar_small_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_radio_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_voice_search_api_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_radio_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_check_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_check_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_radio_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_tab_indicator_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_btn_radio_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo + Buttons/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_go_search_api_material.xml",
@@ -344,12 +344,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_edit_text_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_dark.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Utils + PubSub copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_light.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_dark.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + TCP copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ratingbar_small_material.xml",
@@ -368,12 +368,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_go_search_api_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_voice_search_api_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_voice_search_api_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Complete/Wozart 1.0.0/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_switch_thumb_material.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_ic_voice_search_api_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_voice_search_api_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_borderless_material.xml",
@@ -492,12 +492,12 @@
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_ic_menu_overflow_material.xml"
     },
     {
-        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_cab_background_top_material.xml",
-        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_cab_background_top_material.xml"
-    },
-    {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local + Pairing copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_cab_background_internal_bg.xml",
         "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/AWS + Local copy/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_cab_background_top_material.xml",
+        "source": "/Users/wozart/.android/build-cache/3937d0b4cddce129a3c35f9e2795587567dfaeb6/output/res/drawable/abc_cab_background_top_material.xml"
     },
     {
         "merged": "/Users/wozart/Documents/aarth/Wozart Android Application/Modules/AWS/Cognito + Dynamo/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable/abc_btn_colored_material.xml",
