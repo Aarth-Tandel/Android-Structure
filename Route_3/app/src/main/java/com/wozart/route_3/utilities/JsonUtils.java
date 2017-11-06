@@ -1,5 +1,8 @@
 package com.wozart.route_3.utilities;
 
+import android.content.Context;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,6 +13,8 @@ import com.wozart.route_3.model.JsonAws;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by wozart on 26/10/17.
@@ -81,13 +86,12 @@ public class JsonUtils {
         }
     }
 
-    public String Serialize(AuraSwitch device, String ipInString) throws UnknownHostException {
+    public String Serialize(AuraSwitch device) throws UnknownHostException {
         String name = device.getName();
         int[] states = device.getStates();
         int[] dims = device.getDims();
-        String ip = IpConvert(ipInString);
 
-        String data = "{\"type\":4, \"ip\":\"" + ip + "\",\"name\":\"" + name + "\",\"state\":[" + states[0] + "," + states[1] + "," + states[2] + "," + states[3] + "],\"dimm\":["
+        String data = "{\"type\":4, \"ip\":\"" + convertIP() + "\",\"name\":\"" + name + "\",\"state\":[" + states[0] + "," + states[1] + "," + states[2] + "," + states[3] + "],\"dimm\":["
                 + dims[0] + "," + dims[1] + "," + dims[2] + "," + dims[3] + "]}";
         return data;
     }
@@ -132,6 +136,15 @@ public class JsonUtils {
         String ip = IpConvert(IP);
         String data = "{\"type\":3,\"ip\":\"" + ip + "\"}";
         return data;
+    }
+
+    private static String convertIP() throws UnknownHostException {
+        WifiManager mWifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = mWifi.getConnectionInfo();
+        int ipAddress = wifiInfo.getIpAddress();
+        String IP = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+        IP = IpConvert(IP);
+        return IP;
     }
 
     private static String IpConvert(String ipInString) throws UnknownHostException {

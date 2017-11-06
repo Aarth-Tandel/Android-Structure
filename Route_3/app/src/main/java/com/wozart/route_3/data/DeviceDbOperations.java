@@ -129,20 +129,86 @@ public class DeviceDbOperations {
         db.update(TABLE_NAME, cv, HOME_NAME + " =? and " + ROOM_NAME + " =? ", new String[]{home, room});
     }
 
-    public ArrayList<String> GetLoads(SQLiteDatabase db, String room, String home) {
+    public ArrayList<String> GetDevicesInRoom(SQLiteDatabase db, String room, String home) {
+        ArrayList<String> devices = new ArrayList<>();
         String[] params = new String[]{home, room};
-        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + ", " + LOAD_1 + ", " + LOAD_2 + ", " + LOAD_3 + ", " + LOAD_4 + " from " + TABLE_NAME + " where " + HOME_NAME
+        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + HOME_NAME
                 + " = ? and " + ROOM_NAME + " =?", params);
+        while (cursor.moveToNext()) {
+            devices.add(cursor.getString(0));
+        }
+        cursor.close();
+        return devices;
+    }
+
+    public ArrayList<String> GetLoads(SQLiteDatabase db, String device) {
+        String[] params = new String[]{device};
+        Cursor cursor = db.rawQuery("select " + LOAD_1 + ", " + LOAD_2 + ", " + LOAD_3 + ", " + LOAD_4 + " from " + TABLE_NAME + " where " + DEVICE_NAME
+                + " = ?", params);
         ArrayList<String> loads = new ArrayList<>();
         while (cursor.moveToNext()) {
-            if (!cursor.getString(0).equals("null")) {
-                loads.add(cursor.getString(0));
-                loads.add(cursor.getString(1));
-                loads.add(cursor.getString(2));
-                loads.add(cursor.getString(3));
-                loads.add(cursor.getString(4));
-            }
+            loads.add(cursor.getString(0));
+            loads.add(cursor.getString(1));
+            loads.add(cursor.getString(2));
+            loads.add(cursor.getString(3));
+
         }
         return loads;
+    }
+
+    public void AddDevice(SQLiteDatabase db, String room, String home, String device) {
+
+        ArrayList<String> devicesDuplicate = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + " from " + TABLE_NAME, null);
+        while (cursor.moveToNext()) {
+            if (cursor.getString(0) != null)
+                devicesDuplicate.add(cursor.getString(0));
+        }
+        cursor.close();
+        Boolean flag = true;
+
+        if (devicesDuplicate.isEmpty()) {
+            ContentValues cv = new ContentValues();
+            cv.put(ROOM_NAME, room);
+            cv.put(HOME_NAME, home);
+            cv.put(DEVICE_NAME, device);
+
+            try {
+                db.beginTransaction();
+                db.insert(TABLE_NAME, null, cv);
+
+                db.setTransactionSuccessful();
+            } catch (SQLException e) {
+                //Too bad :(
+            } finally {
+                db.endTransaction();
+
+            }
+            return;
+        }
+
+        for (String x : devicesDuplicate) {
+            if (x.equals(device))
+                flag = false;
+        }
+
+        if (flag) {
+            ContentValues cv = new ContentValues();
+            cv.put(ROOM_NAME, room);
+            cv.put(HOME_NAME, home);
+            cv.put(DEVICE_NAME, device);
+
+            try {
+                db.beginTransaction();
+                db.insert(TABLE_NAME, null, cv);
+
+                db.setTransactionSuccessful();
+            } catch (SQLException e) {
+                //Too bad :(
+            } finally {
+                db.endTransaction();
+
+            }
+        }
     }
 }

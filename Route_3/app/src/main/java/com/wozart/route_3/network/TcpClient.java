@@ -89,7 +89,7 @@ public class TcpClient {
                 //in this while the client listens for the messages sent by the server
                 int count = 0;
                 boolean messageFlag = false;
-                while (mRun && count < 1000 && messageFlag == false)  {
+                while (mRun && count < 1000 && !messageFlag)  {
 
                     mServerMessage = mBufferIn.readLine();
                     if (mServerMessage != null && mMessageListener != null) {
@@ -99,7 +99,7 @@ public class TcpClient {
                     }
                     count++;
                 }
-                if(messageFlag == false)
+                if(!messageFlag)
                     mMessageListener.messageReceived("Server not rechable");
 
             } catch (Exception e) {
@@ -110,6 +110,7 @@ public class TcpClient {
                 // after it is closed, which means a new socket instance has to be created.
                 Log.d("TCP", "Socket Closed");
                 socket.close();
+                stopClient();
             }
 
         } catch (Exception e) {

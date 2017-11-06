@@ -70,7 +70,7 @@ public class TcpServer extends Service {
 
     }
 
-    class ServerAsyncTask extends AsyncTask<Socket, Void, String> {
+    private class ServerAsyncTask extends AsyncTask<Socket, Void, String> {
         @Override
         protected String doInBackground(Socket... params) {
             String result = null;

@@ -17,15 +17,14 @@ public class NsdClient {
 
     private NsdManager mNsdManager;
     NsdManager.DiscoveryListener mDiscoveryListener;
-    public static List<NsdServiceInfo> AVAILABLE_NETWORKS = new ArrayList<>();
 
     //To find all the available networks SERVICE_TYPE = "_services._dns-sd._udp"
     //Aura devices use _hap._tcp.
     public static final String SERVICE_TYPE = "_hap._tcp.";
     public static final String TAG = "NsdClient";
-    private String mServiceName = "Aura";
+    private static String mServiceName = "Aura";
 
-    private static ArrayList<NsdServiceInfo> ServicesAvailable = new ArrayList<>();
+    private static List<NsdServiceInfo> ServicesAvailable = new ArrayList<>();
 
     public NsdClient(Context context) {
         mContext = context;
@@ -47,7 +46,6 @@ public class NsdClient {
             @Override
             public void onServiceFound(NsdServiceInfo service) {
                 Log.d(TAG, "Service discovery success " + service);
-                AVAILABLE_NETWORKS.add(service);
 
                 if (!service.getServiceType().equals(SERVICE_TYPE)) {
                     Log.d(TAG, "Unknown Service Type: " + service.getServiceType());
@@ -115,8 +113,14 @@ public class NsdClient {
                 return;
             }
 
-            if (!ServicesAvailable.contains(serviceInfo))
+            if (ServicesAvailable.size() == 0)
                 ServicesAvailable.add(serviceInfo);
+
+            for (NsdServiceInfo x : ServicesAvailable) {
+                if (!x.getServiceName().equals(serviceInfo.getServiceName())) {
+                    ServicesAvailable.add(serviceInfo);
+                }
+            }
         }
     }
 
@@ -124,7 +128,7 @@ public class NsdClient {
         mNsdManager.stopServiceDiscovery(mDiscoveryListener);
     }
 
-    public List<NsdServiceInfo> getChosenServiceInfo() {
+    public List<NsdServiceInfo> GetAllServices() {
         return ServicesAvailable;
     }
 
@@ -133,9 +137,9 @@ public class NsdClient {
                 SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
     }
 
-    public String GetIP(String device){
-        for(NsdServiceInfo x : ServicesAvailable){
-            if(x.getServiceName().contains(device)){
+    public String GetIP(String device) {
+        for (NsdServiceInfo x : ServicesAvailable) {
+            if (x.getServiceName().contains(device)) {
                 return x.getHost().getHostAddress();
             }
         }

@@ -54,6 +54,7 @@ import com.wozart.route_3.model.AuraSwitch;
 import com.wozart.route_3.network.NsdClient;
 import com.wozart.route_3.network.TcpClient;
 import com.wozart.route_3.network.TcpServer;
+import com.wozart.route_3.utilities.DeviceUtils;
 import com.wozart.route_3.utilities.Encryption;
 import com.wozart.route_3.utilities.JsonUtils;
 
@@ -81,11 +82,10 @@ public class MainActivity extends AppCompatActivity
 
     private TcpClient mTcpClient;
     private NsdClient Nsd;
+    private DeviceUtils mDeviceUtils;
 
     private Toast mtoast;
     private CoordinatorLayout coordinatorLayout;
-
-    private ArrayList<AuraSwitch> UnpairedDevice = new ArrayList<>();
 
     private NavigationView NavigationView;
     FloatingActionMenu materialDesignFAM;
@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
         db.InsertBasicData(mDb);
+        mDeviceUtils = new DeviceUtils();
 
         Nsd = new NsdClient(this);
         Nsd.initializeNsd();
@@ -225,7 +226,7 @@ public class MainActivity extends AppCompatActivity
     private void initializeTabs() {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Favourites"));
-        tabLayout.addTab(tabLayout.newTab().setText("Rooms"));
+        tabLayout.addTab(tabLayout.newTab().setText("Loads"));
         tabLayout.addTab(tabLayout.newTab().setText("Scenes"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -331,8 +332,7 @@ public class MainActivity extends AppCompatActivity
 
                 if (dummyDevice.getType() == 1 && dummyDevice.getCode().equals(Constant.UNPAIRED)) {
                     dummyDevice.setIP(Nsd.GetIP(dummyDevice.getName()));
-                    UnpairedDevice.add(dummyDevice);
-                    Snackbar.make(findViewById(R.id.mCordinateLayout), "Device paired Successfully", Snackbar.LENGTH_INDEFINITE)
+                    Snackbar.make(findViewById(R.id.mCordinateLayout), "New device " + dummyDevice.getName(), Snackbar.LENGTH_INDEFINITE)
                             .setAction("ADD", new ConfigureListener(dummyDevice)).show();
                 }
 
@@ -344,6 +344,16 @@ public class MainActivity extends AppCompatActivity
                     int duration = Toast.LENGTH_SHORT;
                     mtoast = Toast.makeText(context, text, duration);
                     mtoast.show();
+                    db.AddDevice(mDb, AddNewDeviceTo, SelectedHome, dummyDevice.getName());
+                }
+
+                if(dummyDevice.getType() == 1 && dummyDevice.getCode().equals(Encryption.MAC(MainActivity.this))){
+                    for(NsdServiceInfo x : Nsd.GetAllServices()){
+                        //Find the match in services found and data received
+                        if(x.getServiceName().contains(dummyDevice.getName())){
+                            mDeviceUtils.RegisterDevice(dummyDevice, x.getHost().getHostAddress());
+                        }
+                    }
                 }
             }
         }
@@ -480,7 +490,7 @@ public class MainActivity extends AppCompatActivity
         input.setLayoutParams(lp);
         alert.setView(input);
         alert.setMessage("Adding new room to " + SelectedHome);
-        alert.setTitle("Rooms");
+        alert.setTitle("Loads");
         alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {

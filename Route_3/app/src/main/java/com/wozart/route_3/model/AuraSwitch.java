@@ -9,6 +9,7 @@ import com.Constant;
 public class AuraSwitch {
     private int type = 1;
     private String name = "4module";
+    private String loadName;
     private int state[] = new int[]{0, 0, 0, 0};
     private int dimm[] = new int[]{100, 100, 100, 100};
     private double version = 0.0;
@@ -17,6 +18,7 @@ public class AuraSwitch {
     private String code = Constant.UNPAIRED;
     private int aws = 0;
     private int error = 0;
+    private int online = 0;
 
     public AuraSwitch() {
 
@@ -28,6 +30,14 @@ public class AuraSwitch {
 
     public String getName() {
         return name;
+    }
+
+    public String getLoadName() {
+        return loadName;
+    }
+
+    public void setLoadName(String loadName) {
+        this.loadName = loadName;
     }
 
     public int[] getStates() {
@@ -58,7 +68,15 @@ public class AuraSwitch {
         return aws;
     }
 
-    public int getError(){return error;}
+    public int getError() {
+        return error;
+    }
+
+    public int getOnline() {
+        return online;
+    }
+
+    public void setStates(int[] state){this.state = state;}
 
     public void setName(String name) {
         this.name = name;
@@ -83,7 +101,7 @@ public class AuraSwitch {
         }
     }
 
-    public void setStates(int node) {
+    public void setState(int node) {
         for (int i = 0; i < 4; i++) {
             if (i == node) {
                 if (this.state[i] == 0)
@@ -137,5 +155,12 @@ public class AuraSwitch {
         this.aws = aws;
     }
 
-    public void setError(int error){this.error = error;}
+    public void setError(int error) {
+        this.error = error;
+    }
+
+    public void setOnline(int online) {
+        this.online = online;
+    }
+
 }

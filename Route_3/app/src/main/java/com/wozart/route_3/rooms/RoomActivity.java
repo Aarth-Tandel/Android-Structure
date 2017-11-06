@@ -1,15 +1,12 @@
 package com.wozart.route_3.rooms;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,8 +28,10 @@ import java.util.List;
 public class RoomActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private RoomAdapter adapter;
-    private List<Rooms> LoadList;
+    private LoadAdapter adapter;
+    private List<Loads> LoadList;
+    String RoomSelected;
+    String HomeSelected;
 
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
@@ -46,8 +45,8 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
         Intent intent = getIntent();
-        String RoomSelected = intent.getStringExtra("room");
-        String HomeSelected = intent.getStringExtra("home");
+        RoomSelected = intent.getStringExtra("room");
+        HomeSelected = intent.getStringExtra("home");
 
         TextView textView = (TextView) findViewById(R.id.tv_message);
         textView.setText(RoomSelected);
@@ -55,7 +54,7 @@ public class RoomActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         LoadList = new ArrayList<>();
-        adapter = new RoomAdapter(this, LoadList);
+        adapter = new LoadAdapter(this, LoadList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -63,24 +62,23 @@ public class RoomActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        ArrayList<String> loads = new ArrayList<>();
+        ArrayList<String> devices;
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
-        loads = db.GetLoads(mDb, RoomSelected, HomeSelected);
+        devices = db.GetDevicesInRoom(mDb, RoomSelected, HomeSelected);
 
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                mMessageReceiver, new IntentFilter("intentKey"));
-        prepareRooms(loads);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(
+//                mMessageReceiver, new IntentFilter("intentKey"));
+        prepareLoad(devices);
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String data = intent.getStringExtra("key");
-        }
-    };
+//    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            // Get extra data included in the Intent
+//            String data = intent.getStringExtra("key");
+//        }
+//    };
 
     private class ConnectTask extends AsyncTask<String, String, TcpClient> {
 
@@ -129,7 +127,7 @@ public class RoomActivity extends AppCompatActivity {
     /**
      * Adding few albums for testing
      */
-    private void prepareRooms(ArrayList<String> rooms) {
+    private void prepareLoad(ArrayList<String> devices) {
 
         LoadList.clear();
         int[] covers = new int[]{
@@ -142,9 +140,19 @@ public class RoomActivity extends AppCompatActivity {
                 R.drawable.album7
         };
 
-        for (String x : rooms) {
-            Rooms a = new Rooms(x, 0, covers[2]);
-            LoadList.add(a);
+        for (String deviceName : devices) {
+            int i = 0;
+            if (deviceName != null) {
+                ArrayList<String> loads;
+                loads = db.GetLoads(mDb, deviceName);
+
+                for (String loadName : loads) {
+                    Loads a = new Loads(loadName, deviceName, null, covers[2], i);
+                    LoadList.add(a);
+                    i++;
+                }
+            }
+
         }
 
         adapter.notifyDataSetChanged();
