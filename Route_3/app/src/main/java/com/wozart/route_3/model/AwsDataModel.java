@@ -5,6 +5,6 @@ package com.wozart.route_3.model;
  */
 
 public class AwsDataModel {
-    public JsonAws desired;
-    public JsonAws reported;
+    public AwsReported desired;
+    public AwsReported reported;
 }

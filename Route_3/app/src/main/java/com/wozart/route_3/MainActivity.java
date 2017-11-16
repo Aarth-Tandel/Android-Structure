@@ -2,10 +2,12 @@ package com.wozart.route_3;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.net.nsd.NsdServiceInfo;
@@ -15,6 +17,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -51,6 +54,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.wozart.route_3.data.DeviceDbHelper;
 import com.wozart.route_3.data.DeviceDbOperations;
 import com.wozart.route_3.model.AuraSwitch;
+import com.wozart.route_3.network.AwsPubSub;
 import com.wozart.route_3.network.NsdClient;
 import com.wozart.route_3.network.TcpClient;
 import com.wozart.route_3.network.TcpServer;
@@ -83,6 +87,8 @@ public class MainActivity extends AppCompatActivity
     private TcpClient mTcpClient;
     private NsdClient Nsd;
     private DeviceUtils mDeviceUtils;
+    private AwsPubSub awsPubSub;
+    boolean mBounded;
 
     private Toast mtoast;
     private CoordinatorLayout coordinatorLayout;
@@ -90,6 +96,7 @@ public class MainActivity extends AppCompatActivity
     private NavigationView NavigationView;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton AddDevice, ConfigureDevice, AddRooms;
+
 
 
     @Override
@@ -118,8 +125,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         startService(new Intent(this, TcpServer.class));
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                mMessageReceiver, new IntentFilter("intentKey"));
+        startService(new Intent(this, AwsPubSub.class));
+        LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(
+                mMessageReceiver, new IntentFilter("AwsShadow"));
 
         UserInfo();
         initializeFab();
@@ -226,7 +234,7 @@ public class MainActivity extends AppCompatActivity
     private void initializeTabs() {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Favourites"));
-        tabLayout.addTab(tabLayout.newTab().setText("Loads"));
+        tabLayout.addTab(tabLayout.newTab().setText("Rooms"));
         tabLayout.addTab(tabLayout.newTab().setText("Scenes"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -280,14 +288,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra("key");
-        }
-    };
 
     private class ConnectTask extends AsyncTask<String, String, TcpClient> {
 
@@ -678,6 +678,56 @@ public class MainActivity extends AppCompatActivity
     public String GetSelectedHome() {
         return SelectedHome;
     }
+
+    /**
+     * AWS IoT Subscribe to shadow
+     */
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent mIntent = new Intent(this, AwsPubSub.class);
+        bindService(mIntent, mConnection, BIND_AUTO_CREATE);
+    };
+
+    ServiceConnection mConnection = new ServiceConnection() {
+
+        public void onServiceDisconnected(ComponentName name) {
+            mBounded = false;
+            awsPubSub = null;
+        }
+
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mBounded = true;
+            AwsPubSub.LocalAwsBinder mLocalBinder = (AwsPubSub.LocalAwsBinder)service;
+            awsPubSub = mLocalBinder.getServerInstance();
+        }
+    };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mBounded) {
+            unbindService(mConnection);
+            mBounded = false;
+        }
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String data = intent.getStringExtra("Connection");
+            if(data.equals("Connected")) {
+                awsPubSub.AwsSubscribe("device_0002");
+                awsPubSub.AwsSubscribe("device_0001");
+            }
+        }
+    };
+
+    /**
+     * Updating favourite fragment from main
+     */
 
     public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
         this.fragmentRefreshListener = fragmentRefreshListener;

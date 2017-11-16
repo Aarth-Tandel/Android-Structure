@@ -2,11 +2,14 @@ package com.wozart.route_3.rooms;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.AsyncTask;
+import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +28,7 @@ import android.widget.Toast;
 import com.Constant;
 import com.wozart.route_3.R;
 import com.wozart.route_3.model.AuraSwitch;
+import com.wozart.route_3.network.AwsPubSub;
 import com.wozart.route_3.network.TcpClient;
 import com.wozart.route_3.utilities.DeviceUtils;
 import com.wozart.route_3.utilities.JsonUtils;
@@ -31,6 +36,8 @@ import com.wozart.route_3.utilities.JsonUtils;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import static android.content.Context.BIND_AUTO_CREATE;
+import static com.amazonaws.AmazonServiceException.ErrorType.Client;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
@@ -45,10 +52,13 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
     private TcpClient mTcpClient;
     private Toast mtoast;
     private DeviceUtils mDeviceUtils;
+    private boolean flag = true;
+    private int count = 0;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, device;
-        private ImageView thumbnail1, overflow;
+        private ImageView thumbnail, overflow;
 
 
         private MyViewHolder(View view) {
@@ -56,27 +66,37 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
 
             title = (TextView) view.findViewById(R.id.title);
             device = (TextView) view.findViewById(R.id.tv_state);
-            thumbnail1 = (ImageView) view.findViewById(R.id.thumbnail1);
+            thumbnail = (ImageView) view.findViewById(R.id.thumbnail1);
             overflow = (ImageView) view.findViewById(R.id.overflow);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     int pos = getAdapterPosition();
                     AuraSwitch mDevice;
                     JsonUtils serialize = new JsonUtils();
-                    String data = null, Ip;
+                    String data = null;
+
                     // check if item still exists
                     if (pos != RecyclerView.NO_POSITION) {
                         Loads loads = LoadList.get(pos);
                         mDevice = mDeviceUtils.UpdateSwitchState(loads.getDevice(), loads.getLoadNumber());
-                        try {
-                            data = serialize.Serialize(mDevice);
-                        } catch (UnknownHostException e) {
-                            e.printStackTrace();
+
+                        if (mDevice != null) {
+                            try {
+                                data = serialize.Serialize(mDevice);
+                            } catch (UnknownHostException e) {
+                                e.printStackTrace();
+                            }
+                            new ConnectTask(data, mDeviceUtils.GetIP(loads.getDevice())).execute("");
+
+                        } else {
+                            if(mContext instanceof RoomActivity){
+                                ((RoomActivity)mContext).PusblishDataToShadow("device_0001", "");
+                            }
+                            Toast.makeText(v.getContext(), "Device offline", Toast.LENGTH_SHORT).show();
                         }
-                        new ConnectTask(data, mDeviceUtils.GetIP(loads.getDevice())).execute("");
-                        Toast.makeText(v.getContext(), "You clicked " + loads.getName(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -87,23 +107,28 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
     public LoadAdapter(Context mContext, List<Loads> loadsList) {
         this.mContext = mContext;
         this.LoadList = loadsList;
+        LocalBroadcastManager.getInstance(mContext).registerReceiver(
+                mMessageReceiver, new IntentFilter("intentKey"));
+        mDeviceUtils = new DeviceUtils();
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.load_cards2, parent, false);
-        mDeviceUtils = new DeviceUtils();
-        LocalBroadcastManager.getInstance(mContext).registerReceiver(
-                mMessageReceiver, new IntentFilter("intentKey"));
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        count++;
         Loads loads = LoadList.get(position);
         loads.setPostion(position);
-        updateLoads(loads);
+
+        if(flag) {
+            updateLoads(loads);
+        }
+
         holder.title.setText(loads.getName());
         if (loads.getState() == 0)
             holder.device.setText("OFF");
@@ -116,8 +141,29 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                 showPopupMenu(holder.overflow, holder.title.getText().toString(), position);
             }
         });
+        if(count == LoadList.size())
+            flag = false;
     }
 
+    private void updateStates(int[] states, String device) {
+        for (Loads x : LoadList) {
+            if (x.getDevice().equals(device)) {
+                x.setState(states[x.getLoadNumber()]);
+                notifyItemChanged(x.getPostion(), x);
+            }
+        }
+    }
+
+    private void updateLoads(Loads load) {
+        AuraSwitch dummyDevice = mDeviceUtils.GetInfo(load.getDevice());
+        load.setIP(dummyDevice.getIP());
+        int[] state = dummyDevice.getStates();
+        load.setState(state[load.getLoadNumber()]);
+    }
+
+    /**
+     * Send data to the Aura Device
+     */
 
     private class ConnectTask extends AsyncTask<String, String, TcpClient> {
 
@@ -169,29 +215,20 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
 
     }
 
+    /**
+     * Data from the TcpServer
+     */
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String data = intent.getStringExtra("key");
+            JsonUtils deserialize = new JsonUtils();
+            AuraSwitch dummyDevice = deserialize.Deserialize(data);
+            updateStates(dummyDevice.getStates(), dummyDevice.getName());
         }
     };
-
-    private void updateStates(int[] states, String device) {
-        for (Loads x : LoadList) {
-            if (x.getDevice().equals(device)) {
-                x.setState(states[x.getLoadNumber()]);
-                notifyItemChanged(x.getPostion(), x);
-            }
-        }
-    }
-
-    private void updateLoads(Loads load) {
-        AuraSwitch dummyDevice = mDeviceUtils.GetInfo(load.getDevice());
-        load.setIP(dummyDevice.getIP());
-        int[] state = dummyDevice.getStates();
-        load.setState(state[load.getLoadNumber()]);
-    }
 
     /**
      * Showing popup menu when tapping on 3 dots

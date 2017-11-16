@@ -55,6 +55,7 @@
         </activity>
 
         <service android:name=".network.TcpServer" />
+        <service android:name=".network.AwsPubSub" />
     </application>
 
 </manifest>

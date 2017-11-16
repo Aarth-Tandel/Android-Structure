@@ -8,7 +8,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.wozart.route_3.model.AuraSwitch;
 import com.wozart.route_3.model.AwsDataModel;
-import com.wozart.route_3.model.JsonAws;
+import com.wozart.route_3.model.AwsState;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -24,17 +24,16 @@ public class JsonUtils {
     private static final String LOG_TAG = JsonUtils.class.getSimpleName();
     public static int ToggleLed = 0;
 
-    public void DeserializeAwsData(String Data) {
+    public AwsState DeserializeAwsData(String Data) {
         Gson gson = new Gson();
         AwsDataModel dataRD = new AwsDataModel();
-        JsonAws states = new JsonAws();
 
         try {
             dataRD = gson.fromJson(Data, AwsDataModel.class);
-            states = dataRD.desired;
         } catch (Exception e) {
             Log.e(LOG_TAG, "Error Parsing Json Data: " + e);
         }
+        return dataRD.reported.shadow;
     }
 
     public String AwsRegionThing(String region, String thing) {

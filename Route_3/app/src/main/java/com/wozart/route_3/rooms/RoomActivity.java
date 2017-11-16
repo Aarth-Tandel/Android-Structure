@@ -1,12 +1,13 @@
 package com.wozart.route_3.rooms;
 
-import android.content.Context;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,10 +17,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.Constant;
 import com.wozart.route_3.R;
 import com.wozart.route_3.data.DeviceDbHelper;
 import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.network.AwsPubSub;
 import com.wozart.route_3.network.TcpClient;
 
 import java.util.ArrayList;
@@ -36,9 +37,8 @@ public class RoomActivity extends AppCompatActivity {
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
 
-    private TcpClient mTcpClient;
-
-    private Toast mtoast;
+    private AwsPubSub awsPubSub;
+    boolean mBounded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,6 @@ public class RoomActivity extends AppCompatActivity {
         Intent intent = getIntent();
         RoomSelected = intent.getStringExtra("room");
         HomeSelected = intent.getStringExtra("home");
-
-        TextView textView = (TextView) findViewById(R.id.tv_message);
-        textView.setText(RoomSelected);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -66,62 +63,45 @@ public class RoomActivity extends AppCompatActivity {
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
         devices = db.GetDevicesInRoom(mDb, RoomSelected, HomeSelected);
-
-//        LocalBroadcastManager.getInstance(this).registerReceiver(
-//                mMessageReceiver, new IntentFilter("intentKey"));
         prepareLoad(devices);
     }
 
-//    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            // Get extra data included in the Intent
-//            String data = intent.getStringExtra("key");
-//        }
-//    };
+    /**
+     * Calling the method of service
+     */
 
-    private class ConnectTask extends AsyncTask<String, String, TcpClient> {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent mIntent = new Intent(this, AwsPubSub.class);
+        bindService(mIntent, mConnection, BIND_AUTO_CREATE);
+    };
 
-        private String data = null;
-        private String ip = null;
+    ServiceConnection mConnection = new ServiceConnection() {
 
-        private ConnectTask(String message, String address) {
-            super();
-            data = message;
-            ip = address;
+        public void onServiceDisconnected(ComponentName name) {
+            mBounded = false;
+            awsPubSub = null;
         }
 
-        @Override
-        protected TcpClient doInBackground(String... message) {
-
-            //we create a TCPClient object and
-            mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
-                @Override
-                //here the messageReceived method is implemented
-                public void messageReceived(String message) {
-                    publishProgress(message);
-                }
-            });
-            mTcpClient.run(data, ip);
-
-            return null;
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mBounded = true;
+            AwsPubSub.LocalAwsBinder mLocalBinder = (AwsPubSub.LocalAwsBinder)service;
+            awsPubSub = mLocalBinder.getServerInstance();
         }
+    };
 
-        protected void onProgressUpdate(String... message) {
-            if (message[0].equals(Constant.SERVER_NOT_REACHABLE)) {
-                if (mtoast != null)
-                    mtoast = null;
-                Context context = getApplicationContext();
-                CharSequence text = "Device Offline";
-                int duration = Toast.LENGTH_SHORT;
-
-                mtoast = Toast.makeText(context, text, duration);
-                mtoast.show();
-            } else {
-
-            }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mBounded) {
+            unbindService(mConnection);
+            mBounded = false;
         }
+    }
 
+    public void PusblishDataToShadow(String thing, String data){
+        awsPubSub.AWSPublish(thing, data);
     }
 
     /**
