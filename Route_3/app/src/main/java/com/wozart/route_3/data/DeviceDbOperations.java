@@ -5,7 +5,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.amazonaws.models.nosql.UsersDO;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.DEVICE_NAME;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.HOME_NAME;
@@ -15,6 +19,7 @@ import static com.wozart.route_3.data.DeviceContract.DeviceEntry.LOAD_3;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.LOAD_4;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.ROOM_NAME;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.TABLE_NAME;
+import static com.wozart.route_3.data.DeviceContract.DeviceEntry.THING_NAME;
 
 /**
  * Created by wozart on 28/09/17.
@@ -210,5 +215,72 @@ public class DeviceDbOperations {
 
             }
         }
+    }
+
+    public void ThingFromAws(SQLiteDatabase db, UsersDO user) {
+        for (String x : user.getDevices()) {
+            boolean isThingAlreadyPresent;
+            List<String> compositeDataFromAws;
+            compositeDataFromAws = Arrays.asList(x.split(","));
+            isThingAlreadyPresent = checkDevice(db, compositeDataFromAws.get(1));
+            if (!isThingAlreadyPresent) {
+                return;
+            } else {
+                ContentValues value = new ContentValues();
+                value.put(ROOM_NAME, "Hall");
+                value.put(THING_NAME, compositeDataFromAws.get(0));
+                value.put(DEVICE_NAME, compositeDataFromAws.get(1));
+                value.put(HOME_NAME, "Home");
+
+                try {
+                    db.beginTransaction();
+                    db.insert(TABLE_NAME, null, value);
+
+                    db.setTransactionSuccessful();
+                } catch (SQLException e) {
+                    //Too bad :(
+                } finally {
+                    db.endTransaction();
+
+                }
+            }
+        }
+    }
+
+    private boolean checkDevice(SQLiteDatabase db, String device) {
+        String[] params = new String[]{device};
+        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + DEVICE_NAME
+                + " = ?", params);
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            return true;
+        } else {
+            cursor.close();
+            return false;
+        }
+    }
+
+    public ArrayList<String> GetThingName(SQLiteDatabase db) {
+        ArrayList<String> devices = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select " + THING_NAME + " from " + TABLE_NAME, null);
+        while (cursor.moveToNext()) {
+            if (cursor.getString(0) != null)
+                devices.add(cursor.getString(0));
+        }
+        cursor.close();
+        return devices;
+    }
+
+    public String GetDevice(SQLiteDatabase db, String thing) {
+        String devices = null;
+        String[] params = new String[]{thing};
+        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + THING_NAME
+                + " = ?", params);
+        while (cursor.moveToNext()) {
+            if (cursor.getString(0) != null)
+                devices = cursor.getString(0);
+        }
+        cursor.close();
+        return devices;
     }
 }

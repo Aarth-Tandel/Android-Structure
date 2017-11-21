@@ -3,12 +3,12 @@ package com.wozart.route_3.network;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.Constant;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.AWSConfiguration;
@@ -18,8 +18,6 @@ import com.amazonaws.mobileconnectors.iot.AWSIotMqttNewMessageCallback;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttQos;
 import com.amazonaws.regions.Region;
 import com.facebook.AccessToken;
-import com.wozart.route_3.model.AwsState;
-import com.wozart.route_3.utilities.JsonUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -34,7 +32,6 @@ import static com.amazonaws.mobilehelper.util.ThreadUtils.runOnUiThread;
 public class AwsPubSub extends Service {
 
     private static final String LOG_TAG = "AWS IoT PubSub";
-    private JsonUtils jsonUtils = new JsonUtils();
     IBinder mBinder = new LocalAwsBinder();
     // --- Constants to modify per your configuration ---
 
@@ -44,7 +41,6 @@ public class AwsPubSub extends Service {
 
     private AWSIotMqttManager mqttManager;
     private String clientId;
-    private AwsState CloudData = new AwsState();
 
     private AWSCredentials awsCredentials;
     private CognitoCachingCredentialsProvider credentialsProvider;
@@ -78,6 +74,7 @@ public class AwsPubSub extends Service {
 
         // MQTT Client
         clientId = credentialsProvider.getCachedIdentityId();
+        Constant.IDENTITY_ID = clientId;
         mqttManager = new AWSIotMqttManager(clientId, CUSTOMER_SPECIFIC_ENDPOINT);
 
         // The following block uses IAM user credentials for authentication with AWS IoT.
@@ -134,7 +131,6 @@ public class AwsPubSub extends Service {
 
     public void AwsSubscribe(String device) {
         final String topic = "$aws/things/" + device + "/shadow/update/accepted";
-        final JsonUtils jsonUtils = new JsonUtils();
         Log.d(LOG_TAG, "topic = " + topic);
 
         try {
@@ -150,10 +146,8 @@ public class AwsPubSub extends Service {
                                         Log.d(LOG_TAG, "Message arrived:");
                                         Log.d(LOG_TAG, "   Topic: " + topic);
                                         Log.d(LOG_TAG, " Message: " + message);
-                                        //CloudData = jsonUtils.DeserializeAwsData(message);
-                                        if (CloudData != null) {
-                                            //TODO write function
-                                        }
+                                        String segments[] = topic.split("/");
+                                        sendDataToActivity(message + "/" + segments[2]);
                                     } catch (UnsupportedEncodingException e) {
                                         Log.e(LOG_TAG, "Message encoding error.", e);
                                     }
@@ -175,12 +169,53 @@ public class AwsPubSub extends Service {
         } catch (Exception e) {
             Log.e(LOG_TAG, "Publish error.", e);
         }
-
     }
 
-    private void sendDataToActivity(String connected){
+    public void AwsGet(String device) {
+        final String topic = "$aws/things/" + device + "/shadow/get/accepted";
+        Log.d(LOG_TAG, "topic = " + topic);
+
+        try {
+            mqttManager.subscribeToTopic(topic, AWSIotMqttQos.QOS0,
+                    new AWSIotMqttNewMessageCallback() {
+                        @Override
+                        public void onMessageArrived(final String topic, final byte[] data) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        String message = new String(data, "UTF-8");
+                                        Log.d(LOG_TAG, "Message arrived:");
+                                        Log.d(LOG_TAG, "   Topic: " + topic);
+                                        Log.d(LOG_TAG, " Message: " + message);
+                                        String segments[] = topic.split("/");
+                                        sendDataToActivity(message + "/" + segments[2]);
+                                    } catch (UnsupportedEncodingException e) {
+                                        Log.e(LOG_TAG, "Message encoding error.", e);
+                                    }
+                                }
+                            });
+                        }
+                    });
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Subscription error.", e);
+        }
+    }
+
+    public void AwsGetPublish(String device) {
+        final String topic = "$aws/things/" + device + "/shadow/get";
+        final String msg = "";
+
+        try {
+            mqttManager.publishString(msg, topic, AWSIotMqttQos.QOS0);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Publish error.", e);
+        }
+    }
+
+    private void sendDataToActivity(String message) {
         Intent intent = new Intent("AwsShadow");
-        intent.putExtra("Connection", connected);
+        intent.putExtra("data", message);
         LocalBroadcastManager.getInstance(AwsPubSub.this).sendBroadcast(intent);
     }
 }

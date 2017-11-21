@@ -24,7 +24,7 @@ public class JsonUtils {
     private static final String LOG_TAG = JsonUtils.class.getSimpleName();
     public static int ToggleLed = 0;
 
-    public AwsState DeserializeAwsData(String Data) {
+    public static AwsState DeserializeAwsData(String Data) {
         Gson gson = new Gson();
         AwsDataModel dataRD = new AwsDataModel();
 
@@ -33,7 +33,10 @@ public class JsonUtils {
         } catch (Exception e) {
             Log.e(LOG_TAG, "Error Parsing Json Data: " + e);
         }
-        return dataRD.reported.shadow;
+        if (dataRD.state.reported == null)
+            return dataRD.state.desired;
+        else
+            return dataRD.state.reported;
     }
 
     public String AwsRegionThing(String region, String thing) {
@@ -95,10 +98,10 @@ public class JsonUtils {
         return data;
     }
 
-    public String SerializeDataToAws() {
+    public static String SerializeDataToAws() {
         String data = null;
         if (ToggleLed == 1) {
-            data = "{\"type\":4,\"state\":{\"desired\": {\"led\": " + ToggleLed + ", \"dimm\": [100, 100, 100, 100],\"state\": [1, 1, 1, 1]}}}";
+            data = "{\"state\":{\"desired\": {\"led\": " + ToggleLed + ", \"dimm\": [100, 100, 100, 100],\"state\": [1, 1, 1, 1]}}}";
             ToggleLed = 0;
         } else {
             data = "{\"state\":{\"desired\": {\"led\": " + ToggleLed + ", \"dimm\": [100, 100, 100, 100],\"state\": [0, 0, 0, 0]}}}";
@@ -107,10 +110,21 @@ public class JsonUtils {
         return data;
     }
 
+    public static String SerializeDataToAws(AuraSwitch device) {
+        String data;
+        int[] states = device.getStates();
+        int led = device.getLed();
+        if (led == 1) led = 0;
+        else led = 1;
+        data = "{\"state\":{\"desired\": {\"led\": " + led + ", \"dimm\": [100, 100, 100, 100],\"state\": [" + states[0] + ", " + states[1] + ", " + states[2] + "," +
+                states[3] + "]}}}";
+        return data;
+    }
+
     public String InitialData(String ipInString) throws UnknownHostException {
         String ip = IpConvert(ipInString);
 
-        String data = "{\"type\":1,\"ip\":\"" + ip + "\",\"time\":" + (System.currentTimeMillis()/1000) + " }";
+        String data = "{\"type\":1,\"ip\":\"" + ip + "\",\"time\":" + (System.currentTimeMillis() / 1000) + " }";
         return data;
     }
 

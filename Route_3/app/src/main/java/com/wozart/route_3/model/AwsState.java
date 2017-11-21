@@ -30,4 +30,14 @@ public class AwsState {
                 this.dimm[i] = dimm;
         }
     }
+
+    public int getLed(){return led;}
+
+    public int[] getStates() {
+        return state;
+    }
+
+    public int[] getDims() {
+        return dimm;
+    }
 }

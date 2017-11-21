@@ -5,5 +5,6 @@ package com.wozart.route_3.model;
  */
 
 public class AwsReported {
-    public AwsState shadow;
+    public AwsState desired;
+    public AwsState reported;
 }

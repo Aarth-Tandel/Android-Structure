@@ -9,7 +9,7 @@ import com.Constant;
 public class AuraSwitch {
     private int type = 1;
     private String name = "4module";
-    private String loadName;
+    private String thing;
     private int state[] = new int[]{0, 0, 0, 0};
     private int dimm[] = new int[]{100, 100, 100, 100};
     private double version = 0.0;
@@ -19,6 +19,7 @@ public class AuraSwitch {
     private int aws = 1;
     private int error = 0;
     private int online = 0;
+    private int led = 0;
 
     public AuraSwitch() {
 
@@ -32,12 +33,12 @@ public class AuraSwitch {
         return name;
     }
 
-    public String getLoadName() {
-        return loadName;
+    public String getThing() {
+        return thing;
     }
 
-    public void setLoadName(String loadName) {
-        this.loadName = loadName;
+    public void setThing(String thing) {
+        this.thing = thing;
     }
 
     public int[] getStates() {
@@ -77,6 +78,8 @@ public class AuraSwitch {
     }
 
     public void setStates(int[] state){this.state = state;}
+
+    public void setDims(int[] dimm){this.dimm = dimm;}
 
     public void setName(String name) {
         this.name = name;
@@ -163,4 +166,11 @@ public class AuraSwitch {
         this.online = online;
     }
 
+    public int getLed() {
+        return led;
+    }
+
+    public void setLed(int led) {
+        this.led = led;
+    }
 }

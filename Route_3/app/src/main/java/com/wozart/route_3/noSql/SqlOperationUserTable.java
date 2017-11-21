@@ -10,9 +10,12 @@ import com.amazonaws.models.nosql.UsersDO;
 
 import java.util.List;
 
-public class SqlOperationTable {
+/**
+ * Created by wozart on 17/11/17.
+ */
 
-    private static final String LOG_TAG = SqlOperationTable.class.getSimpleName();
+public class SqlOperationUserTable {
+    private static final String LOG_TAG = SqlOperationUserTable.class.getSimpleName();
     private final static DynamoDBMapper mapper = AWSMobileClient.defaultMobileClient().getDynamoDBMapper();
     private final static UsersDO User = new UsersDO();
     private UserData Device = new UserData();
@@ -66,6 +69,4 @@ public class SqlOperationTable {
     public UsersDO GetUserInfo() {
         return User;
     }
-
 }
-

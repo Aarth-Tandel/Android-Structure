@@ -44,11 +44,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Constant;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobile.AWSConfiguration;
 import com.amazonaws.mobile.AWSMobileClient;
-import com.amazonaws.mobilehelper.auth.IdentityHandler;
 import com.amazonaws.mobilehelper.auth.IdentityManager;
 import com.amazonaws.mobilehelper.auth.IdentityProvider;
 import com.amazonaws.mobilehelper.auth.user.IdentityProfile;
+import com.amazonaws.models.nosql.UsersDO;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.wozart.route_3.data.DeviceDbHelper;
@@ -58,6 +61,7 @@ import com.wozart.route_3.network.AwsPubSub;
 import com.wozart.route_3.network.NsdClient;
 import com.wozart.route_3.network.TcpClient;
 import com.wozart.route_3.network.TcpServer;
+import com.wozart.route_3.noSql.SqlOperationUserTable;
 import com.wozart.route_3.utilities.DeviceUtils;
 import com.wozart.route_3.utilities.Encryption;
 import com.wozart.route_3.utilities.JsonUtils;
@@ -83,11 +87,14 @@ public class MainActivity extends AppCompatActivity
 
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
+    private UsersDO UserData = new UsersDO();
 
     private TcpClient mTcpClient;
     private NsdClient Nsd;
     private DeviceUtils mDeviceUtils;
     private AwsPubSub awsPubSub;
+    private AWSCredentials awsCredentials;
+    private CognitoCachingCredentialsProvider credentialsProvider;
     boolean mBounded;
 
     private Toast mtoast;
@@ -96,8 +103,6 @@ public class MainActivity extends AppCompatActivity
     private NavigationView NavigationView;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton AddDevice, ConfigureDevice, AddRooms;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +134,19 @@ public class MainActivity extends AppCompatActivity
         LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(
                 mMessageReceiver, new IntentFilter("AwsShadow"));
 
-        UserInfo();
+        credentialsProvider = new CognitoCachingCredentialsProvider(
+                getApplicationContext(), // context
+                AWSConfiguration.AMAZON_COGNITO_IDENTITY_POOL_ID,// Identity Pool ID
+                AWSConfiguration.AMAZON_COGNITO_REGION // Region
+        );
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                awsCredentials = credentialsProvider.getCredentials();
+                GetUserData();
+            }
+        }).start();
         initializeFab();
         initializeTabs();
         updateUserDetails();
@@ -196,35 +213,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void UserInfo() {
+    public void GetUserData() {
+        final SqlOperationUserTable user = new SqlOperationUserTable();
         Runnable runnable = new Runnable() {
-            @Override
             public void run() {
-                final IdentityManager identityManager = AWSMobileClient.defaultMobileClient().getIdentityManager();
-
-                Log.d(LOG_TAG, "fetchUserIdentity");
-                AWSMobileClient.defaultMobileClient()
-                        .getIdentityManager()
-                        .getUserID(new IdentityHandler() {
-
-                            @Override
-                            public void onIdentityId(String identityId) {
-                                Constant.IDENTITY_ID = identityId;
-                                if (identityManager.isUserSignedIn()) {
-                                    final IdentityProfile identityProfile = identityManager.getIdentityProfile();
-
-                                    if (identityProfile != null) {
-//                                        getUserData(identityId);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void handleError(Exception exception) {
-                                Log.e(LOG_TAG, " " + exception);
-                            }
-                        });
-
+                UserData = user.GetData(credentialsProvider.getIdentityId());
+                if (UserData == null)
+                    return;
+                db.ThingFromAws(mDb, UserData);
             }
         };
         Thread saveUserId = new Thread(runnable);
@@ -272,14 +268,10 @@ public class MainActivity extends AppCompatActivity
         AddRooms.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 addRooms();
-
             }
         });
         AddDevice.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Snackbar.make(coordinatorLayout, "Only five Home can be added :(", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
             }
         });
         ConfigureDevice.setOnClickListener(new View.OnClickListener() {
@@ -287,77 +279,6 @@ public class MainActivity extends AppCompatActivity
                 openWebPage(URL);
             }
         });
-    }
-
-    private class ConnectTask extends AsyncTask<String, String, TcpClient> {
-
-        private String data = null;
-        private String ip = null;
-
-        private ConnectTask(String message, String address) {
-            super();
-            data = message;
-            ip = address;
-        }
-
-        @Override
-        protected TcpClient doInBackground(String... message) {
-
-            //we create a TCPClient object and
-            mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
-                @Override
-                //here the messageReceived method is implemented
-                public void messageReceived(String message) {
-                    publishProgress(message);
-                }
-            });
-            mTcpClient.run(data, ip);
-
-            return null;
-        }
-
-        protected void onProgressUpdate(String... message) {
-            if (message[0].equals(Constant.SERVER_NOT_REACHABLE)) {
-                if (mtoast != null)
-                    mtoast = null;
-                Context context = getApplicationContext();
-                CharSequence text = "Device Offline";
-                int duration = Toast.LENGTH_SHORT;
-
-                mtoast = Toast.makeText(context, text, duration);
-                mtoast.show();
-            } else {
-                JsonUtils mJsonUtils = new JsonUtils();
-                AuraSwitch dummyDevice = mJsonUtils.DeserializeTcp(message[0]);
-
-                if (dummyDevice.getType() == 1 && dummyDevice.getCode().equals(Constant.UNPAIRED)) {
-                    dummyDevice.setIP(Nsd.GetIP(dummyDevice.getName()));
-                    Snackbar.make(findViewById(R.id.mCordinateLayout), "New device " + dummyDevice.getName(), Snackbar.LENGTH_INDEFINITE)
-                            .setAction("ADD", new ConfigureListener(dummyDevice)).show();
-                }
-
-                if (dummyDevice.getCode().equals(Encryption.MAC(MainActivity.this)) && dummyDevice.getType() == 2) {
-                    if (mtoast != null)
-                        mtoast = null;
-                    Context context = getApplicationContext();
-                    CharSequence text = "Device Paired Successfully";
-                    int duration = Toast.LENGTH_SHORT;
-                    mtoast = Toast.makeText(context, text, duration);
-                    mtoast.show();
-                    db.AddDevice(mDb, AddNewDeviceTo, SelectedHome, dummyDevice.getName());
-                }
-
-                if(dummyDevice.getType() == 1 && dummyDevice.getCode().equals(Encryption.MAC(MainActivity.this))){
-                    for(NsdServiceInfo x : Nsd.GetAllServices()){
-                        //Find the match in services found and data received
-                        if(x.getServiceName().contains(dummyDevice.getName())){
-                            mDeviceUtils.RegisterDevice(dummyDevice, x.getHost().getHostAddress());
-                        }
-                    }
-                }
-            }
-        }
-
     }
 
     @Override
@@ -375,8 +296,10 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         this.HomeMenu = menu;
-        for (String home : db.GetAllHome(mDb))
-            createMenuItem(home);
+        for (String home : db.GetAllHome(mDb)) {
+            if (home != null)
+                createMenuItem(home);
+        }
         onOptionsItemSelected(menu.findItem(R.id.home));
         return true;
     }
@@ -688,7 +611,7 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
         Intent mIntent = new Intent(this, AwsPubSub.class);
         bindService(mIntent, mConnection, BIND_AUTO_CREATE);
-    };
+    }
 
     ServiceConnection mConnection = new ServiceConnection() {
 
@@ -699,7 +622,7 @@ public class MainActivity extends AppCompatActivity
 
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBounded = true;
-            AwsPubSub.LocalAwsBinder mLocalBinder = (AwsPubSub.LocalAwsBinder)service;
+            AwsPubSub.LocalAwsBinder mLocalBinder = (AwsPubSub.LocalAwsBinder) service;
             awsPubSub = mLocalBinder.getServerInstance();
         }
     };
@@ -707,7 +630,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        if(mBounded) {
+        if (mBounded) {
             unbindService(mConnection);
             mBounded = false;
         }
@@ -717,13 +640,97 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
-            String data = intent.getStringExtra("Connection");
-            if(data.equals("Connected")) {
-                awsPubSub.AwsSubscribe("device_0002");
-                awsPubSub.AwsSubscribe("device_0001");
+            String shadow = intent.getStringExtra("data");
+            String segments[] = shadow.split("/");
+            if (shadow.equals("Connected")) {
+                ArrayList<String> things = db.GetThingName(mDb);
+                for (String x : things) {
+                    awsPubSub.AwsGet(x);
+                    awsPubSub.AwsGetPublish(x);
+                    awsPubSub.AwsSubscribe(x);
+                }
+            } else{
+                String device = db.GetDevice(mDb, segments[1]);
+                mDeviceUtils.CloudDevices(JsonUtils.DeserializeAwsData(segments[0]),segments[1], device);
             }
         }
     };
+
+
+    /**
+     * Send data to the device TCP
+     */
+
+    private class ConnectTask extends AsyncTask<String, String, TcpClient> {
+
+        private String data = null;
+        private String ip = null;
+
+        private ConnectTask(String message, String address) {
+            super();
+            data = message;
+            ip = address;
+        }
+
+        @Override
+        protected TcpClient doInBackground(String... message) {
+
+            //we create a TCPClient object and
+            mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
+                @Override
+                //here the messageReceived method is implemented
+                public void messageReceived(String message) {
+                    publishProgress(message);
+                }
+            });
+            mTcpClient.run(data, ip);
+
+            return null;
+        }
+
+        protected void onProgressUpdate(String... message) {
+            if (message[0].equals(Constant.SERVER_NOT_REACHABLE)) {
+                if (mtoast != null)
+                    mtoast = null;
+                Context context = getApplicationContext();
+                CharSequence text = "Device Offline";
+                int duration = Toast.LENGTH_SHORT;
+
+                mtoast = Toast.makeText(context, text, duration);
+                mtoast.show();
+            } else {
+                JsonUtils mJsonUtils = new JsonUtils();
+                AuraSwitch dummyDevice = mJsonUtils.DeserializeTcp(message[0]);
+
+                if (dummyDevice.getType() == 1 && dummyDevice.getCode().equals(Constant.UNPAIRED)) {
+                    dummyDevice.setIP(Nsd.GetIP(dummyDevice.getName()));
+                    Snackbar.make(findViewById(R.id.mCordinateLayout), "New device " + dummyDevice.getName(), Snackbar.LENGTH_INDEFINITE)
+                            .setAction("ADD", new ConfigureListener(dummyDevice)).show();
+                }
+
+                if (dummyDevice.getCode().equals(Encryption.MAC(MainActivity.this)) && dummyDevice.getType() == 2) {
+                    if (mtoast != null)
+                        mtoast = null;
+                    Context context = getApplicationContext();
+                    CharSequence text = "Device Paired Successfully";
+                    int duration = Toast.LENGTH_SHORT;
+                    mtoast = Toast.makeText(context, text, duration);
+                    mtoast.show();
+                    db.AddDevice(mDb, AddNewDeviceTo, SelectedHome, dummyDevice.getName());
+                }
+
+                if (dummyDevice.getType() == 1 && dummyDevice.getCode().equals(Encryption.MAC(MainActivity.this))) {
+                    for (NsdServiceInfo x : Nsd.GetAllServices()) {
+                        //Find the match in services found and data received
+                        if (x.getServiceName().contains(dummyDevice.getName())) {
+                            mDeviceUtils.RegisterDevice(dummyDevice, x.getHost().getHostAddress());
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 
     /**
      * Updating favourite fragment from main

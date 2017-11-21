@@ -5,6 +5,5 @@ package com.wozart.route_3.model;
  */
 
 public class AwsDataModel {
-    public AwsReported desired;
-    public AwsReported reported;
+    public AwsReported state;
 }

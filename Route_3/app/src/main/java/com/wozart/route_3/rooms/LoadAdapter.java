@@ -2,14 +2,14 @@ package com.wozart.route_3.rooms;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,8 +26,10 @@ import android.widget.Toast;
 
 import com.Constant;
 import com.wozart.route_3.R;
+import com.wozart.route_3.data.DeviceDbHelper;
+import com.wozart.route_3.data.DeviceDbOperations;
 import com.wozart.route_3.model.AuraSwitch;
-import com.wozart.route_3.network.AwsPubSub;
+import com.wozart.route_3.model.AwsState;
 import com.wozart.route_3.network.TcpClient;
 import com.wozart.route_3.utilities.DeviceUtils;
 import com.wozart.route_3.utilities.JsonUtils;
@@ -36,8 +37,6 @@ import com.wozart.route_3.utilities.JsonUtils;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import static android.content.Context.BIND_AUTO_CREATE;
-import static com.amazonaws.AmazonServiceException.ErrorType.Client;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
@@ -55,6 +54,8 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
     private boolean flag = true;
     private int count = 0;
 
+    private DeviceDbOperations db = new DeviceDbOperations();
+    private SQLiteDatabase mDb;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, device;
@@ -83,7 +84,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                         Loads loads = LoadList.get(pos);
                         mDevice = mDeviceUtils.UpdateSwitchState(loads.getDevice(), loads.getLoadNumber());
 
-                        if (mDevice != null) {
+                        if (mDeviceUtils.GetIP(loads.getDevice()) != null) {
                             try {
                                 data = serialize.Serialize(mDevice);
                             } catch (UnknownHostException e) {
@@ -91,12 +92,12 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                             }
                             new ConnectTask(data, mDeviceUtils.GetIP(loads.getDevice())).execute("");
 
-                        } else {
-                            if(mContext instanceof RoomActivity){
-                                ((RoomActivity)mContext).PusblishDataToShadow("device_0001", "");
+                        } else if (isNetworkAvailable()) {
+                            if (mContext instanceof RoomActivity) {
+                                ((RoomActivity) mContext).PusblishDataToShadow(mDevice.getThing(), JsonUtils.SerializeDataToAws(mDevice));
                             }
+                        } else
                             Toast.makeText(v.getContext(), "Device offline", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
             });
@@ -107,8 +108,12 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
     public LoadAdapter(Context mContext, List<Loads> loadsList) {
         this.mContext = mContext;
         this.LoadList = loadsList;
+        DeviceDbHelper dbHelper = new DeviceDbHelper(mContext);
+        mDb = dbHelper.getWritableDatabase();
         LocalBroadcastManager.getInstance(mContext).registerReceiver(
                 mMessageReceiver, new IntentFilter("intentKey"));
+        LocalBroadcastManager.getInstance(mContext).registerReceiver(
+                mReceiverAws, new IntentFilter("AwsShadow"));
         mDeviceUtils = new DeviceUtils();
     }
 
@@ -125,7 +130,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
         Loads loads = LoadList.get(position);
         loads.setPostion(position);
 
-        if(flag) {
+        if (flag) {
             updateLoads(loads);
         }
 
@@ -141,7 +146,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                 showPopupMenu(holder.overflow, holder.title.getText().toString(), position);
             }
         });
-        if(count == LoadList.size())
+        if (count == LoadList.size())
             flag = false;
     }
 
@@ -158,8 +163,30 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
         AuraSwitch dummyDevice = mDeviceUtils.GetInfo(load.getDevice());
         load.setIP(dummyDevice.getIP());
         int[] state = dummyDevice.getStates();
-        load.setState(state[load.getLoadNumber()]);
+        load.setState(state[load.getLoadNumber() % 4]);
     }
+
+    /**
+     * To check is there internet connection
+     */
+
+    private boolean isNetworkAvailable() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
 
     /**
      * Send data to the Aura Device
@@ -209,10 +236,8 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                 if (dummyDevice.getType() == 4) {
                     updateStates(dummyDevice.getStates(), dummyDevice.getName());
                 }
-
             }
         }
-
     }
 
     /**
@@ -227,6 +252,23 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
             JsonUtils deserialize = new JsonUtils();
             AuraSwitch dummyDevice = deserialize.Deserialize(data);
             updateStates(dummyDevice.getStates(), dummyDevice.getName());
+        }
+    };
+
+    /**
+     * Data from the AwsShadowUpdate
+     */
+
+    private BroadcastReceiver mReceiverAws = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String shadow = intent.getStringExtra("data");
+            String segments[] = shadow.split("/");
+            String device = db.GetDevice(mDb, segments[1]);
+            AwsState dummyShadow = JsonUtils.DeserializeAwsData(segments[0]);
+            mDeviceUtils.CloudDevices(dummyShadow, segments[1], device);
+            updateStates(dummyShadow.getStates(), device);
         }
     };
 

@@ -1,6 +1,7 @@
 package com.wozart.route_3.utilities;
 
 import com.wozart.route_3.model.AuraSwitch;
+import com.wozart.route_3.model.AwsState;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class DeviceUtils {
 
     private static ArrayList<AuraSwitch> AuraFourNodeDevice = new ArrayList<>();
+    private static ArrayList<AuraSwitch> ShadowAuraDevice = new ArrayList<>();
     public static final String TAG = "DeviceUtils";
 
     public void RegisterDevice(AuraSwitch deviceName, String ip) {
@@ -27,6 +29,25 @@ public class DeviceUtils {
             singleDevice.setCode(deviceName.getCode());
             singleDevice.setOnline(1);
             singleDevice.setStates(deviceName.getStates());
+            AuraFourNodeDevice.add(singleDevice);
+        }
+    }
+
+    public void CloudDevices(AwsState shadow, String thing, String device){
+        Boolean flag = true;
+        for(AuraSwitch x : AuraFourNodeDevice){
+            if(x.getName().equals(device))
+                flag = false;
+        }
+        if(flag) {
+            AuraSwitch singleDevice = new AuraSwitch();
+            singleDevice.setName(device);
+            singleDevice.setOnline(1);
+            singleDevice.setStates(shadow.getStates());
+            singleDevice.setDims(shadow.getDims());
+            singleDevice.setThing(thing);
+            singleDevice.setAWSConfiguration(1);
+            singleDevice.setLed(shadow.getLed());
             AuraFourNodeDevice.add(singleDevice);
         }
     }
@@ -58,6 +79,8 @@ public class DeviceUtils {
                 singleDevice.setDummyStates(switchNumber);
                 singleDevice.setDummyDims(switchNumber);
                 singleDevice.setName(c.getName());
+                singleDevice.setThing(c.getThing());
+                singleDevice.setLed(c.getLed());
                 return singleDevice;
             }
         }

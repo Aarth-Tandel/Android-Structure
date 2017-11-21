@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobilehelper.auth.DefaultSignInResultHandler;
 import com.amazonaws.mobilehelper.auth.IdentityHandler;
 import com.amazonaws.mobilehelper.auth.IdentityManager;
 import com.amazonaws.mobilehelper.auth.IdentityProvider;
 import com.amazonaws.mobilehelper.auth.user.IdentityProfile;
-import com.wozart.route_3.noSql.SqlOperationTable;
+import com.wozart.route_3.noSql.SqlOperationUserTable;
 
 /**
  * Created by wozart on 12/10/17.
@@ -52,7 +51,7 @@ public class SignInHandler extends DefaultSignInResultHandler {
     }
 
     private void userCheck(final String id) {
-        final SqlOperationTable user = new SqlOperationTable();
+        final SqlOperationUserTable user = new SqlOperationUserTable();
         Runnable runnable = new Runnable() {
             public void run() {
                 IsUserAvailable = user.CheckUser(id);
@@ -65,7 +64,7 @@ public class SignInHandler extends DefaultSignInResultHandler {
     }
 
     private void userInsert(final String id) {
-        final SqlOperationTable user = new SqlOperationTable();
+        final SqlOperationUserTable user = new SqlOperationUserTable();
         Runnable runnable = new Runnable() {
             public void run() {
                 user.InsertData(id);
