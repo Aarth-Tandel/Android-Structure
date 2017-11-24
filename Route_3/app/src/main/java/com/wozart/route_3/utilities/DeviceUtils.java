@@ -6,13 +6,19 @@ import com.wozart.route_3.model.AwsState;
 import java.util.ArrayList;
 
 /**
- * Created by wozart on 01/11/17.
+ * Created for Wozart on 01/11/17.
+ * Author - Aarth Tandel
+ *
+ * Device data GET and SET methods
+ *
+ * //////////////////////////////
+ * Version - 1.0.0 - Initial built
+ * //////////////////////////////
  */
 
 public class DeviceUtils {
 
     private static ArrayList<AuraSwitch> AuraFourNodeDevice = new ArrayList<>();
-    private static ArrayList<AuraSwitch> ShadowAuraDevice = new ArrayList<>();
     public static final String TAG = "DeviceUtils";
 
     public void RegisterDevice(AuraSwitch deviceName, String ip) {

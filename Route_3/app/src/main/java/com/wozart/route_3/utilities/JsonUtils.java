@@ -17,12 +17,19 @@ import java.util.ArrayList;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
- * Created by wozart on 26/10/17.
+ * Created for Wozart on 26/10/17.
+ * Author - Aarth Tandel
+ *
+ * Serializing and Deserializing JSON data
+ *
+ * //////////////////////////////
+ * Version - 1.0.0 - Initial built
+ * //////////////////////////////
  */
 
 public class JsonUtils {
     private static final String LOG_TAG = JsonUtils.class.getSimpleName();
-    public static int ToggleLed = 0;
+    private static int ToggleLed = 0;
 
     public static AwsState DeserializeAwsData(String Data) {
         Gson gson = new Gson();
@@ -33,10 +40,7 @@ public class JsonUtils {
         } catch (Exception e) {
             Log.e(LOG_TAG, "Error Parsing Json Data: " + e);
         }
-        if (dataRD.state.reported == null)
-            return dataRD.state.desired;
-        else
-            return dataRD.state.reported;
+        return dataRD.state.reported;
     }
 
     public String AwsRegionThing(String region, String thing) {

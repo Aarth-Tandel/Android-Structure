@@ -11,25 +11,40 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.Constant.CHECK_DEVICES;
+import static com.Constant.CRUD_ROOM;
+import static com.Constant.GET_ALL_DEVICES;
+import static com.Constant.GET_ALL_HOME;
+import static com.Constant.GET_DEVICES_FOR_THING;
+import static com.Constant.GET_DEVICES_IN_ROOM;
+import static com.Constant.GET_LOADS;
+import static com.Constant.GET_ROOMS;
+import static com.Constant.GET_THING_NAME;
+import static com.Constant.INSERT_DEVICES;
+import static com.Constant.INSERT_INITIAL_DATA;
+import static com.Constant.INSERT_ROOMS;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.DEVICE_NAME;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.HOME_NAME;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.LOAD_1;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.LOAD_2;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.LOAD_3;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.LOAD_4;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.ROOM_NAME;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.TABLE_NAME;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.THING_NAME;
 
 /**
- * Created by wozart on 28/09/17.
+ * Created for Wozart on 28/09/17.
+ * Author - Aarth Tandel
+ *
+ * Database accessing layer
+ *
+ * //////////////////////////////
+ * Version - 1.0.0 - Initial built
+ * //////////////////////////////
  */
 
 public class DeviceDbOperations {
 
     public ArrayList<String> GetAllDevices(SQLiteDatabase db) {
         ArrayList<String> devices = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery(GET_ALL_DEVICES, null);
         while (cursor.moveToNext()) {
             devices.add(cursor.getString(1));
         }
@@ -40,7 +55,7 @@ public class DeviceDbOperations {
 
     public ArrayList<String> GetAllHome(SQLiteDatabase db) {
         ArrayList<String> home = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select " + HOME_NAME + " from " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery(GET_ALL_HOME, null);
         while (cursor.moveToNext()) {
             home.add(cursor.getString(0));
         }
@@ -49,7 +64,7 @@ public class DeviceDbOperations {
     }
 
     public void InsertBasicData(SQLiteDatabase db) {
-        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery(INSERT_INITIAL_DATA, null);
         if (cursor.getCount() == 0) {
             ContentValues value = new ContentValues();
             value.put(HOME_NAME, "Home");
@@ -84,20 +99,19 @@ public class DeviceDbOperations {
 
     public ArrayList<String> GetRooms(SQLiteDatabase db, String home) {
         String[] params = new String[]{home};
-        Cursor cursor = db.rawQuery("select distinct " + ROOM_NAME + " from " + TABLE_NAME + " where " + HOME_NAME
-                + " = ?", params);
+        Cursor cursor = db.rawQuery(GET_ROOMS, params);
         ArrayList<String> room = new ArrayList<>();
         while (cursor.moveToNext()) {
             room.add(cursor.getString(0));
         }
+        cursor.close();
         return room;
     }
 
     public void InsertRoom(SQLiteDatabase db, String home, String room) {
         String x = "null";
         String[] params = new String[]{x};
-        Cursor cursor = db.rawQuery("select " + HOME_NAME + " from " + TABLE_NAME + " where " + ROOM_NAME
-                + " = ?", params);
+        Cursor cursor = db.rawQuery(INSERT_ROOMS, params);
         if (cursor.getCount() == 0) {
             ContentValues value = new ContentValues();
             value.put(HOME_NAME, home);
@@ -119,26 +133,25 @@ public class DeviceDbOperations {
     }
 
     public void DeleteRoom(SQLiteDatabase db, String home, String room) {
-        db.delete(TABLE_NAME, HOME_NAME + " =? and " + ROOM_NAME + " =? ", new String[]{home, room});
+        db.delete(TABLE_NAME, CRUD_ROOM, new String[]{home, room});
     }
 
     public void UpdateRoom(SQLiteDatabase db, String home, String previousRoom, String room) {
         ContentValues cv = new ContentValues();
         cv.put(ROOM_NAME, room);
-        db.update(TABLE_NAME, cv, HOME_NAME + " =?  and " + ROOM_NAME + " =? ", new String[]{home, previousRoom});
+        db.update(TABLE_NAME, cv, CRUD_ROOM, new String[]{home, previousRoom});
     }
 
     public void TransferDeletedDevices(SQLiteDatabase db, String home, String room) {
         ContentValues cv = new ContentValues();
         cv.put(ROOM_NAME, "Hall");
-        db.update(TABLE_NAME, cv, HOME_NAME + " =? and " + ROOM_NAME + " =? ", new String[]{home, room});
+        db.update(TABLE_NAME, cv, CRUD_ROOM, new String[]{home, room});
     }
 
     public ArrayList<String> GetDevicesInRoom(SQLiteDatabase db, String room, String home) {
         ArrayList<String> devices = new ArrayList<>();
         String[] params = new String[]{home, room};
-        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + HOME_NAME
-                + " = ? and " + ROOM_NAME + " =?", params);
+        Cursor cursor = db.rawQuery(GET_DEVICES_IN_ROOM, params);
         while (cursor.moveToNext()) {
             devices.add(cursor.getString(0));
         }
@@ -148,8 +161,7 @@ public class DeviceDbOperations {
 
     public ArrayList<String> GetLoads(SQLiteDatabase db, String device) {
         String[] params = new String[]{device};
-        Cursor cursor = db.rawQuery("select " + LOAD_1 + ", " + LOAD_2 + ", " + LOAD_3 + ", " + LOAD_4 + " from " + TABLE_NAME + " where " + DEVICE_NAME
-                + " = ?", params);
+        Cursor cursor = db.rawQuery(GET_LOADS, params);
         ArrayList<String> loads = new ArrayList<>();
         while (cursor.moveToNext()) {
             loads.add(cursor.getString(0));
@@ -164,7 +176,7 @@ public class DeviceDbOperations {
     public void AddDevice(SQLiteDatabase db, String room, String home, String device) {
 
         ArrayList<String> devicesDuplicate = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + " from " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery(INSERT_DEVICES, null);
         while (cursor.moveToNext()) {
             if (cursor.getString(0) != null)
                 devicesDuplicate.add(cursor.getString(0));
@@ -249,8 +261,7 @@ public class DeviceDbOperations {
 
     private boolean checkDevice(SQLiteDatabase db, String device) {
         String[] params = new String[]{device};
-        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + DEVICE_NAME
-                + " = ?", params);
+        Cursor cursor = db.rawQuery(CHECK_DEVICES, params);
         if (cursor.getCount() == 0) {
             cursor.close();
             return true;
@@ -262,7 +273,7 @@ public class DeviceDbOperations {
 
     public ArrayList<String> GetThingName(SQLiteDatabase db) {
         ArrayList<String> devices = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select " + THING_NAME + " from " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery(GET_THING_NAME, null);
         while (cursor.moveToNext()) {
             if (cursor.getString(0) != null)
                 devices.add(cursor.getString(0));
@@ -274,8 +285,7 @@ public class DeviceDbOperations {
     public String GetDevice(SQLiteDatabase db, String thing) {
         String devices = null;
         String[] params = new String[]{thing};
-        Cursor cursor = db.rawQuery("select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + THING_NAME
-                + " = ?", params);
+        Cursor cursor = db.rawQuery(GET_DEVICES_FOR_THING, params);
         while (cursor.moveToNext()) {
             if (cursor.getString(0) != null)
                 devices = cursor.getString(0);

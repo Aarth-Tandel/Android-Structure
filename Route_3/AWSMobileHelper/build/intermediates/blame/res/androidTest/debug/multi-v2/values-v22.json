@@ -1,10 +1,26 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v22/values-v22.xml",
+            "outputFile": "D:\\Users\\wozart\\Documents\\aarth\\Wozart 2.0.0\\Android-Structure\\Route_3\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v22\\values-v22.xml",
             "map": [
                 {
-                    "source": "/Users/wozart/.gradle/caches/transforms-1/files-1.1/appcompat-v7-24.2.0.aar/0245861d72f927865de28478fe997623/res/values-v22/values-v22.xml",
+                    "source": "D:\\Users\\wozart\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-24.2.0.aar\\0245861d72f927865de28478fe997623\\res\\values-v22\\values-v22.xml",
+                    "from": {
+                        "startLines": "2,3,4,9",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,130,217,553",
+                        "endLines": "2,3,8,13",
+                        "endColumns": "74,86,12,12",
+                        "endOffsets": "125,212,548,896"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "D:\\Aarth\\Programming\\Android-Structure\\Route_3\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v22\\values-v22.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Aarth Tandel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-24.2.0.aar\\61587a7e712a4d3511ae40747dcf201e\\res\\values-v22\\values-v22.xml",
                     "from": {
                         "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",

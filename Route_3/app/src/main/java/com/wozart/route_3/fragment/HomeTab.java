@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wozart.route_3.Rooms;
-import com.wozart.route_3.AlbumsAdapter;
+import com.wozart.route_3.RoomAdapter;
 import com.wozart.route_3.MainActivity;
 import com.wozart.route_3.R;
 import com.wozart.route_3.data.DeviceDbHelper;
@@ -32,7 +32,7 @@ import java.util.List;
 public class HomeTab extends Fragment {
 
     private RecyclerView recyclerView;
-    private AlbumsAdapter adapter;
+    private RoomAdapter adapter;
     private List<Rooms> roomsList;
 
     private DeviceDbOperations db = new DeviceDbOperations();
@@ -47,7 +47,7 @@ public class HomeTab extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         roomsList = new ArrayList<>();
-        adapter = new AlbumsAdapter(getActivity(), roomsList);
+        adapter = new RoomAdapter(getActivity(), roomsList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);

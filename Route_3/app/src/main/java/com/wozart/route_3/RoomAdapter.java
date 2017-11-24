@@ -29,7 +29,7 @@ import com.wozart.route_3.rooms.RoomActivity;
 
 import java.util.List;
 
-public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHolder> {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<Rooms> roomsList;
@@ -66,7 +66,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     }
 
 
-    public AlbumsAdapter(Context mContext, List<Rooms> roomsList) {
+    public RoomAdapter(Context mContext, List<Rooms> roomsList) {
         this.mContext = mContext;
         this.roomsList = roomsList;
     }

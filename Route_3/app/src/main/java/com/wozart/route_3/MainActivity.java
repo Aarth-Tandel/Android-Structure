@@ -70,18 +70,32 @@ import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import static com.Constant.MAX_HOME;
+import static com.Constant.NETWORK_SSID;
+
+/**
+ * Created for Wozart on 26/9/17.
+ * Author - Aarth Tandel
+ *
+ * NSD Discovery
+ * Fetching and updating users's Data
+ * Tcp Server Receiver
+ * Tcp Client to send data
+ *
+ * //////////////////////////////
+ * Version - 1.0.0 - Initial built
+ * //////////////////////////////
+ */
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private IdentityManager identityManager;
-    public static String NETWORK_SSID = "Aura";
-    public static String URL = "http://192.168.10.1/";
     private String IP;
 
     private Menu HomeMenu;
     private int HOME_ID = 1;
-    private int MAX_HOME = 5;
     public static String SelectedHome;
     private static String AddNewDeviceTo = null;
 
@@ -153,6 +167,10 @@ public class MainActivity extends AppCompatActivity
         convertIP();
         initializeDiscovery();
     }
+
+    /**
+     * Initializing User's data and UI/UX components
+     */
 
     private void initializeDiscovery() {
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
@@ -276,7 +294,7 @@ public class MainActivity extends AppCompatActivity
         });
         ConfigureDevice.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openWebPage(URL);
+                openWebPage(Constant.URL);
             }
         });
     }
@@ -378,6 +396,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Side navigation options
+     */
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -402,6 +424,10 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    /**
+     * Dialogue modal pop-up to register various values
+     */
 
     private void addRooms() {
         final Boolean[] flag = {true};
@@ -573,6 +599,10 @@ public class MainActivity extends AppCompatActivity
         });
         alert.show();
     }
+
+    /**
+     * Opening configuration webpage for Aura Switch
+     */
 
     private void openWebPage(String url) {
 

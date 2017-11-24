@@ -40,7 +40,16 @@ import java.util.List;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
- * Created by wozart on 26/10/17.
+ * Created for Wozart on 26/10/17.
+ * Author - Aarth Tandel
+ *
+ * RecyclerView for Rooms
+ * Publishing data to AWS IOT
+ * TCP Server for updating loads
+ *
+ * ///////////////////////////////
+ * Version - 1.0.0 - Initial built
+ * ///////////////////////////////
  */
 
 public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> {
@@ -264,11 +273,18 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String shadow = intent.getStringExtra("data");
-            String segments[] = shadow.split("/");
-            String device = db.GetDevice(mDb, segments[1]);
-            AwsState dummyShadow = JsonUtils.DeserializeAwsData(segments[0]);
-            mDeviceUtils.CloudDevices(dummyShadow, segments[1], device);
-            updateStates(dummyShadow.getStates(), device);
+            if(shadow != "Connected") {
+                String segments[] = shadow.split("/");
+                String device = db.GetDevice(mDb, segments[1]);
+                AwsState dummyShadow = JsonUtils.DeserializeAwsData(segments[0]);
+                if (dummyShadow != null) {
+                    mDeviceUtils.CloudDevices(dummyShadow, segments[1], device);
+                    updateStates(dummyShadow.getStates(), device);
+                } else {
+                    if (mtoast != null) mtoast = null;
+                    Toast.makeText(mContext, "Aura Switch not connected to internet", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     };
 
