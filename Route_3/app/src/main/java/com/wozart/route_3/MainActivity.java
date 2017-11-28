@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private IdentityManager identityManager;
-    private String IP;
 
     private Menu HomeMenu;
     private int HOME_ID = 1;
@@ -164,7 +163,6 @@ public class MainActivity extends AppCompatActivity
         initializeFab();
         initializeTabs();
         updateUserDetails();
-        convertIP();
         initializeDiscovery();
     }
 
@@ -193,7 +191,7 @@ public class MainActivity extends AppCompatActivity
                     JsonUtils mJsonUtils = new JsonUtils();
                     String data = null;
                     try {
-                        data = mJsonUtils.InitialData(IP);
+                        data = mJsonUtils.InitialData(convertIP());
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     }
@@ -414,6 +412,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
+
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -554,11 +553,11 @@ public class MainActivity extends AppCompatActivity
         alert.show();
     }
 
-    private void convertIP() {
+    private String convertIP() {
         WifiManager mWifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = mWifi.getConnectionInfo();
         int ipAddress = wifiInfo.getIpAddress();
-        IP = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+        return String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
     }
 
     private void addHomeDialog() {

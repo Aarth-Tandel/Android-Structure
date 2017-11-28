@@ -80,8 +80,8 @@ public class DeviceUtils {
         AuraSwitch singleDevice = new AuraSwitch();
         for (AuraSwitch c : AuraFourNodeDevice) {
             if (deviceName.equals(c.getName())) {
-                singleDevice.updateStates(c.getStates());
-                singleDevice.updateDims(c.getDims());
+                singleDevice.setStates(c.getStates());
+                singleDevice.setDims(c.getDims());
                 singleDevice.setDummyStates(switchNumber);
                 singleDevice.setDummyDims(switchNumber);
                 singleDevice.setName(c.getName());
@@ -91,6 +91,16 @@ public class DeviceUtils {
             }
         }
         return null;
+    }
+
+    public void UpdateSwitchStatesFromShadow(AwsState shadow, String thing, String device){
+        for (AuraSwitch c : AuraFourNodeDevice) {
+            if (device.equals(c.getName())) {
+                c.setStates(shadow.getStates());
+                c.setDims(shadow.getDims());
+                c.setLed(shadow.getLed());
+            }
+        }
     }
 
     public AuraSwitch GetInfo(String deviceName) {
@@ -110,8 +120,8 @@ public class DeviceUtils {
         for (AuraSwitch c : AuraFourNodeDevice) {
             String deviceName = c.getName();
             if (deviceName.contains(name)) {
-                c.updateStates(device.getStates());
-                c.updateDims(device.getDims());
+                c.setStates(device.getStates());
+                c.setDims(device.getDims());
             }
         }
     }
@@ -123,8 +133,8 @@ public class DeviceUtils {
 
                 String name = deviceName.substring(deviceName.lastIndexOf('-') + 1);
                 SingleDevice.setName(name);
-                SingleDevice.updateStates(c.getStates());
-                SingleDevice.updateDims(c.getDims());
+                SingleDevice.setStates(c.getStates());
+                SingleDevice.setDims(c.getDims());
             }
         }
         return SingleDevice;

@@ -9,7 +9,9 @@ import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.nsd.NsdServiceInfo;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +32,7 @@ import com.wozart.route_3.data.DeviceDbHelper;
 import com.wozart.route_3.data.DeviceDbOperations;
 import com.wozart.route_3.model.AuraSwitch;
 import com.wozart.route_3.model.AwsState;
+import com.wozart.route_3.network.NsdClient;
 import com.wozart.route_3.network.TcpClient;
 import com.wozart.route_3.utilities.DeviceUtils;
 import com.wozart.route_3.utilities.JsonUtils;
@@ -66,6 +69,8 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
 
+    private NsdClient Nsd;
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, device;
         private ImageView thumbnail, overflow;
@@ -93,7 +98,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                         Loads loads = LoadList.get(pos);
                         mDevice = mDeviceUtils.UpdateSwitchState(loads.getDevice(), loads.getLoadNumber());
 
-                        if (mDeviceUtils.GetIP(loads.getDevice()) != null) {
+                        if (Nsd.GetIP(mDevice.getName()) != null) {
                             try {
                                 data = serialize.Serialize(mDevice);
                             } catch (UnknownHostException e) {
@@ -124,6 +129,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
         LocalBroadcastManager.getInstance(mContext).registerReceiver(
                 mReceiverAws, new IntentFilter("AwsShadow"));
         mDeviceUtils = new DeviceUtils();
+        Nsd = new NsdClient(mContext);
     }
 
     @Override
@@ -174,6 +180,8 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
         int[] state = dummyDevice.getStates();
         load.setState(state[load.getLoadNumber() % 4]);
     }
+
+
 
     /**
      * To check is there internet connection
@@ -278,9 +286,9 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                 String device = db.GetDevice(mDb, segments[1]);
                 AwsState dummyShadow = JsonUtils.DeserializeAwsData(segments[0]);
                 if (dummyShadow != null) {
-                    mDeviceUtils.CloudDevices(dummyShadow, segments[1], device);
+                    mDeviceUtils.UpdateSwitchStatesFromShadow(dummyShadow, segments[1], device);
                     updateStates(dummyShadow.getStates(), device);
-                } else {
+                } else if(segments[1] == null){
                     if (mtoast != null) mtoast = null;
                     Toast.makeText(mContext, "Aura Switch not connected to internet", Toast.LENGTH_SHORT).show();
                 }

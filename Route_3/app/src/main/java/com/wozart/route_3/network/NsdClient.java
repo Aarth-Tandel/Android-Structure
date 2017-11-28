@@ -41,6 +41,7 @@ public class NsdClient {
             @Override
             public void onDiscoveryStarted(String regType) {
                 Log.d(TAG, "Service discovery started " + regType);
+                ServicesAvailable.clear();
             }
 
             @Override
@@ -60,7 +61,8 @@ public class NsdClient {
             @Override
             public void onServiceLost(NsdServiceInfo service) {
                 Log.e(TAG, "service lost" + service);
-                if (ServicesAvailable.equals(service)) {
+                for(NsdServiceInfo x : ServicesAvailable)
+                if (x.equals(service)) {
                     ServicesAvailable = null;
                 }
             }

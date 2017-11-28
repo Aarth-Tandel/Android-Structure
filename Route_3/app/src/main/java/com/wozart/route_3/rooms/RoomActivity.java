@@ -1,36 +1,55 @@
 package com.wozart.route_3.rooms;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
+import android.net.nsd.NsdServiceInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Constant;
+import com.wozart.route_3.MainActivity;
 import com.wozart.route_3.R;
 import com.wozart.route_3.data.DeviceDbHelper;
 import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.model.AuraSwitch;
 import com.wozart.route_3.network.AwsPubSub;
+import com.wozart.route_3.network.NsdClient;
 import com.wozart.route_3.network.TcpClient;
+import com.wozart.route_3.utilities.DeviceUtils;
+import com.wozart.route_3.utilities.Encryption;
+import com.wozart.route_3.utilities.JsonUtils;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoomActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = RoomActivity.class.getSimpleName();
+
     private RecyclerView recyclerView;
     private LoadAdapter adapter;
     private List<Loads> LoadList;
+    private Toast mtoast;
     String RoomSelected;
     String HomeSelected;
 
@@ -39,6 +58,10 @@ public class RoomActivity extends AppCompatActivity {
 
     private AwsPubSub awsPubSub;
     boolean mBounded;
+
+    private NsdClient Nsd;
+    private TcpClient mTcpClient;
+    private String IP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +87,119 @@ public class RoomActivity extends AppCompatActivity {
         mDb = dbHelper.getWritableDatabase();
         devices = db.GetDevicesInRoom(mDb, RoomSelected, HomeSelected);
         prepareLoad(devices);
+
+        Nsd = new NsdClient(this);
+        Nsd.initializeNsd();
+        NsdDiscovery();
+        final Handler backgroundDiscovery = new Handler();
+        backgroundDiscovery.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                NsdDiscovery();
+                backgroundDiscovery.postDelayed(this, 10000);
+
+            }
+        }, 10000);
+    }
+
+    /**
+     * NSD discovery of devices
+     */
+
+    private void NsdDiscovery() {
+        Nsd.discoverServices();
+        final Handler NsdDiscoveryHandler = new Handler();
+        NsdDiscoveryHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (final NsdServiceInfo service : Nsd.GetServiceInfo()) {
+                    JsonUtils mJsonUtils = new JsonUtils();
+                    String data = null;
+                    try {
+                        data = mJsonUtils.InitialData(convertIP());
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
+                    }
+
+                    new ConnectTask(data, service.getHost().getHostAddress()).execute("");
+                    Log.d(LOG_TAG, "Initial data: " + data + " to " + service.getServiceName());
+                }
+            }
+        }, 1000);
+
+        NsdDiscoveryHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Nsd.stopDiscovery();
+            }
+        }, 1000);
+    }
+
+    /**
+     * Send data to the device TCP
+     */
+
+    private class ConnectTask extends AsyncTask<String, String, TcpClient> {
+
+        private String data = null;
+        private String ip = null;
+
+        private ConnectTask(String message, String address) {
+            super();
+            data = message;
+            ip = address;
+        }
+
+        @Override
+        protected TcpClient doInBackground(String... message) {
+
+            //we create a TCPClient object and
+            mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
+                @Override
+                //here the messageReceived method is implemented
+                public void messageReceived(String message) {
+                    publishProgress(message);
+                }
+            });
+            mTcpClient.run(data, ip);
+
+            return null;
+        }
+
+        protected void onProgressUpdate(String... message) {
+            if (message[0].equals(Constant.SERVER_NOT_REACHABLE)) {
+                if (mtoast != null)
+                    mtoast = null;
+                Context context = getApplicationContext();
+                CharSequence text = "Device Offline";
+                int duration = Toast.LENGTH_SHORT;
+
+                mtoast = Toast.makeText(context, text, duration);
+                mtoast.show();
+            } else {
+                JsonUtils mJsonUtils = new JsonUtils();
+                AuraSwitch dummyDevice = mJsonUtils.DeserializeTcp(message[0]);
+                DeviceUtils mDeviceUtils = new DeviceUtils();
+
+                if (dummyDevice.getType() == 1 && dummyDevice.getCode().equals(Encryption.MAC(RoomActivity.this))) {
+                    for (NsdServiceInfo x : Nsd.GetAllServices()) {
+                        //Find the match in services found and data received
+                        if (x.getServiceName().contains(dummyDevice.getName())) {
+                            mDeviceUtils.RegisterDevice(dummyDevice, x.getHost().getHostAddress());
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    private String convertIP() {
+        WifiManager mWifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = mWifi.getConnectionInfo();
+        int ipAddress = wifiInfo.getIpAddress();
+        return String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
     }
 
     /**

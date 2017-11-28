@@ -104,38 +104,8 @@ public class AuraSwitch {
         }
     }
 
-    public void setState(int node) {
-        for (int i = 0; i < 4; i++) {
-            if (i == node) {
-                if (this.state[i] == 0)
-                    this.state[i] = 1;
-                else
-                    this.state[i] = 0;
-            }
-        }
-    }
-
-    public void setDims(int node) {
-        for (int i = 0; i < 4; i++) {
-            if (i == node) {
-                if (this.dimm[i] == 0)
-                    this.dimm[i] = 1;
-                else
-                    this.dimm[i] = 0;
-            }
-        }
-    }
-
     public void setType(int type) {
         this.type = type;
-    }
-
-    public void updateStates(int[] state) {
-        this.state = state;
-    }
-
-    public void updateDims(int[] dimm) {
-        this.dimm = dimm;
     }
 
     public void setVersion(double version) {
