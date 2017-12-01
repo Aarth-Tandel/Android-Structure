@@ -13,9 +13,9 @@ import static com.wozart.route_3.data.DeviceContract.DeviceEntry.THING_NAME;
 /**
  * Created for Wozart on 12/10/17.
  * Author - Aarth Tandel
- *
+ * <p>
  * Constants for easy access
- *
+ * <p>
  * //////////////////////////////
  * Version - 1.0.0 - Initial built
  * //////////////////////////////
@@ -36,7 +36,7 @@ public class Constant {
 
     //SQL - Lite Queries
     public static final String GET_ALL_DEVICES = "select * from " + TABLE_NAME;
-    public static final String GET_ALL_HOME = "select " + HOME_NAME + " from " + TABLE_NAME;
+    public static final String GET_ALL_HOME = "select distinct " + HOME_NAME + " from " + TABLE_NAME;
     public static final String INSERT_INITIAL_DATA = "select * from " + TABLE_NAME;
     public static final String GET_ROOMS = "select distinct " + ROOM_NAME + " from " + TABLE_NAME + " where " + HOME_NAME + " = ?";
     public static final String INSERT_ROOMS = "select " + HOME_NAME + " from " + TABLE_NAME + " where " + ROOM_NAME + " = ?";
@@ -47,4 +47,5 @@ public class Constant {
     public static final String CHECK_DEVICES = "select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + DEVICE_NAME + " = ?";
     public static final String GET_THING_NAME = "select " + THING_NAME + " from " + TABLE_NAME;
     public static final String GET_DEVICES_FOR_THING = "select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + THING_NAME + " = ?";
+    public static final String UPDATE_DEVICE = DEVICE_NAME + "=?";
 }

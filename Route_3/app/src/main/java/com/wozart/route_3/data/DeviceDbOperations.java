@@ -6,6 +6,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.amazonaws.models.nosql.UsersDO;
+import com.wozart.route_3.customization.Device;
+import com.wozart.route_3.noSql.SqlOperationUserTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +25,7 @@ import static com.Constant.GET_THING_NAME;
 import static com.Constant.INSERT_DEVICES;
 import static com.Constant.INSERT_INITIAL_DATA;
 import static com.Constant.INSERT_ROOMS;
+import static com.Constant.UPDATE_DEVICE;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.DEVICE_NAME;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.HOME_NAME;
 import static com.wozart.route_3.data.DeviceContract.DeviceEntry.ROOM_NAME;
@@ -42,11 +45,16 @@ import static com.wozart.route_3.data.DeviceContract.DeviceEntry.THING_NAME;
 
 public class DeviceDbOperations {
 
-    public ArrayList<String> GetAllDevices(SQLiteDatabase db) {
-        ArrayList<String> devices = new ArrayList<>();
+    public List<Device> GetAllDevices(SQLiteDatabase db) {
+        List<Device> devices = new ArrayList<>();
         Cursor cursor = db.rawQuery(GET_ALL_DEVICES, null);
         while (cursor.moveToNext()) {
-            devices.add(cursor.getString(1));
+            Device dummyDevice = new Device();
+            dummyDevice.setDevice(cursor.getString(1));
+            dummyDevice.setHome(cursor.getString(6));
+            dummyDevice.setRoom(cursor.getString(7));
+            dummyDevice.setThing(cursor.getString(8));
+            devices.add(dummyDevice);
         }
         cursor.close();
         return devices;
@@ -140,6 +148,13 @@ public class DeviceDbOperations {
         ContentValues cv = new ContentValues();
         cv.put(ROOM_NAME, room);
         db.update(TABLE_NAME, cv, CRUD_ROOM, new String[]{home, previousRoom});
+    }
+
+    public void UpdateRoomAndHome(SQLiteDatabase db, String home, String room, String device){
+        ContentValues cv = new ContentValues();
+        cv.put(ROOM_NAME, room);
+        cv.put(HOME_NAME, home);
+        db.update(TABLE_NAME, cv,UPDATE_DEVICE , new String[]{device});
     }
 
     public void TransferDeletedDevices(SQLiteDatabase db, String home, String room) {

@@ -27,8 +27,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- BEGIN - FACEBOOK SIGN-IN -->
 
@@ -50,12 +49,16 @@
             android:value="@string/facebook_app_id" />
 
         <!-- END - FACEBOOK SIGN-IN -->
-        <activity android:name=".rooms.RoomActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
+        <activity
+            android:name=".rooms.RoomActivity"
+            android:parentActivityName=".MainActivity" />
 
         <service android:name=".network.TcpServer" />
         <service android:name=".network.AwsPubSub" />
+
+        <activity android:name=".customization.CustomizationActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

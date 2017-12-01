@@ -50,8 +50,7 @@ public class RoomActivity extends AppCompatActivity {
     private LoadAdapter adapter;
     private List<Loads> LoadList;
     private Toast mtoast;
-    String RoomSelected;
-    String HomeSelected;
+    String RoomSelected, HomeSelected;
 
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;

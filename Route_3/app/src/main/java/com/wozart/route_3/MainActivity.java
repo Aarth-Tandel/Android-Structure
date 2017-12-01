@@ -54,6 +54,7 @@ import com.amazonaws.mobilehelper.auth.user.IdentityProfile;
 import com.amazonaws.models.nosql.UsersDO;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.wozart.route_3.customization.CustomizationActivity;
 import com.wozart.route_3.data.DeviceDbHelper;
 import com.wozart.route_3.data.DeviceDbOperations;
 import com.wozart.route_3.model.AuraSwitch;
@@ -411,7 +412,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
-
+            Intent intent = new Intent(this, CustomizationActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
 
