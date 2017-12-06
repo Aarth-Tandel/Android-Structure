@@ -14,7 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,14 +22,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Constant;
-import com.wozart.route_3.MainActivity;
 import com.wozart.route_3.R;
-import com.wozart.route_3.data.DeviceDbHelper;
-import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.deviceSqlLite.DeviceDbHelper;
+import com.wozart.route_3.deviceSqlLite.DeviceDbOperations;
 import com.wozart.route_3.model.AuraSwitch;
 import com.wozart.route_3.network.AwsPubSub;
 import com.wozart.route_3.network.NsdClient;
@@ -62,6 +60,8 @@ public class RoomActivity extends AppCompatActivity {
     private TcpClient mTcpClient;
     private String IP;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,13 +73,27 @@ public class RoomActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         LoadList = new ArrayList<>();
-        adapter = new LoadAdapter(this, LoadList);
+        adapter = new LoadAdapter(this, LoadList, RoomSelected);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new RoomActivity.GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    NsdDiscovery();
+                }catch (Exception e){
+                    Log.e(LOG_TAG, "Error: " + e);
+                }
+
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         ArrayList<String> devices;
         DeviceDbHelper dbHelper = new DeviceDbHelper(this);
@@ -90,16 +104,6 @@ public class RoomActivity extends AppCompatActivity {
         Nsd = new NsdClient(this);
         Nsd.initializeNsd();
         NsdDiscovery();
-        final Handler backgroundDiscovery = new Handler();
-        backgroundDiscovery.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                NsdDiscovery();
-                backgroundDiscovery.postDelayed(this, 10000);
-
-            }
-        }, 10000);
     }
 
     /**
@@ -210,7 +214,9 @@ public class RoomActivity extends AppCompatActivity {
         super.onStart();
         Intent mIntent = new Intent(this, AwsPubSub.class);
         bindService(mIntent, mConnection, BIND_AUTO_CREATE);
-    };
+    }
+
+    ;
 
     ServiceConnection mConnection = new ServiceConnection() {
 
@@ -221,7 +227,7 @@ public class RoomActivity extends AppCompatActivity {
 
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBounded = true;
-            AwsPubSub.LocalAwsBinder mLocalBinder = (AwsPubSub.LocalAwsBinder)service;
+            AwsPubSub.LocalAwsBinder mLocalBinder = (AwsPubSub.LocalAwsBinder) service;
             awsPubSub = mLocalBinder.getServerInstance();
         }
     };
@@ -229,13 +235,13 @@ public class RoomActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(mBounded) {
+        if (mBounded) {
             unbindService(mConnection);
             mBounded = false;
         }
     }
 
-    public void PusblishDataToShadow(String thing, String data){
+    public void PusblishDataToShadow(String thing, String data) {
         awsPubSub.AWSPublish(thing, data);
     }
 

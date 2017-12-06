@@ -1,11 +1,17 @@
 package com.wozart.route_3.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,8 +25,9 @@ import com.wozart.route_3.Rooms;
 import com.wozart.route_3.RoomAdapter;
 import com.wozart.route_3.MainActivity;
 import com.wozart.route_3.R;
-import com.wozart.route_3.data.DeviceDbHelper;
-import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.deviceSqlLite.DeviceDbHelper;
+import com.wozart.route_3.deviceSqlLite.DeviceDbOperations;
+import com.wozart.route_3.utilities.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,22 +71,8 @@ public class HomeTab extends Fragment {
             }
         });
 
-
-        ((MainActivity) getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
-            @Override
-            public void onRefresh() {
-                MainActivity activity = new MainActivity();
-                String home = activity.GetSelectedHome();
-                if (home != null) {
-                    ArrayList<String> rooms = db.GetRooms(mDb, home);
-                    prepareRooms(rooms);
-                } else {
-                    ArrayList<String> rooms = db.GetRooms(mDb, "Home");
-                    prepareRooms(rooms);
-                }
-
-            }
-        });
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
+                mRefresh, new IntentFilter("refreshHomeTab"));
 
         DeviceDbHelper dbHelper = new DeviceDbHelper(getActivity());
         mDb = dbHelper.getWritableDatabase();
@@ -113,6 +106,21 @@ public class HomeTab extends Fragment {
 
         adapter.notifyDataSetChanged();
     }
+
+    private BroadcastReceiver mRefresh = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String home = intent.getStringExtra("home");
+            if (home != null) {
+                ArrayList<String> rooms = db.GetRooms(mDb, home);
+                prepareRooms(rooms);
+            } else {
+                ArrayList<String> rooms = db.GetRooms(mDb, "Home");
+                prepareRooms(rooms);
+            }
+        }
+    };
 
     /**
      * RecyclerView item decoration - give equal margin around grid item

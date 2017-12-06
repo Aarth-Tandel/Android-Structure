@@ -9,9 +9,7 @@ import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.nsd.NsdServiceInfo;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -27,9 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Constant;
+import com.wozart.route_3.MainActivity;
 import com.wozart.route_3.R;
-import com.wozart.route_3.data.DeviceDbHelper;
-import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.deviceSqlLite.DeviceDbHelper;
+import com.wozart.route_3.deviceSqlLite.DeviceDbOperations;
+import com.wozart.route_3.favouriteSqlLite.FavouriteDbHelper;
+import com.wozart.route_3.favouriteSqlLite.FavouriteDbOperations;
 import com.wozart.route_3.model.AuraSwitch;
 import com.wozart.route_3.model.AwsState;
 import com.wozart.route_3.network.NsdClient;
@@ -59,6 +60,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
 
     private Context mContext;
     private List<Loads> LoadList;
+    private String roomSelected;
 
     private TcpClient mTcpClient;
     private Toast mtoast;
@@ -68,6 +70,9 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
 
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
+
+    private FavouriteDbOperations favouriteDb = new FavouriteDbOperations();
+    private SQLiteDatabase mFavouriteDb;
 
     private NsdClient Nsd;
 
@@ -119,16 +124,21 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
     }
 
 
-    public LoadAdapter(Context mContext, List<Loads> loadsList) {
+    public LoadAdapter(Context mContext, List<Loads> loadsList, String room) {
         this.mContext = mContext;
         this.LoadList = loadsList;
         DeviceDbHelper dbHelper = new DeviceDbHelper(mContext);
         mDb = dbHelper.getWritableDatabase();
+
+        FavouriteDbHelper dbFavouriteHelper = new FavouriteDbHelper(mContext);
+        mFavouriteDb = dbFavouriteHelper.getWritableDatabase();
+
         LocalBroadcastManager.getInstance(mContext).registerReceiver(
                 mMessageReceiver, new IntentFilter("intentKey"));
         LocalBroadcastManager.getInstance(mContext).registerReceiver(
                 mReceiverAws, new IntentFilter("AwsShadow"));
         mDeviceUtils = new DeviceUtils();
+        roomSelected = room;
         Nsd = new NsdClient(mContext);
     }
 
@@ -303,7 +313,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_album, popup.getMenu());
+        inflater.inflate(R.menu.menu_loads, popup.getMenu());
         popup.setOnMenuItemClickListener(new MyMenuItemClickListener(room, position));
         popup.show();
     }
@@ -313,11 +323,9 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
      */
     private class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private String RoomSelected;
         private int Position;
 
         private MyMenuItemClickListener(String room, int position) {
-            RoomSelected = room;
             Position = position;
         }
 
@@ -330,6 +338,9 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                     return true;
 
                 case R.id.action_play_next:
+                    Loads load = LoadList.get(Position);
+                    favouriteDb.insertFavourite(mFavouriteDb, load.getDevice(), load.getName(), MainActivity.SelectedHome, roomSelected);
+                    refreshFavTab(MainActivity.SelectedHome);
                     return true;
                 default:
             }
@@ -360,6 +371,12 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
             });
             alert.show();
         }
+    }
+
+    private void refreshFavTab(String home){
+        Intent intent = new Intent("refreshFavTab");
+        intent.putExtra("home", home);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
     @Override

@@ -12,9 +12,8 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.wozart.route_3.R;
-import com.wozart.route_3.data.DeviceDbHelper;
-import com.wozart.route_3.data.DeviceDbOperations;
-import com.wozart.route_3.rooms.Loads;
+import com.wozart.route_3.deviceSqlLite.DeviceDbHelper;
+import com.wozart.route_3.deviceSqlLite.DeviceDbOperations;
 
 import java.util.ArrayList;
 import java.util.List;

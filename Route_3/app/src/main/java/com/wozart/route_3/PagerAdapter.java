@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.wozart.route_3.fragment.FavTab;
+import com.wozart.route_3.favouritesTab.FavTab;
 import com.wozart.route_3.fragment.HomeTab;
 import com.wozart.route_3.fragment.SceneTab;
 

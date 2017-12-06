@@ -1,4 +1,4 @@
-package com.wozart.route_3.data;
+package com.wozart.route_3.deviceSqlLite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

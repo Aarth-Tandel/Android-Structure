@@ -1,8 +1,9 @@
-package com.wozart.route_3.favourites;
+package com.wozart.route_3.favouritesTab;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,8 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.wozart.route_3.R;
+import com.wozart.route_3.deviceSqlLite.DeviceDbHelper;
+import com.wozart.route_3.deviceSqlLite.DeviceDbOperations;
+import com.wozart.route_3.favouriteSqlLite.FavouriteDbHelper;
+import com.wozart.route_3.favouriteSqlLite.FavouriteDbOperations;
 
 import java.util.List;
 
@@ -26,65 +30,72 @@ import java.util.List;
  */
 
 
-
 public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Favourites> roomsList;
+    private List<Favourites> favouriteList;
+
+    private DeviceDbOperations db = new DeviceDbOperations();
+    private SQLiteDatabase mDb;
+
+    private FavouriteDbOperations favouriteDb = new FavouriteDbOperations();
+    private SQLiteDatabase mFavouriteDb;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, count;
-        public ImageView thumbnail1, overflow;
+        public TextView title, room;
+        private ImageView thumbnail1, overflow;
 
-        public MyViewHolder(View view) {
+        private MyViewHolder(View view) {
             super(view);
 
             title = (TextView) view.findViewById(R.id.title);
-            count = (TextView) view.findViewById(R.id.count);
+            room = (TextView) view.findViewById(R.id.tv_state);
             thumbnail1 = (ImageView) view.findViewById(R.id.thumbnail1);
             overflow = (ImageView) view.findViewById(R.id.overflow);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, title.getText() +  " Selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, title.getText() + " Selected", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
 
-    public FavouritesAdapter(Context mContext, List<Favourites> roomsList) {
+    public FavouritesAdapter(Context mContext, List<Favourites> List) {
         this.mContext = mContext;
-        this.roomsList = roomsList;
+        this.favouriteList = List;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.album_card, parent, false);
+                .inflate(R.layout.load_cards2, parent, false);
 
-      //  DeviceDbHelper dbHelper = new DeviceDbHelper(mContext);
-//        mDb = dbHelper.getWritableDatabase();
-//        db.InsertBasicData(mDb);
+        DeviceDbHelper dbHelper = new DeviceDbHelper(mContext);
+        mDb = dbHelper.getWritableDatabase();
+        db.InsertBasicData(mDb);
 
+        FavouriteDbHelper dbFavouriteHelper = new FavouriteDbHelper(mContext);
+        mFavouriteDb = dbFavouriteHelper.getWritableDatabase();
 
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder,final int position) {
-        Favourites rooms = roomsList.get(position);
-        holder.title.setText(rooms.getName());
-        holder.count.setText(rooms.getNumOfDevices() + " Devices");
-
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        final Favourites load = favouriteList.get(position);
+        holder.title.setText(load.getName());
+        //holder.count.setText(rooms.getNumOfDevices() + " Devices");
+        holder.room.setText(load.getRoom());
         // loading rooms cover using Glide library
-        Glide.with(mContext).load(rooms.getThumbnail()).into(holder.thumbnail1);
+        //Glide.with(mContext).load(load.getThumbnail()).into(holder.thumbnail1);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopupMenu(holder.overflow, holder.title.getText().toString(), position);
+                showPopupMenu(holder.overflow, load, position);
             }
         });
     }
@@ -92,12 +103,12 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.My
     /**
      * Showing popup menu when tapping on 3 dots
      */
-    private void showPopupMenu(View view, String room, int position) {
+    private void showPopupMenu(View view, Favourites load, int position) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_album, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(room, position));
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(load, position));
         popup.show();
     }
 
@@ -106,25 +117,21 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.My
      */
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
-        private String RoomSelected;
+        private Favourites favourite;
         private int Position;
 
-        private MyMenuItemClickListener(String room, int position) {
-            RoomSelected = room;
+        private MyMenuItemClickListener(Favourites load, int position) {
+            favourite = load;
             Position = position;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
-                case R.id.action_add_favourite:
-                    Favourites previousDevice = roomsList.get(Position);
-                    editBoxPopUp(previousDevice.getName());
-                    return true;
 
                 case R.id.action_play_next:
                     deleteItem(Position);
-//                    db.DeleteRoom(mDb, activity.GetSelectedHome(), RoomSelected);
+
                     return true;
                 default:
             }
@@ -132,16 +139,10 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.My
         }
 
         private void deleteItem(int position) {
-            roomsList.remove(position);
+            favouriteList.remove(position);
             notifyItemRemoved(position);
-            notifyItemRangeChanged(position, roomsList.size());
-        }
-
-        private void updateCard(String roomName) {
-            Favourites previousDevice = roomsList.get(Position);
-            Favourites device = new Favourites(roomName, previousDevice.getNumOfDevices(), previousDevice.getThumbnail());
-            roomsList.set(Position, device);
-            notifyItemChanged(Position);
+            notifyItemRangeChanged(position, favouriteList.size());
+            favouriteDb.removeFavourite(mFavouriteDb, favourite.getDevice(), favourite.getName());
         }
 
         private void editBoxPopUp(final String previousDevice) {
@@ -158,18 +159,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.My
             alert.setPositiveButton("Update", new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int whichButton) {
-//                    for (String x : db.GetRooms(mDb, activity.GetSelectedHome())) {
-//                        if (input.getText().toString().equals(x)) {
-//                            flag[0] = false;
-//                        }
-//                    }
-//                    if (flag[0]) {
-//                        db.UpdateRoom(mDb, activity.GetSelectedHome(), previousDevice, input.getText().toString().trim());
-//                        Toast.makeText(mContext, "Room name edited", Toast.LENGTH_SHORT).show();
-//                        updateCard(input.getText().toString().trim());
-//                    } else {
-//                        Toast.makeText(mContext, "Edit failed", Toast.LENGTH_SHORT).show();
-//                    }
+
                 }
             });
 
@@ -184,6 +174,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.My
 
     @Override
     public int getItemCount() {
-        return roomsList.size();
+        return favouriteList.size();
     }
 }

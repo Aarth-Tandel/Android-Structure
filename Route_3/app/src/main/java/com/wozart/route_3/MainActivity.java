@@ -1,6 +1,8 @@
 package com.wozart.route_3;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -48,6 +50,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.AWSConfiguration;
 import com.amazonaws.mobile.AWSMobileClient;
+import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 import com.amazonaws.mobilehelper.auth.IdentityManager;
 import com.amazonaws.mobilehelper.auth.IdentityProvider;
 import com.amazonaws.mobilehelper.auth.user.IdentityProfile;
@@ -55,8 +58,8 @@ import com.amazonaws.models.nosql.UsersDO;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.wozart.route_3.customization.CustomizationActivity;
-import com.wozart.route_3.data.DeviceDbHelper;
-import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.deviceSqlLite.DeviceDbHelper;
+import com.wozart.route_3.deviceSqlLite.DeviceDbOperations;
 import com.wozart.route_3.model.AuraSwitch;
 import com.wozart.route_3.network.AwsPubSub;
 import com.wozart.route_3.network.NsdClient;
@@ -77,12 +80,12 @@ import static com.Constant.NETWORK_SSID;
 /**
  * Created for Wozart on 26/9/17.
  * Author - Aarth Tandel
- *
+ * <p>
  * NSD Discovery
  * Fetching and updating users's Data
  * Tcp Server Receiver
  * Tcp Client to send data
- *
+ * <p>
  * //////////////////////////////
  * Version - 1.0.0 - Initial built
  * //////////////////////////////
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity
     private AWSCredentials awsCredentials;
     private CognitoCachingCredentialsProvider credentialsProvider;
     boolean mBounded;
+    public static PinpointManager pinpointManager;
 
     private Toast mtoast;
     private CoordinatorLayout coordinatorLayout;
@@ -234,6 +238,7 @@ public class MainActivity extends AppCompatActivity
         final SqlOperationUserTable user = new SqlOperationUserTable();
         Runnable runnable = new Runnable() {
             public void run() {
+                Constant.IDENTITY_ID = credentialsProvider.getIdentityId();
                 UserData = user.GetData(credentialsProvider.getIdentityId());
                 if (UserData == null)
                     return;
@@ -350,31 +355,36 @@ public class MainActivity extends AppCompatActivity
             case R.id.home:
                 item.setChecked(true);
                 SelectedHome = item.getTitle().toString();
-                getFragmentRefreshListener().onRefresh();
+                refreshHomeTab(SelectedHome);
+                refreshFavTab(SelectedHome);
                 return true;
 
             case 1:
                 item.setChecked(true);
                 SelectedHome = item.getTitle().toString();
-                getFragmentRefreshListener().onRefresh();
+                refreshHomeTab(SelectedHome);
+                refreshFavTab(SelectedHome);
                 return true;
 
             case 2:
                 item.setChecked(true);
                 SelectedHome = item.getTitle().toString();
-                getFragmentRefreshListener().onRefresh();
+                refreshHomeTab(SelectedHome);
+                refreshFavTab(SelectedHome);
                 return true;
 
             case 3:
                 item.setChecked(true);
                 SelectedHome = item.getTitle().toString();
-                getFragmentRefreshListener().onRefresh();
+                refreshHomeTab(SelectedHome);
+                refreshFavTab(SelectedHome);
                 return true;
 
             case 4:
                 item.setChecked(true);
                 SelectedHome = item.getTitle().toString();
-                getFragmentRefreshListener().onRefresh();
+                refreshHomeTab(SelectedHome);
+                refreshFavTab(SelectedHome);
                 return true;
         }
 
@@ -451,7 +461,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 if (flag[0]) {
                     db.InsertRoom(mDb, SelectedHome, input.getText().toString().trim());
-                    getFragmentRefreshListener().onRefresh();
+                    refreshHomeTab(SelectedHome);
                     Snackbar.make(materialDesignFAM, "Room added", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 } else {
                     Snackbar.make(materialDesignFAM, "Room with same name already exists", Snackbar.LENGTH_LONG)
@@ -680,9 +690,9 @@ public class MainActivity extends AppCompatActivity
                     awsPubSub.AwsGetPublish(x);
                     awsPubSub.AwsSubscribe(x);
                 }
-            } else{
+            } else {
                 String device = db.GetDevice(mDb, segments[1]);
-                mDeviceUtils.CloudDevices(JsonUtils.DeserializeAwsData(segments[0]),segments[1], device);
+                mDeviceUtils.CloudDevices(JsonUtils.DeserializeAwsData(segments[0]), segments[1], device);
             }
         }
     };
@@ -767,17 +777,15 @@ public class MainActivity extends AppCompatActivity
      * Updating favourite fragment from main
      */
 
-    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
-        this.fragmentRefreshListener = fragmentRefreshListener;
+    public void refreshHomeTab(String home){
+        Intent intent = new Intent("refreshHomeTab");
+        intent.putExtra("home", home);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    private FragmentRefreshListener fragmentRefreshListener;
-
-    public FragmentRefreshListener getFragmentRefreshListener() {
-        return fragmentRefreshListener;
-    }
-
-    public interface FragmentRefreshListener {
-        void onRefresh();
+    public void refreshFavTab(String home){
+        Intent intent = new Intent("refreshFavTab");
+        intent.putExtra("home", home);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

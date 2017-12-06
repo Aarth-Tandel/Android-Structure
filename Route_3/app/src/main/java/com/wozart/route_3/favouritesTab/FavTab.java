@@ -1,13 +1,20 @@
-package com.wozart.route_3.fragment;
+package com.wozart.route_3.favouritesTab;
 
 /**
- * Created by wozart on 05/10/17.
+ * Created by wozart on 05/12/17.
  */
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +23,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wozart.route_3.MainActivity;
 import com.wozart.route_3.R;
-import com.wozart.route_3.favourites.FavouritesAdapter;
-import com.wozart.route_3.favourites.Favourites;
+import com.wozart.route_3.favouriteSqlLite.FavouriteDbHelper;
+import com.wozart.route_3.favouriteSqlLite.FavouriteDbOperations;
+import com.wozart.route_3.favouritesTab.FavouritesAdapter;
+import com.wozart.route_3.favouritesTab.Favourites;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +37,10 @@ public class FavTab extends Fragment {
 
     private RecyclerView FAV_recyclerView;
     private FavouritesAdapter FAV_adapter;
-    private List<Favourites> FAV_roomsList;
+    private List<Favourites> favouriteList;
+
+    private FavouriteDbOperations favouriteDb = new FavouriteDbOperations();
+    private SQLiteDatabase mFavouriteDb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,8 +49,8 @@ public class FavTab extends Fragment {
 
         FAV_recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        FAV_roomsList = new ArrayList<>();
-        FAV_adapter = new FavouritesAdapter(getActivity(), FAV_roomsList);
+        favouriteList = new ArrayList<>();
+        FAV_adapter = new FavouritesAdapter(getActivity(), favouriteList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
         FAV_recyclerView.setLayoutManager(mLayoutManager);
@@ -45,41 +58,23 @@ public class FavTab extends Fragment {
         FAV_recyclerView.setItemAnimator(new DefaultItemAnimator());
         FAV_recyclerView.setAdapter(FAV_adapter);
 
-//        ((MainActivity) getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                MainActivity activity = new MainActivity();
-//                String home = activity.GetSelectedHome();
-//                if (home != null) {
-//                    ArrayList<String> rooms = db.GetRooms(mDb, home);
-//                    prepareRooms(rooms);
-//                } else {
-//                    ArrayList<String> rooms = db.GetRooms(mDb, "Home");
-//                    prepareRooms(rooms);
-//                }
-//
-//            }
-//        });
-//
-//        DeviceDbHelper dbHelper = new DeviceDbHelper(getActivity());
-//        mDb = dbHelper.getWritableDatabase();
-//
-        ArrayList<String> rooms = new ArrayList<>();
-        rooms.add("Lamp");
-        rooms.add("Fan");
-        rooms.add("AC");
-        rooms.add("TV");
-        prepareRooms(rooms);
+        FavouriteDbHelper dbFavouriteHelper = new FavouriteDbHelper(getActivity());
+        mFavouriteDb = dbFavouriteHelper.getWritableDatabase();
 
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
+                mRefresh, new IntentFilter("refreshFavTab"));
+
+        ArrayList<Favourites> favouriteLoads = favouriteDb.getFavouriteDevice(mFavouriteDb, MainActivity.SelectedHome);
+        prepareRooms(favouriteLoads);
         return rootView;
     }
 
     /**
      * Adding few albums for testing
      */
-    private void prepareRooms(ArrayList<String> rooms) {
+    private void prepareRooms(ArrayList<Favourites> favouriteLoads) {
 
-        FAV_roomsList.clear();
+        favouriteList.clear();
         int[] covers = new int[]{
                 R.drawable.album1,
                 R.drawable.album2,
@@ -89,14 +84,27 @@ public class FavTab extends Fragment {
                 R.drawable.album6,
                 R.drawable.album7
         };
-
-        for (String x : rooms) {
-            Favourites a = new Favourites(x, 0, covers[2]);
-            FAV_roomsList.add(a);
+        for(Favourites x : favouriteLoads){
+            Favourites fav = new Favourites(x.getName(), x.getHome(), x.getDevice(), x.getRoom(), covers[2]);
+            favouriteList.add(fav);
         }
-
         FAV_adapter.notifyDataSetChanged();
     }
+
+    private BroadcastReceiver mRefresh = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String home = intent.getStringExtra("home");
+            if(home != null){
+                ArrayList<Favourites> rooms = favouriteDb.getFavouriteDevice(mFavouriteDb, home);
+                prepareRooms(rooms);
+            } else {
+                ArrayList<Favourites> rooms = favouriteDb.getFavouriteDevice(mFavouriteDb, "Home");
+                prepareRooms(rooms);
+            }
+        }
+    };
 
     /**
      * RecyclerView item decoration - give equal margin around grid item

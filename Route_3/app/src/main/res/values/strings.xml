@@ -6,10 +6,10 @@
 
     <string name="action_add_home">Add home</string>
 
-    <string name="action_add_favourite">Edit</string>
-    <string name="action_play_next">Remove</string>
-    <string name="backdrop_title">LOVE MUSIC</string>
-    <string name="backdrop_subtitle">This season top 20 albums</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_remove">Remove</string>
+    <string name="action_add_favourite">Add to Favourite</string>
+
 
 
     <string name="facebook_app_id">160586947836430</string>

@@ -1,4 +1,4 @@
-package com.wozart.route_3.data;
+package com.wozart.route_3.deviceSqlLite;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.amazonaws.models.nosql.UsersDO;
 import com.wozart.route_3.customization.Device;
-import com.wozart.route_3.noSql.SqlOperationUserTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,11 +25,11 @@ import static com.Constant.INSERT_DEVICES;
 import static com.Constant.INSERT_INITIAL_DATA;
 import static com.Constant.INSERT_ROOMS;
 import static com.Constant.UPDATE_DEVICE;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.DEVICE_NAME;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.HOME_NAME;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.ROOM_NAME;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.TABLE_NAME;
-import static com.wozart.route_3.data.DeviceContract.DeviceEntry.THING_NAME;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.DEVICE_NAME;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.HOME_NAME;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.ROOM_NAME;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.TABLE_NAME;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.THING_NAME;
 
 /**
  * Created for Wozart on 28/09/17.

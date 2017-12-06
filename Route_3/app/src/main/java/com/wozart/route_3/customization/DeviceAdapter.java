@@ -8,8 +8,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,20 +25,33 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.models.nosql.KeysDO;
 import com.wozart.route_3.R;
-import com.wozart.route_3.data.DeviceDbHelper;
-import com.wozart.route_3.data.DeviceDbOperations;
+import com.wozart.route_3.deviceSqlLite.DeviceDbHelper;
+import com.wozart.route_3.deviceSqlLite.DeviceDbOperations;
+import com.wozart.route_3.model.AuraSwitch;
+import com.wozart.route_3.network.TcpClient;
+import com.wozart.route_3.noSql.SqlOperationDeviceTable;
+import com.wozart.route_3.noSql.SqlOperationUserTable;
+import com.wozart.route_3.utilities.DeviceUtils;
+import com.wozart.route_3.utilities.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHolder> {
 
+    private static final String LOG_TAG = CustomizationActivity.class.getSimpleName();
+
     private Context mContext;
     private List<Device> DeviceList;
+    private DeviceUtils mDeviceUtils = new DeviceUtils();
 
     private DeviceDbOperations db = new DeviceDbOperations();
     private SQLiteDatabase mDb;
+    private TcpClient mTcpClient;
+
+    private KeysDO KeysAndCertificates = new KeysDO();
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewDevice, textViewHome, textViewRoom;
@@ -95,7 +110,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
         holder.AwsConnectSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, device.getDevice() + " Selected", Toast.LENGTH_SHORT).show();
+                if (holder.AwsConnectSwitch.isChecked())
+                    getKeys(device.getDevice());
+                else
+                    Toast.makeText(mContext, device.getDevice() + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -105,6 +123,102 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
                 showPopupMenu(holder.overflow, holder.textViewDevice.getText().toString(), position);
             }
         });
+    }
+
+    /**
+     * Transferring Keys to Device
+     */
+    private void getKeys(final String device) {
+        new ConnectTask("{\"type\":8, \"set\":1}", mDeviceUtils.GetIP(device)).execute("");
+        final SqlOperationDeviceTable keysAvailable = new SqlOperationDeviceTable();
+        Runnable runnable = new Runnable() {
+            public void run() {
+                KeysAndCertificates = keysAvailable.SearchAvailableDevices();
+                KeysAndCertificates.getThing();
+                updateUserDevice(device);
+            }
+        };
+        Thread getAvailableDevices = new Thread(runnable);
+        getAvailableDevices.start();
+    }
+
+    private void updateUserDevice(final String device) {
+        final JsonUtils jsonUtils = new JsonUtils();
+        final String[] nameRegion = {null};
+        Runnable runnable = new Runnable() {
+            public void run() {
+                nameRegion[0] = jsonUtils.AwsRegionThing(KeysAndCertificates.getRegion(), KeysAndCertificates.getThing());
+                new ConnectTask(nameRegion[0], mDeviceUtils.GetIP(device)).execute("");
+                ArrayList<String> data = jsonUtils.Certificates(KeysAndCertificates.getCertificate());
+                sendTcpKeys(data, "Certificate", device);
+                Log.d(LOG_TAG, "Send Certificate Keys" + data);
+                data = jsonUtils.PrivateKeys(KeysAndCertificates.getPrivateKey());
+                sendTcpKeys(data, "PrivateKey", device);
+                Log.d(LOG_TAG, "Send Private Keys" + data);
+
+            }
+        };
+        Thread getAvailableDevices = new Thread(runnable);
+        getAvailableDevices.start();
+    }
+
+    private void sendTcpKeys(ArrayList<String> data, String whatData, String device) {
+        for (String key : data) {
+            new ConnectTask(key, mDeviceUtils.GetIP(device)).execute("");
+        }
+
+        if (whatData.equals("PrivateKey")) {
+            new ConnectTask("{\"type\":8, \"set\":0}", mDeviceUtils.GetIP(device)).execute("");
+        }
+    }
+
+    private class ConnectTask extends AsyncTask<String, String, TcpClient> {
+
+        private String data = null;
+        private String ip = null;
+
+        private ConnectTask(String message, String address) {
+            super();
+            data = message;
+            ip = address;
+        }
+
+        @Override
+        protected TcpClient doInBackground(String... message) {
+
+            //we create a TCPClient object and
+            mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
+                @Override
+                //here the messageReceived method is implemented
+                public void messageReceived(String message) {
+                    publishProgress(message);
+                }
+            });
+            mTcpClient.run(data, ip);
+
+            return null;
+        }
+
+        protected void onProgressUpdate(String... message) {
+
+            JsonUtils mJsonUtils = new JsonUtils();
+            final AuraSwitch dummyDevice = mJsonUtils.DeserializeTcp(message[0]);
+
+            if (dummyDevice.getType() == 8 && dummyDevice.getError() == 0) {
+                final SqlOperationDeviceTable keysAvailable = new SqlOperationDeviceTable();
+                final SqlOperationUserTable updateDevice = new SqlOperationUserTable();
+                Runnable runnable = new Runnable() {
+                    public void run() {
+                        keysAvailable.UpdateAvailablity(KeysAndCertificates.getThing());
+                        updateDevice.UpdateUserDevices(KeysAndCertificates.getThing() + ',' + dummyDevice.getName());
+                    }
+                };
+                Thread getAvailableDevices = new Thread(runnable);
+                getAvailableDevices.start();
+            } else if (dummyDevice.getType() == 8 && dummyDevice.getError() == 1) {
+                Toast.makeText(mContext, "Cannot receive all Packages, please try again ", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     /**
@@ -143,12 +257,6 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
             return false;
         }
 
-
-        private void updateCard(String roomName) {
-//            roomsList.set(Position, device);
-            notifyItemChanged(Position);
-        }
-
         private void editBoxPopUp(final String deviceSelected) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
             dialog.setTitle("Customization Device");
@@ -178,6 +286,13 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
                 public void onClick(DialogInterface dialog, int whichButton) {
                     if (homeSpinner.getSelectedItem().toString() != null && roomSpinner.getSelectedItem().toString() != null) {
                         db.UpdateRoomAndHome(mDb, homeSpinner.getSelectedItem().toString(), roomSpinner.getSelectedItem().toString(), deviceSelected);
+                        for(Device x : DeviceList){
+                            if(deviceSelected.equals(x.getDevice())){
+                                x.setHome(homeSpinner.getSelectedItem().toString());
+                                x.setRoom(roomSpinner.getSelectedItem().toString());
+                                notifyItemChanged(Position,x);
+                            }
+                        }
                     } else {
                         Toast.makeText(mContext, "Please make appropriate selection", Toast.LENGTH_SHORT).show();
                     }
