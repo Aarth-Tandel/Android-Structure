@@ -191,7 +191,14 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
         load.setState(state[load.getLoadNumber() % 4]);
     }
 
-
+    public void updateLoadName(String oldName, String newName){
+        for(Loads x : LoadList) {
+            if(x.getName().equals(oldName)){
+                x.setName(newName);
+                notifyItemChanged(x.getPostion(), x);
+            }
+        }
+    }
 
     /**
      * To check is there internet connection
@@ -334,7 +341,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
             switch (menuItem.getItemId()) {
                 case R.id.action_add_favourite:
                     Loads previousDevice = LoadList.get(Position);
-                    editBoxPopUp(previousDevice.getName());
+                    editBoxPopUp(previousDevice);
                     return true;
 
                 case R.id.action_play_next:
@@ -347,7 +354,7 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
             return false;
         }
 
-        private void editBoxPopUp(final String previousDevice) {
+        private void editBoxPopUp(final Loads previousDevice) {
             final Boolean[] flag = {true};
             AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
             final EditText input = new EditText(mContext);
@@ -356,11 +363,17 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
                     LinearLayout.LayoutParams.MATCH_PARENT);
             input.setLayoutParams(lp);
             alert.setView(input);
-            alert.setMessage("Change name of " + previousDevice);
+            alert.setMessage("Change name of " + previousDevice.getName());
             alert.setTitle("Edit Room");
             alert.setPositiveButton("Update", new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int whichButton) {
+                    if(!input.getText().toString().trim().matches("")){
+                        db.updateLoadName(mDb, previousDevice.getName(), MainActivity.SelectedHome, roomSelected, previousDevice.getLoadNumber(), input.getText().toString().trim());
+                        favouriteDb.updateLoadName(mFavouriteDb, previousDevice.getDevice(), previousDevice.getName(), input.getText().toString().trim(),roomSelected, MainActivity.SelectedHome);
+                        updateLoadName(previousDevice.getName(),input.getText().toString().trim());
+                        refreshFavTab(MainActivity.SelectedHome);
+                    }
                 }
             });
 
@@ -385,4 +398,6 @@ public class LoadAdapter extends RecyclerView.Adapter<LoadAdapter.MyViewHolder> 
     }
 
 }
+
+
 

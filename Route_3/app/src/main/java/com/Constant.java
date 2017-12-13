@@ -50,8 +50,19 @@ public class Constant {
     public static final String GET_THING_NAME = "select " + THING_NAME + " from " + TABLE_NAME;
     public static final String GET_DEVICES_FOR_THING = "select " + DEVICE_NAME + " from " + TABLE_NAME + " where " + THING_NAME + " = ?";
     public static final String UPDATE_DEVICE = DEVICE_NAME + "=?";
+    public static final String UPDATE_LOAD1_NAME = HOME_NAME + " =? and " + ROOM_NAME + " =? and " + LOAD_1 + " =?";
+    public static final String UPDATE_LOAD2_NAME = HOME_NAME + " =? and " + ROOM_NAME + " =? and " + LOAD_2 + " =?";
+    public static final String UPDATE_LOAD3_NAME = HOME_NAME + " =? and " + ROOM_NAME + " =? and " + LOAD_3 + " =?";
+    public static final String UPDATE_LOAD4_NAME = HOME_NAME + " =? and " + ROOM_NAME + " =? and " + LOAD_4 + " =?";
 
     //SQL - Lite Queries for Favourite DB
-    public static String GET_ALL_FAVOURITE = "select * from " + FavouriteContract.FavouriteEntry.TABLE_NAME + " where " + FavouriteContract.FavouriteEntry.HOME_NAME + " = ?";
-    public static String CRUD_FAVOURITE = FavouriteContract.FavouriteEntry.DEVICE_NAME + " = ? and " + FavouriteContract.FavouriteEntry.LOAD_NAME + " = ?";
+    public static final String GET_ALL_FAVOURITE = "select * from " + FavouriteContract.FavouriteEntry.TABLE_NAME + " where " + FavouriteContract.FavouriteEntry.HOME_NAME + " = ?";
+    public static final String CRUD_FAVOURITE = FavouriteContract.FavouriteEntry.DEVICE_NAME + " = ? and " + FavouriteContract.FavouriteEntry.LOAD_NAME + " = ?";
+    public static final String UPDATE_LOAD_NAME = FavouriteContract.FavouriteEntry.HOME_NAME + " =? and " + FavouriteContract.FavouriteEntry.ROOM_NAME + " =? and " + FavouriteContract.FavouriteEntry.DEVICE_NAME + " =? and " + FavouriteContract.FavouriteEntry.LOAD_NAME + " =?";
+
+    //AWS MQTT Messages
+    public static final String AWS_UPDATE_ACCEPTED = "$aws/things/%s/shadow/update/accepted";
+    public static final String AWS_GET_ACCEPTED = "$aws/things/%s/shadow/get/accepted";
+    public static final String AWS_UPDATE = "$aws/things/%s/shadow/update";
+    public static final String AWS_GET = "$aws/things/%s/shadow/get";
 }

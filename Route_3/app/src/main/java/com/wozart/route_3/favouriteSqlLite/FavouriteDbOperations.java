@@ -11,6 +11,7 @@ import com.wozart.route_3.favouritesTab.Favourites;
 import java.util.ArrayList;
 
 import static com.Constant.CRUD_FAVOURITE;
+import static com.Constant.UPDATE_LOAD_NAME;
 import static com.wozart.route_3.favouriteSqlLite.FavouriteContract.FavouriteEntry.DEVICE_NAME;
 import static com.wozart.route_3.favouriteSqlLite.FavouriteContract.FavouriteEntry.HOME_NAME;
 import static com.wozart.route_3.favouriteSqlLite.FavouriteContract.FavouriteEntry.LOAD_NAME;
@@ -19,6 +20,7 @@ import static com.wozart.route_3.favouriteSqlLite.FavouriteContract.FavouriteEnt
 
 /**
  * Created by wozart on 05/12/17.
+ * All the data access and modification is done in this class
  */
 
 public class FavouriteDbOperations {
@@ -62,5 +64,12 @@ public class FavouriteDbOperations {
     public void removeFavourite(SQLiteDatabase db, String device, String load){
         String[] params = new String[]{device, load};
         db.delete(TABLE_NAME, CRUD_FAVOURITE, params);
+    }
+
+    public void updateLoadName(SQLiteDatabase db, String device, String oldName, String load, String room, String home){
+        String[] params = new String[]{home, room, device, oldName};
+        ContentValues values = new ContentValues();
+        values.put(LOAD_NAME, load);
+        db.update(TABLE_NAME, values, UPDATE_LOAD_NAME, params);
     }
 }

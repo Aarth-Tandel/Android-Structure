@@ -215,8 +215,17 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
                 };
                 Thread getAvailableDevices = new Thread(runnable);
                 getAvailableDevices.start();
+                //updateAwsState(dummyDevice.getName());
             } else if (dummyDevice.getType() == 8 && dummyDevice.getError() == 1) {
                 Toast.makeText(mContext, "Cannot receive all Packages, please try again ", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void updateAwsState(String device){
+        for(Device x : DeviceList){
+            if(device.equals(x.getDevice())){
+
             }
         }
     }

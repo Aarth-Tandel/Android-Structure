@@ -25,8 +25,16 @@ import static com.Constant.INSERT_DEVICES;
 import static com.Constant.INSERT_INITIAL_DATA;
 import static com.Constant.INSERT_ROOMS;
 import static com.Constant.UPDATE_DEVICE;
+import static com.Constant.UPDATE_LOAD1_NAME;
+import static com.Constant.UPDATE_LOAD2_NAME;
+import static com.Constant.UPDATE_LOAD3_NAME;
+import static com.Constant.UPDATE_LOAD4_NAME;
 import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.DEVICE_NAME;
 import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.HOME_NAME;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.LOAD_1;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.LOAD_2;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.LOAD_3;
+import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.LOAD_4;
 import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.ROOM_NAME;
 import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.TABLE_NAME;
 import static com.wozart.route_3.deviceSqlLite.DeviceContract.DeviceEntry.THING_NAME;
@@ -306,5 +314,28 @@ public class DeviceDbOperations {
         }
         cursor.close();
         return devices;
+    }
+
+    public void updateLoadName(SQLiteDatabase db, String oldName, String home, String room, int loadNumber, String load){
+        String[] params = new String[]{home, room, oldName};
+        ContentValues values = new ContentValues();
+        switch (loadNumber){
+            case 0:
+                values.put(LOAD_1, load);
+                db.update(TABLE_NAME,values, UPDATE_LOAD1_NAME, params);
+                break;
+            case 1:
+                values.put(LOAD_2, load);
+                db.update(TABLE_NAME,values, UPDATE_LOAD2_NAME, params);
+                break;
+            case 2:
+                values.put(LOAD_3,load);
+                db.update(TABLE_NAME,values, UPDATE_LOAD3_NAME, params);
+                break;
+            case 3:
+                values.put(LOAD_4, load);
+                db.update(TABLE_NAME,values, UPDATE_LOAD4_NAME, params);
+                break;
+        }
     }
 }

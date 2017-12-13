@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/D:\\Users\\wozart\\Documents\\aarth\\Wozart 2.0.0\\Android-Structure\\Route_3\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-large-v4\\values-large-v4.xml",
+            "outputFile": "D:\\Users\\wozart\\Documents\\aarth\\Wozart 2.0.0\\Android-Structure\\Route_3\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-large-v4\\values-large-v4.xml",
             "map": [
                 {
-                    "source": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/D:\\Users\\wozart\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-24.2.0.aar\\0245861d72f927865de28478fe997623\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "D:\\Users\\wozart\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-24.2.0.aar\\0245861d72f927865de28478fe997623\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/D:\\Aarth\\Programming\\Android-Structure\\Route_3\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-large-v4\\values-large-v4.xml",
+            "outputFile": "D:\\Users\\wozart\\Documents\\aarth\\Wozart 2.0.0\\Android-Structure\\Route_3\\D:\\Aarth\\Programming\\Android-Structure\\Route_3\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-large-v4\\values-large-v4.xml",
             "map": [
                 {
-                    "source": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/C:\\Users\\Aarth Tandel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-24.2.0.aar\\61587a7e712a4d3511ae40747dcf201e\\res\\values-large-v4\\values-large-v4.xml",
+                    "source": "D:\\Users\\wozart\\Documents\\aarth\\Wozart 2.0.0\\Android-Structure\\Route_3\\C:\\Users\\Aarth Tandel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-24.2.0.aar\\61587a7e712a4d3511ae40747dcf201e\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -31,10 +31,25 @@
             ]
         },
         {
-            "outputFile": "/Users/wozart/Documents/aarth/Wozart 2.0.0/Android-Structure/Route_3/AWSMobileHelper/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-large-v4/values-large-v4.xml",
+            "outputFile": "D:\\Aarth\\Programming\\Android-Structure\\Route_3\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-large-v4\\values-large-v4.xml",
             "map": [
                 {
-                    "source": "/Users/wozart/.gradle/caches/transforms-1/files-1.1/appcompat-v7-24.2.0.aar/0245861d72f927865de28478fe997623/res/values-large-v4/values-large-v4.xml",
+                    "source": "C:\\Users\\Aarth Tandel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-24.2.0.aar\\61587a7e712a4d3511ae40747dcf201e\\res\\values-large-v4\\values-large-v4.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,114,185,256,326,396,464,532,636",
+                        "endColumns": "58,70,70,69,69,67,67,103,115",
+                        "endOffsets": "109,180,251,321,391,459,527,631,747"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "D:\\Users\\wozart\\Documents\\aarth\\Wozart 2.0.0\\Android-Structure\\Route_3\\D:\\Users\\wozart\\Documents\\aarth\\Wozart 2.0.0\\Android-Structure\\Route_3\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-large-v4\\values-large-v4.xml",
+            "map": [
+                {
+                    "source": "D:\\Users\\wozart\\Documents\\aarth\\Wozart 2.0.0\\Android-Structure\\Route_3\\D:\\Users\\wozart\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-24.2.0.aar\\0245861d72f927865de28478fe997623\\res\\values-large-v4\\values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

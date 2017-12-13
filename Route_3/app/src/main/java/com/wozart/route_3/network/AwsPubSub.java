@@ -23,6 +23,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.Constant.AWS_GET;
+import static com.Constant.AWS_GET_ACCEPTED;
+import static com.Constant.AWS_UPDATE;
+import static com.Constant.AWS_UPDATE_ACCEPTED;
 import static com.amazonaws.mobilehelper.util.ThreadUtils.runOnUiThread;
 
 /**
@@ -130,7 +134,7 @@ public class AwsPubSub extends Service {
     }
 
     public void AwsSubscribe(String device) {
-        final String topic = "$aws/things/" + device + "/shadow/update/accepted";
+        final String topic = String.format(AWS_UPDATE_ACCEPTED, device) ;
         Log.d(LOG_TAG, "topic = " + topic);
 
         try {
@@ -162,7 +166,7 @@ public class AwsPubSub extends Service {
 
     public void AWSPublish(String device, String data) {
 
-        final String topic = "$aws/things/" + device + "/shadow/update";
+        final String topic = String.format(AWS_UPDATE, device);
         Log.d(LOG_TAG, "Data to Publish: " + data);
         try {
             mqttManager.publishString(data, topic, AWSIotMqttQos.QOS0);
@@ -172,7 +176,7 @@ public class AwsPubSub extends Service {
     }
 
     public void AwsGet(String device) {
-        final String topic = "$aws/things/" + device + "/shadow/get/accepted";
+        final String topic = String.format(AWS_GET_ACCEPTED,device);
         Log.d(LOG_TAG, "topic = " + topic);
 
         try {
@@ -203,7 +207,7 @@ public class AwsPubSub extends Service {
     }
 
     public void AwsGetPublish(String device) {
-        final String topic = "$aws/things/" + device + "/shadow/get";
+        final String topic = String.format(AWS_GET,device);
         final String msg = "";
 
         try {
